@@ -7,6 +7,7 @@ Projeto de jogo 1v1 por turnos com interface gráfica 2D, seleção de magias po
 - [Registro de decisões](DECISOES.md)
 - [Ensaio da entrega 2: preparação e execução](docs/GUIA_ENSAIO.md)
 - [Resultados e limites da entrega 2](docs/ENTREGA_02.md)
+- [Orientações dos agentes do projeto](AGENTS.md)
 
 ## Executar o laboratório local
 
@@ -55,7 +56,7 @@ O catálogo está em `.agents/plugins/marketplace.json` e a habilitação do pro
 
 ## Estado do projeto
 
-A entrega 1 foi aprovada e registrada no commit `03852f5`. Em 28/10/2026, D13 substituiu a câmera dos dados e os d20 físicos por rolagens virtuais. O laboratório da entrega 2 foi adaptado; não há dano, combate ou troca automática de turnos. A entrega 2 foi aceita após registro de seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros; rejeição, unicidade, recuperação e métricas não foram registradas. Consulte o relatório para os limites. Entregas 3 a 7 não iniciadas.
+A entrega 1 foi aprovada e registrada no commit `c9d1d7b`. Em 28/10/2026, D13 substituiu a câmera dos dados e os d20 físicos por rolagens virtuais. O laboratório da entrega 2 foi adaptado; não há dano, combate ou troca automática de turnos. A entrega 2 foi aceita após registro de seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros; rejeição, unicidade, recuperação e métricas não foram registradas. Consulte o relatório para os limites. Entregas 3 a 7 não iniciadas.
 
 Cada entrega deve ser mostrada ao usuário e ter seu commit autorizado antes de ser registrado.
 
