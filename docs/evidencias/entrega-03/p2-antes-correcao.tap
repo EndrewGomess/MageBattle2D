@@ -1,0 +1,266 @@
+TAP version 13
+# Subtest: P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+not ok 1 - P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 4.6635
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:386:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+        [
+    +     21,
+    +     -1
+    -     15,
+    -     8
+        ]
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0:
+      0: 15
+      1: 8
+  actual:
+    0:
+      0: 21
+      1: -1
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:392:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.start (node:internal/test_runner/test:1262:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)
+  ...
+# Subtest: P2: ação copia índices validados sem consumir iterador que substitui dados
+not ok 2 - P2: ação copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 0.6469
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:399:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   0
+    -   13
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 13
+  actual:
+    0: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:405:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)
+  ...
+# Subtest: P2: iteradores que lançam não são chamados na iniciativa nem na ação
+not ok 3 - P2: iteradores que lançam não são chamados na iniciativa nem na ação
+  ---
+  duration_ms: 0.184
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:414:1'
+  failureType: 'testCodeFailure'
+  error: 'Iterador externo não deve ser consumido.'
+  code: 'ERR_TEST_FAILURE'
+  stack: |-
+    Array.iterator (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:416:43)
+    applyInitiativeRoll (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/dist/combat.js:93:49)
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:419:19)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+not ok 4 - P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+  ---
+  duration_ms: 1.1397
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:427:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      [
+    +   6,
+    +   6
+    -   1,
+    -   1
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 1
+    1: 1
+  actual:
+    0: 6
+    1: 6
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:433:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: P2: ação lê cada índice uma vez antes de validar e resolver
+not ok 5 - P2: ação lê cada índice uma vez antes de validar e resolver
+  ---
+  duration_ms: 0.2718
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:438:1'
+  failureType: 'testCodeFailure'
+  error: 'Cada d20 deve ser um inteiro de 1 a 20.'
+  code: 'INVALID_VALUES'
+  name: 'CombatError'
+  stack: |-
+    requireDice (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/dist/combat.js:85:13)
+    resolveAction (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/dist/combat.js:126:3)
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:442:17)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: P2: criação captura configuração uma vez antes de validar e emitir snapshot
+not ok 6 - P2: criação captura configuração uma vez antes de validar e emitir snapshot
+  ---
+  duration_ms: 0.4418
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:448:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   armorClass: 4,
+    +   baseDamage: 3,
+    +   maxHealth: 3
+    -   armorClass: 1,
+    -   baseDamage: 1,
+    -   maxHealth: 1
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    maxHealth: 1
+    baseDamage: 1
+    armorClass: 1
+  actual:
+    maxHealth: 3
+    baseDamage: 3
+    armorClass: 4
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:453:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: P2: validateConfig público avalia uma leitura de cada campo externo
+not ok 7 - P2: validateConfig público avalia uma leitura de cada campo externo
+  ---
+  duration_ms: 0.3458
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:459:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly deep-equal:
+    + actual - expected
+    
+      {
+    +   errors: {
+    +     armorClass: 'A CA deve ser um inteiro de 1 a 19.',
+    +     baseDamage: 'O dano padrão deve ser um inteiro positivo representável com precisão.',
+    +     maxHealth: 'A vida máxima deve ser um inteiro positivo representável com precisão.'
+    +   },
+    +   valid: false
+    -   errors: {},
+    -   valid: true
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    valid: true
+    errors:
+  actual:
+    valid: false
+    errors:
+      maxHealth: 'A vida máxima deve ser um inteiro positivo representável com precisão.'
+      baseDamage: 'O dano padrão deve ser um inteiro positivo representável com precisão.'
+      armorClass: 'A CA deve ser um inteiro de 1 a 19.'
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:463:10)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+# Subtest: P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+not ok 8 - P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+  ---
+  duration_ms: 0.3645
+  type: 'test'
+  location: 'C:\\Users\\endrew.gomes\\OneDrive - Programmers AI, Data & Software\\Documents\\ChatGPT\\Projeto Visão Computacional 2\\tests\\combat.test.mjs:467:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    attacker
+    
+    3 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///C:/Users/endrew.gomes/OneDrive%20-%20Programmers%20AI,%20Data%20&%20Software/Documents/ChatGPT/Projeto%20Vis%C3%A3o%20Computacional%202/tests/combat.test.mjs:476:12)
+    Test.runInAsyncScope (node:async_hooks:227:14)
+    Test.run (node:internal/test_runner/test:1402:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+    Test.postRun (node:internal/test_runner/test:1542:19)
+    Test.run (node:internal/test_runner/test:1467:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 0
+# fail 8
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 129.4633

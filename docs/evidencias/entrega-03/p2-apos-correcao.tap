@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+ok 1 - P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 2.6898
+  type: 'test'
+  ...
+# Subtest: P2: ação copia índices validados sem consumir iterador que substitui dados
+ok 2 - P2: ação copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 0.4765
+  type: 'test'
+  ...
+# Subtest: P2: iteradores que lançam não são chamados na iniciativa nem na ação
+ok 3 - P2: iteradores que lançam não são chamados na iniciativa nem na ação
+  ---
+  duration_ms: 0.2499
+  type: 'test'
+  ...
+# Subtest: P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+ok 4 - P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+  ---
+  duration_ms: 0.3208
+  type: 'test'
+  ...
+# Subtest: P2: ação lê cada índice uma vez antes de validar e resolver
+ok 5 - P2: ação lê cada índice uma vez antes de validar e resolver
+  ---
+  duration_ms: 1.1086
+  type: 'test'
+  ...
+# Subtest: P2: criação captura configuração uma vez antes de validar e emitir snapshot
+ok 6 - P2: criação captura configuração uma vez antes de validar e emitir snapshot
+  ---
+  duration_ms: 0.35
+  type: 'test'
+  ...
+# Subtest: P2: validateConfig público avalia uma leitura de cada campo externo
+ok 7 - P2: validateConfig público avalia uma leitura de cada campo externo
+  ---
+  duration_ms: 0.224
+  type: 'test'
+  ...
+# Subtest: P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+ok 8 - P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+  ---
+  duration_ms: 0.4291
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 154.0393

@@ -42,6 +42,7 @@ A investigação de d20 físicos foi retirada do escopo por D13; isso não const
 | 27/10/2026 | Especificação e propostas da entrega 1 preparadas para revisão | Aguardando aprovação; nenhum commit criado |
 | 27/10/2026 | Usuário solicitou como única alteração arredondar a metade do dano para baixo; documentos e cenários atualizados | Regra de arredondamento confirmada; commit ainda aguarda autorização |
 | 27/10/2026 | Usuário aprovou a versão 1.1 revisada e autorizou o commit da entrega 1 | Decisões D01 a D12 aprovadas; entrega 1 concluída; commit autorizado |
+| 29/10/2026 | Usuário autorizou criar o commit e abrir a PR da entrega 3, mantendo testes de partida integrada e webcam real pendentes por ora | Autorização para o motor testado, com limites explícitos conforme D15; execução consultável no histórico Git e na PR correspondente, quando criada |
 
 ## D13 — uma webcam e rolagens virtuais (28/10/2026)
 
@@ -61,3 +62,13 @@ D01, D04–D08 e demais regras de dano, CA e vitória permanecem. A entrega 2 re
 ## D14 — prévia espelhada e limiar específico para mão aberta (29/10/2026)
 
 A prévia da webcam é espelhada para facilitar o posicionamento; a conversão das coordenadas de inferência para a prévia ocorre uma única vez no cálculo da região do jogador. O jogador 1 fica à esquerda e o jogador 2 à direita. Open_Palm usa limiar inicial 0,60; Pointing_Up e Victory permanecem em 0,75. A confirmação continua exigindo um gesto elegível por 1000 ms, intervalo máximo de 500 ms entre observações e rejeição de ambiguidades. Os limiares são ajustes experimentais, sem precisão física comprovada. A exportação inclui o modo espelhado e escores das classes observadas. O ensaio de 29/10 registrou seis gestos positivos, uma sessão e cerca de 1.957 quadros; rejeição, unicidade, recuperação e métricas não foram registradas. A entrega 2 foi aceita com esses limites.
+
+## D15 — registro da entrega 3 e adiamento das verificações integradas e físicas (29/10/2026)
+
+O usuário autorizou explicitamente criar o commit e abrir a PR da entrega 3 para o motor determinístico testado em 29/10/2026, preservando as pendências conhecidas. A execução pode ser consultada no histórico Git e na PR correspondente, quando criada. A autorização não inicia nem libera as entregas 4 a 7 e não altera as regras de combate.
+
+As evidências da entrega 3 permanecem: 70/70 testes aprovados, cobertura focada de 100% de linhas, ramos e funções em `combat.js` e `dice.js`, sintaxe 15/15 e revisão independente final sem novos achados acionáveis após resolver os dois P2. Esses resultados não demonstram uma partida integrada ou a qualidade física dos gestos.
+
+Por decisão explícita do usuário, os testes de partida integrada e de webcam real ficam adiados por ora. Continuam pendentes a unicidade da seleção no aplicativo, descarte de respostas antigas, suspensão/recuperação, partida completa, revanche e retorno ao menu, além de rejeição de gestos inativos/ambíguos e métricas físicas de precisão, rejeição e latência. Evidências sintéticas não devem ser apresentadas como ensaio físico.
+
+Em cada uma das próximas entregas 4, 5, 6 e 7, o coordenador deve lembrar essas pendências ao usuário antes de planejar e antes de fechar a etapa, registrando a decisão atual sobre retomá-las. Atenção especial antes de concluir a validação de ponta a ponta ou preparar o pacote de entrega; o adiamento não equivale à execução ou aprovação desses testes.

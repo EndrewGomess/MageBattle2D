@@ -1,0 +1,441 @@
+TAP version 13
+# Subtest: mesmo dispositivo é rejeitado antes de qualquer abertura
+ok 1 - mesmo dispositivo é rejeitado antes de qualquer abertura
+  ---
+  duration_ms: 3.0709
+  type: 'test'
+  ...
+# Subtest: falha na segunda câmera encerra o primeiro fluxo
+ok 2 - falha na segunda câmera encerra o primeiro fluxo
+  ---
+  duration_ms: 0.8369
+  type: 'test'
+  ...
+# Subtest: stop durante abertura descarta fluxo que chega depois
+ok 3 - stop durante abertura descarta fluxo que chega depois
+  ---
+  duration_ms: 0.2301
+  type: 'test'
+  ...
+# Subtest: dois seletores que retornam o mesmo hardware são rejeitados
+ok 4 - dois seletores que retornam o mesmo hardware são rejeitados
+  ---
+  duration_ms: 0.4257
+  type: 'test'
+  ...
+# Subtest: interrupção de uma câmera encerra os fluxos e notifica uma única vez
+ok 5 - interrupção de uma câmera encerra os fluxos e notifica uma única vez
+  ---
+  duration_ms: 0.2896
+  type: 'test'
+  ...
+# Subtest: objetos antigos não armam a ação; área vazia é necessária
+ok 6 - objetos antigos não armam a ação; área vazia é necessária
+  ---
+  duration_ms: 3.7943
+  type: 'test'
+  ...
+# Subtest: dois objetos distintos podem gerar uma única captura, mesmo com valores iguais
+ok 7 - dois objetos distintos podem gerar uma única captura, mesmo com valores iguais
+  ---
+  duration_ms: 0.7061
+  type: 'test'
+  ...
+# Subtest: um dado não valida ação que exige dois; dado extra também bloqueia
+ok 8 - um dado não valida ação que exige dois; dado extra também bloqueia
+  ---
+  duration_ms: 0.2813
+  type: 'test'
+  ...
+# Subtest: movimento, obstrução e cancelamento invalidam OCR atrasado
+ok 9 - movimento, obstrução e cancelamento invalidam OCR atrasado
+  ---
+  duration_ms: 0.9913
+  type: 'test'
+  ...
+# Subtest: intervalo sem observações não conta como estabilidade
+ok 10 - intervalo sem observações não conta como estabilidade
+  ---
+  duration_ms: 0.6156
+  type: 'test'
+  ...
+# Subtest: uma caixa duplicada não se passa por dois objetos físicos
+ok 11 - uma caixa duplicada não se passa por dois objetos físicos
+  ---
+  duration_ms: 1.7169
+  type: 'test'
+  ...
+# Subtest: d20 rejeita lixo, valores fora da faixa e múltiplos números
+ok 12 - d20 rejeita lixo, valores fora da faixa e múltiplos números
+  ---
+  duration_ms: 0.408
+  type: 'test'
+  ...
+# Subtest: OCR rejeita conflito 6/9 e escore insuficiente
+ok 13 - OCR rejeita conflito 6/9 e escore insuficiente
+  ---
+  duration_ms: 0.4193
+  type: 'test'
+  ...
+# Subtest: D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores
+ok 14 - D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores
+  ---
+  duration_ms: 0.9775
+  type: 'test'
+  ...
+# Subtest: D14: centro, fronteiras e mão atravessando a faixa central não confirmam
+ok 15 - D14: centro, fronteiras e mão atravessando a faixa central não confirmam
+  ---
+  duration_ms: 0.4332
+  type: 'test'
+  ...
+# Subtest: D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física
+ok 16 - D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física
+  ---
+  duration_ms: 0.7261
+  type: 'test'
+  ...
+# Subtest: gesto no limite temporal confirma só depois de duração contínua completa
+ok 17 - gesto no limite temporal confirma só depois de duração contínua completa
+  ---
+  duration_ms: 0.8976
+  type: 'test'
+  ...
+# Subtest: intervalo máximo excedido e classe não reconhecida reiniciam progresso
+ok 18 - intervalo máximo excedido e classe não reconhecida reiniciam progresso
+  ---
+  duration_ms: 0.244
+  type: 'test'
+  ...
+# Subtest: gesto exige observação contínua por 1 segundo e confirma só uma vez
+ok 19 - gesto exige observação contínua por 1 segundo e confirma só uma vez
+  ---
+  duration_ms: 0.3988
+  type: 'test'
+  ...
+# Subtest: trocar ou perder gesto reinicia progresso
+ok 20 - trocar ou perder gesto reinicia progresso
+  ---
+  duration_ms: 0.2474
+  type: 'test'
+  ...
+# Subtest: métricas incluem rejeições e preservam multiplicidade dos valores
+ok 21 - métricas incluem rejeições e preservam multiplicidade dos valores
+  ---
+  duration_ms: 1.3634
+  type: 'test'
+  ...
+# Subtest: segmentação conta componentes físicos distintos, sem usar seus números
+ok 22 - segmentação conta componentes físicos distintos, sem usar seus números
+  ---
+  duration_ms: 22.3369
+  type: 'test'
+  ...
+# Subtest: configuração padrão é explícita; estado inicial tem vida cheia e iniciativa pendente
+ok 23 - configuração padrão é explícita; estado inicial tem vida cheia e iniciativa pendente
+  ---
+  duration_ms: 5.6824
+  type: 'test'
+  ...
+# Subtest: A01: configuração inválida identifica cada campo e não aplica padrões silenciosos
+ok 24 - A01: configuração inválida identifica cada campo e não aplica padrões silenciosos
+  ---
+  duration_ms: 4.8541
+  type: 'test'
+  ...
+# Subtest: configuração aceita CA 1/19 e inteiros positivos seguros; CA fora dos limites é rejeitada
+ok 25 - configuração aceita CA 1/19 e inteiros positivos seguros; CA fora dos limites é rejeitada
+  ---
+  duration_ms: 0.6663
+  type: 'test'
+  ...
+# Subtest: criação copia campos conhecidos e não congela nem altera configuração do chamador
+ok 26 - criação copia campos conhecidos e não congela nem altera configuração do chamador
+  ---
+  duration_ms: 0.4141
+  type: 'test'
+  ...
+# Subtest: A02/A03: empates preservados e desempate inicia o jogador correto
+ok 27 - A02/A03: empates preservados e desempate inicia o jogador correto
+  ---
+  duration_ms: 0.8712
+  type: 'test'
+  ...
+# Subtest: iniciativa cobre todos os 400 pares possíveis de faces sem alterar vida
+ok 28 - iniciativa cobre todos os 400 pares possíveis de faces sem alterar vida
+  ---
+  duration_ms: 6.3079
+  type: 'test'
+  ...
+# Subtest: iniciativa copia o par sem congelá-lo e rejeita dados inválidos atomicamente
+ok 29 - iniciativa copia o par sem congelá-lo e rejeita dados inválidos atomicamente
+  ---
+  duration_ms: 1.9939
+  type: 'test'
+  ...
+# Subtest: estados forjados, clones e primitivas retornam INVALID_STATE sem percorrer a entrada
+ok 30 - estados forjados, clones e primitivas retornam INVALID_STATE sem percorrer a entrada
+  ---
+  duration_ms: 1.1826
+  type: 'test'
+  ...
+# Subtest: operações em fases incorretas não alteram estados legítimos
+ok 31 - operações em fases incorretas não alteram estados legítimos
+  ---
+  duration_ms: 0.5661
+  type: 'test'
+  ...
+# Subtest: A04–A09/A15/A22/A23: cenários de magias e histórico completo
+ok 32 - A04–A09/A15/A22/A23: cenários de magias e histórico completo
+  ---
+  duration_ms: 1.1202
+  type: 'test'
+  ...
+# Subtest: CA estrita e naturais: 380 combinações de uma face e CA, sem efeito especial
+ok 33 - CA estrita e naturais: 380 combinações de uma face e CA, sem efeito especial
+  ---
+  duration_ms: 5.4683
+  type: 'test'
+  ...
+# Subtest: vantagem/desvantagem: 15.200 combinações de pares e CA usam maior/menor
+ok 34 - vantagem/desvantagem: 15.200 combinações de pares e CA usam maior/menor
+  ---
+  duration_ms: 170.1623
+  type: 'test'
+  ...
+# Subtest: dano extremo e limite da vida: 105 combinações confrontadas com oráculo BigInt
+ok 35 - dano extremo e limite da vida: 105 combinações confrontadas com oráculo BigInt
+  ---
+  duration_ms: 2.9855
+  type: 'test'
+  ...
+# Subtest: A16: ataque fatal registra dano aplicado e bloqueia qualquer ação ou iniciativa posterior
+ok 36 - A16: ataque fatal registra dano aplicado e bloqueia qualquer ação ou iniciativa posterior
+  ---
+  duration_ms: 0.5405
+  type: 'test'
+  ...
+# Subtest: erro e dano zero consomem turno, magias podem repetir e iniciativa permanece fixa
+ok 37 - erro e dano zero consomem turno, magias podem repetir e iniciativa permanece fixa
+  ---
+  duration_ms: 0.4585
+  type: 'test'
+  ...
+# Subtest: ação ausente, jogador incorreto e magia inválida são rejeitados atomicamente
+ok 38 - ação ausente, jogador incorreto e magia inválida são rejeitados atomicamente
+  ---
+  duration_ms: 2.5398
+  type: 'test'
+  ...
+# Subtest: quantidade, tipo e faixa de todos os dados são validados antes de consumir ação
+ok 39 - quantidade, tipo e faixa de todos os dados são validados antes de consumir ação
+  ---
+  duration_ms: 3.6531
+  type: 'test'
+  ...
+# Subtest: snapshots congelados, entradas copiadas e ação duplicada não altera próximo turno
+ok 40 - snapshots congelados, entradas copiadas e ação duplicada não altera próximo turno
+  ---
+  duration_ms: 0.443
+  type: 'test'
+  ...
+# Subtest: 12 partidas determinísticas limitadas mantêm invariantes, histórico e reprodução idêntica
+ok 41 - 12 partidas determinísticas limitadas mantêm invariantes, histórico e reprodução idêntica
+  ---
+  duration_ms: 106.1566
+  type: 'test'
+  ...
+# Subtest: sequência limitada de 100 erros continua válida sem forçar vitória artificial
+ok 42 - sequência limitada de 100 erros continua válida sem forçar vitória artificial
+  ---
+  duration_ms: 1.2009
+  type: 'test'
+  ...
+# Subtest: 250 pares empatados permanecem registrados antes do desempate sem iniciar combate
+ok 43 - 250 pares empatados permanecem registrados antes do desempate sem iniciar combate
+  ---
+  duration_ms: 3.5468
+  type: 'test'
+  ...
+# Subtest: 250 acertos de dano zero alternam turnos e preservam todo histórico sem falsa vitória
+ok 44 - 250 acertos de dano zero alternam turnos e preservam todo histórico sem falsa vitória
+  ---
+  duration_ms: 3.7845
+  type: 'test'
+  ...
+# Subtest: P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+ok 45 - P2: iniciativa copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 0.2045
+  type: 'test'
+  ...
+# Subtest: P2: ação copia índices validados sem consumir iterador que substitui dados
+ok 46 - P2: ação copia índices validados sem consumir iterador que substitui dados
+  ---
+  duration_ms: 0.1625
+  type: 'test'
+  ...
+# Subtest: P2: iteradores que lançam não são chamados na iniciativa nem na ação
+ok 47 - P2: iteradores que lançam não são chamados na iniciativa nem na ação
+  ---
+  duration_ms: 0.1728
+  type: 'test'
+  ...
+# Subtest: P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+ok 48 - P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada
+  ---
+  duration_ms: 0.2881
+  type: 'test'
+  ...
+# Subtest: P2: ação lê cada índice uma vez antes de validar e resolver
+ok 49 - P2: ação lê cada índice uma vez antes de validar e resolver
+  ---
+  duration_ms: 0.18
+  type: 'test'
+  ...
+# Subtest: P2: criação captura configuração uma vez antes de validar e emitir snapshot
+ok 50 - P2: criação captura configuração uma vez antes de validar e emitir snapshot
+  ---
+  duration_ms: 0.206
+  type: 'test'
+  ...
+# Subtest: P2: validateConfig público avalia uma leitura de cada campo externo
+ok 51 - P2: validateConfig público avalia uma leitura de cada campo externo
+  ---
+  duration_ms: 0.2669
+  type: 'test'
+  ...
+# Subtest: P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+ok 52 - P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução
+  ---
+  duration_ms: 0.4839
+  type: 'test'
+  ...
+# Subtest: d20 mapeia os 20 intervalos e extremos de [0,1) para inteiros 1..20
+ok 53 - d20 mapeia os 20 intervalos e extremos de [0,1) para inteiros 1..20
+  ---
+  duration_ms: 3.6458
+  type: 'test'
+  ...
+# Subtest: RNG não função e amostras inválidas produzem erro claro
+ok 54 - RNG não função e amostras inválidas produzem erro claro
+  ---
+  duration_ms: 1.4813
+  type: 'test'
+  ...
+# Subtest: exceção da fonte aleatória é preservada sem nova chamada
+ok 55 - exceção da fonte aleatória é preservada sem nova chamada
+  ---
+  duration_ms: 0.3163
+  type: 'test'
+  ...
+# Subtest: A10: Raio gera exatamente um dado e mantém formato do laboratório
+ok 56 - A10: Raio gera exatamente um dado e mantém formato do laboratório
+  ---
+  duration_ms: 2.4526
+  type: 'test'
+  ...
+# Subtest: A11: vantagem/desvantagem fazem duas chamadas e usam maior/menor em 800 pares
+ok 57 - A11: vantagem/desvantagem fazem duas chamadas e usam maior/menor em 800 pares
+  ---
+  duration_ms: 8.5637
+  type: 'test'
+  ...
+# Subtest: dois valores iguais preservam duas chamadas e duas posições
+ok 58 - dois valores iguais preservam duas chamadas e duas posições
+  ---
+  duration_ms: 0.3905
+  type: 'test'
+  ...
+# Subtest: gestos inválidos e chaves herdadas são rejeitados antes de chamar RNG
+ok 59 - gestos inválidos e chaves herdadas são rejeitados antes de chamar RNG
+  ---
+  duration_ms: 0.6421
+  type: 'test'
+  ...
+# Subtest: falha no segundo dado aborta a rolagem sem sortear novamente
+ok 60 - falha no segundo dado aborta a rolagem sem sortear novamente
+  ---
+  duration_ms: 0.4465
+  type: 'test'
+  ...
+# Subtest: rolagens independentes retornam arrays distintos sem guardar seleção anterior
+ok 61 - rolagens independentes retornam arrays distintos sem guardar seleção anterior
+  ---
+  duration_ms: 0.4654
+  type: 'test'
+  ...
+# Subtest: fonte padrão é Math.random e mantém a quantidade de chamadas por magia
+ok 62 - fonte padrão é Math.random e mantém a quantidade de chamadas por magia
+  ---
+  duration_ms: 1.2492
+  type: 'test'
+  ...
+# Subtest: mesa vazia continua sem objetos após mudança uniforme de exposição
+ok 63 - mesa vazia continua sem objetos após mudança uniforme de exposição
+  ---
+  duration_ms: 25.6791
+  type: 'test'
+  ...
+# Subtest: balanço de branco uniforme não cria objetos inexistentes
+ok 64 - balanço de branco uniforme não cria objetos inexistentes
+  ---
+  duration_ms: 12.4321
+  type: 'test'
+  ...
+# Subtest: mancha de pouco contraste na mesa vazia é ignorada
+ok 65 - mancha de pouco contraste na mesa vazia é ignorada
+  ---
+  duration_ms: 10.9366
+  type: 'test'
+  ...
+# Subtest: ruído pequeno de alto contraste não conta como um dado
+ok 66 - ruído pequeno de alto contraste não conta como um dado
+  ---
+  duration_ms: 10.8288
+  type: 'test'
+  ...
+# Subtest: faixa fina não conta como um dado mesmo com área suficiente
+ok 67 - faixa fina não conta como um dado mesmo com área suficiente
+  ---
+  duration_ms: 15.3317
+  type: 'test'
+  ...
+# Subtest: dois objetos contrastantes continuam separados após variação global de luz
+ok 68 - dois objetos contrastantes continuam separados após variação global de luz
+  ---
+  duration_ms: 15.7955
+  type: 'test'
+  ...
+# Subtest: mudança extrema de iluminação exige calibração sem criar objetos
+ok 69 - mudança extrema de iluminação exige calibração sem criar objetos
+  ---
+  duration_ms: 10.3351
+  type: 'test'
+  ...
+# Subtest: movimento real de um objeto continua sendo detectado
+ok 70 - movimento real de um objeto continua sendo detectado
+  ---
+  duration_ms: 9.7383
+  type: 'test'
+  ...
+1..70
+# tests 70
+# suites 0
+# pass 70
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 547.4262
+# start of coverage report
+# -----------------------------------------------------------
+# file       | line % | branch % | funcs % | uncovered lines
+# -----------------------------------------------------------
+# dist       |        |          |         | 
+#  combat.js | 100.00 |   100.00 |  100.00 | 
+#  dice.js   | 100.00 |   100.00 |  100.00 | 
+# -----------------------------------------------------------
+# all files  | 100.00 |   100.00 |  100.00 | 
+# -----------------------------------------------------------
+# end of coverage report
