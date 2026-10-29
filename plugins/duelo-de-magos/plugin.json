@@ -1,0 +1,28 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "duelo-de-magos",
+  "version": "0.1.0",
+  "description": "Entendimento, implementação e revisão do Duelo de Magos a partir dos documentos atuais do projeto.",
+  "author": {
+    "name": "Projeto Duelo de Magos"
+  },
+  "keywords": ["duelo-de-magos", "desenvolvimento", "revisao", "visao-computacional"],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "interface": {
+        "displayName": "Duelo de Magos",
+        "shortDescription": "Desenvolva o projeto com contexto e revisão",
+        "longDescription": "Organiza pedidos, implementação e revisão com os três agentes do repositório, consultando planejamento, especificação, decisões e evidências atuais.",
+        "developerName": "Projeto Duelo de Magos",
+        "category": "Productivity",
+        "capabilities": ["Read", "Write"],
+        "defaultPrompt": [
+          "Use $duelo-entender para organizar este pedido e seus critérios de aceite.",
+          "Use $duelo-implementar para desenvolver esta alteração com os três agentes do projeto.",
+          "Use $duelo-revisar para revisar as alterações em relação às regras aprovadas."
+        ]
+      }
+    }
+  }
+}

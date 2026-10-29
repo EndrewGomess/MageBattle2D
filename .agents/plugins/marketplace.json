@@ -1,0 +1,20 @@
+{
+  "name": "duelo-de-magos-local",
+  "interface": {
+    "displayName": "Duelo de Magos · Projeto"
+  },
+  "plugins": [
+    {
+      "name": "duelo-de-magos",
+      "source": {
+        "source": "local",
+        "path": "./plugins/duelo-de-magos"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+node_modules/
+ensaio-local/
+*.log
+.DS_Store
