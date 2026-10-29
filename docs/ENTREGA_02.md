@@ -23,7 +23,7 @@ Não foram adicionados nem executados testes nesta alteração documental. Os ap
 
 O ensaio antigo de duas webcams e d20 físicos foi removido do escopo por D13 e não valida o fluxo atual. O [guia](GUIA_ENSAIO.md) permanece disponível para registrar ensaios adicionais e cobrir as limitações acima.
 
-O conjunto desta entrega deve ser mostrado ao usuário para revisão. O commit permanece aguardando autorização explícita.
+A entrega 2 está registrada no commit `cf988a0`; agentes, plugin e atualização documental foram registrados no commit de complementação `bcda282`.
 ## Histórico anterior a D13
 
 O material abaixo preserva observações e relatos anteriores da investigação de duas câmeras/d20 físicos. Não é evidência de execução ou aprovação da versão atual. Naquele registro histórico, anterior ao ensaio de 29/10/2026, o ensaio real dos gestos ainda estava pendente. As pendências relativas a dados físicos foram retiradas do escopo vigente por D13.

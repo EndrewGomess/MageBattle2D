@@ -1,6 +1,6 @@
 # Entrega 2 — Guia de ensaio da webcam e dados virtuais
 
-Versão D14, 29/10/2026. Procedimento para ensaio físico, ainda não executado com esta configuração. Uma webcam observa os dois jogadores; d20 são gerados pelo software.
+Versão D14, 29/10/2026. Uma webcam observa os dois jogadores; d20 são gerados pelo software. Esta configuração foi ensaiada e aceita no escopo limitado de seis gestos positivos (três por jogador). Rejeição, unicidade, recuperação e métricas continuam sem evidência, conforme o [relatório](ENTREGA_02.md). Este guia permite registrar ensaios adicionais.
 
 ## Preparação
 

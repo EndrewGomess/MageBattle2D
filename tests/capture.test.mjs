@@ -60,10 +60,10 @@ test('OCR rejeita conflito 6/9 e escore insuficiente',()=>{
 test('gesto inativo, mão no centro e duas mãos na região não confirmam',()=>{
   const hand=x=>Array.from({length:21},()=>({x,y:.5}));
   const category={categoryName:'Victory',score:.95};
-  assert.equal(activeGesture({landmarks:[hand(.8)],gestures:[[category]]},1),null);
+  assert.equal(activeGesture({landmarks:[hand(.2)],gestures:[[category]]},1),null);
   assert.equal(activeGesture({landmarks:[hand(.5)],gestures:[[category]]},1),null);
-  assert.equal(activeGesture({landmarks:[hand(.2),hand(.3)],gestures:[[category],[category]]},1),null);
-  assert.equal(activeGesture({landmarks:[hand(.2)],gestures:[[category]]},1).categoryName,'Victory');
+  assert.equal(activeGesture({landmarks:[hand(.8),hand(.7)],gestures:[[category],[category]]},1),null);
+  assert.equal(activeGesture({landmarks:[hand(.8)],gestures:[[category]]},1).categoryName,'Victory');
 });
 test('gesto exige observação contínua por 1 segundo e confirma só uma vez',()=>{
   const gate=new GestureGate(), category={categoryName:'Victory'};

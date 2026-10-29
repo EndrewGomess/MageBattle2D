@@ -143,7 +143,7 @@ As entregas abaixo seguem uma ordem de dependências. Cada etapa deixa um artefa
 ### Estado atual
 
 - Entrega 1: concluída e aprovada; especificação 1.1, fluxo de estados, 23 cenários de aceitação e decisões D01 a D12 aprovados; commit `c9d1d7b`.
-- Entrega 2: concluída e aceita no escopo limitado do ensaio; seis gestos positivos (três por jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; ver relatório. Commit da entrega 2 registrado em `cf988a0`. [Guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
+- Entrega 2: concluída e aceita no escopo limitado do ensaio; seis gestos positivos (três por jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; ver relatório. Commit da entrega 2 registrado em `cf988a0`; agentes, plugin e atualização documental registrados em `bcda282`. [Guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
 - Entregas 3 a 7: não iniciadas.
 
 ### Revisão e commit por entrega
