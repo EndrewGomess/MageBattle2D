@@ -1,0 +1,18 @@
+Comando: node --check em cada arquivo JS/MJS de dist/, scripts/ e tests/
+Node: v24.22.1
+OK dist\app.js
+OK dist\cameras.js
+OK dist\combat.js
+OK dist\config.js
+OK dist\core.js
+OK dist\dice.js
+OK dist\gesture-worker.js
+OK dist\segmentation.js
+OK dist\vision.js
+OK scripts\serve.mjs
+OK tests\cameras.test.mjs
+OK tests\capture.test.mjs
+OK tests\combat.test.mjs
+OK tests\dice.test.mjs
+OK tests\segmentation.test.mjs
+Total aprovado: 15

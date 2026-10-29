@@ -8,6 +8,7 @@ Projeto de jogo 1v1 por turnos com interface gráfica 2D, seleção de magias po
 - [Ensaio da entrega 2: preparação e execução](docs/GUIA_ENSAIO.md)
 - [Resultados e limites da entrega 2](docs/ENTREGA_02.md)
 - [Orientações dos agentes do projeto](AGENTS.md)
+- [Motor e critérios da entrega 3](docs/ENTREGA_03.md)
 
 ## Executar o laboratório local
 
@@ -30,13 +31,17 @@ O navegador precisa de acesso à internet ao carregar os modelos fixados em `dis
 
 O servidor atende somente em `127.0.0.1` e expõe somente os arquivos de `dist/`. A webcam é solicitada sem áudio e encerrada pelo botão Encerrar câmera ou ao sair da página.
 
+## Motor de combate — Entrega 3
+
+O módulo ESM [dist/combat.js](dist/combat.js) implementa as regras com resultados de dados fornecidos pelo chamador. Exporta validação da configuração, criação da partida, registro da iniciativa e resolução de ações. A [documentação da entrega](docs/ENTREGA_03.md) descreve API, estado, erros, cenários e evidências. Após corrigir dois achados da revisão sobre captura de entradas, a validação final do coordenador aprovou 70 testes, com cobertura focada de 100% de linhas, ramos e funções em `combat.js` e `dice.js`. A nova revisão independente confirmou as correções e não encontrou novos problemas acionáveis. Commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. O laboratório ainda não chama esse motor.
+
 ## Verificações automatizadas
 
 ```powershell
 node --test tests/*.test.mjs
 ```
 
-A suíte existente contém verificações de gestos e recursos de câmera, além de testes legados de dados físicos/OCR, que não fazem parte do fluxo ativo desde D13. Não foi alterada ou executada nesta rodada; não comprova o novo fluxo de rolagens virtuais nem reconhecimento físico de gestos. Execute testes somente mediante pedido explícito do usuário. O ensaio com a webcam segue o [guia](docs/GUIA_ENSAIO.md).
+A suíte contém testes do motor e gerador virtual, verificações sintéticas de gestos e recursos de câmera, além de testes legados de dados físicos/OCR, que não fazem parte do fluxo ativo desde D13. Os testes foram armazenados e executados em 29/10/2026 por pedido explícito do usuário: 70 aprovados, zero falhas, cancelamentos ou ignorados. Consulte [os comandos e resultados](docs/evidencias/entrega-03/execucoes.md). Esses resultados não comprovam o reconhecimento físico nem a integração completa do jogo. O ensaio com a webcam segue o [guia](docs/GUIA_ENSAIO.md).
 
 ## Agentes do projeto no Codex
 
@@ -56,7 +61,7 @@ O catálogo está em `.agents/plugins/marketplace.json` e a habilitação do pro
 
 ## Estado do projeto
 
-A entrega 1 foi aprovada e registrada no commit `c9d1d7b`. Em 28/10/2026, D13 substituiu a câmera dos dados e os d20 físicos por rolagens virtuais. O laboratório da entrega 2 foi adaptado; não há dano, combate ou troca automática de turnos. A entrega 2 foi aceita após registro de seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros; rejeição, unicidade, recuperação e métricas não foram registradas. Consulte o relatório para os limites. Entregas 3 a 7 não iniciadas.
+A entrega 1 foi aprovada e registrada no commit `c9d1d7b`. Em 28/10/2026, D13 substituiu a câmera dos dados e os d20 físicos por rolagens virtuais. O laboratório da entrega 2 foi adaptado; não há dano, combate ou troca automática de turnos no laboratório. A entrega 2 foi aceita após registro de seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros; rejeição, unicidade, recuperação e métricas não foram registradas. Consulte o relatório para os limites. O motor da Entrega 3 foi implementado separadamente, teve seus cenários aplicáveis verificados automaticamente e recebeu revisão independente final sem novos achados acionáveis. Commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Testes de partida integrada e webcam real ficam adiados por ora e serão relembrados em cada entrega 4 a 7 conforme [D15](DECISOES.md). Entregas 4 a 7 não iniciadas.
 
 Cada entrega deve ser mostrada ao usuário e ter seu commit autorizado antes de ser registrado.
 

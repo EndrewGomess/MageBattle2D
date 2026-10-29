@@ -1,12 +1,12 @@
 # Especificação — Duelo de Magos
 
-Versão vigente: 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 virtuais (D13). A versão 1.1 da entrega 1 foi aprovada e registrada no commit `c9d1d7b`; essa aprovação e suas evidências são históricas. A entrega 2 foi concluída e aceita no escopo limitado do ensaio de 29/10/2026: seis gestos positivos, três por jogador. Rejeição, unicidade, recuperação e métricas não foram registradas; consulte docs/ENTREGA_02.md. A alteração atual não autoriza commit ou avanço de entrega.
+Versão vigente: 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 virtuais (D13). A versão 1.1 da entrega 1 foi aprovada e registrada no commit `c9d1d7b`; essa aprovação e suas evidências são históricas. A entrega 2 foi concluída e aceita no escopo limitado do ensaio de 29/10/2026: seis gestos positivos, três por jogador. Rejeição, unicidade, recuperação e métricas não foram registradas; consulte docs/ENTREGA_02.md. Em 29/10/2026, o usuário autorizou commit e PR do motor testado da entrega 3, mantendo testes integrados e físicos adiados por ora (D15); isso não libera as entregas 4 a 7.
 
 ## 1. Escopo e equipamento
 
 Jogo 1v1 por turnos, em português, com interface gráfica 2D no navegador de um computador. Dois jogadores humanos: mago preto à esquerda e mago branco à direita, com nomes, posição e indicação de turno além da cor. Uma única webcam observa os gestos dos dois jogadores. Os resultados dos d20 são gerados aleatoriamente pelo software; não há dados físicos, câmera de dados, OCR ou entrada manual de números no fluxo vigente.
 
-A versão futura do jogo inclui menu, preparação da webcam, iniciativa, magias, vida, histórico, vitória, revanche e retorno ao menu. O laboratório atual da entrega 2 demonstra somente gestos e rolagens virtuais, sem aplicar dano, decidir acerto ou alternar turnos de combate. Entregas 3 a 7 não iniciadas.
+A versão futura do jogo inclui menu, preparação da webcam, iniciativa, magias, vida, histórico, vitória, revanche e retorno ao menu. O laboratório atual da entrega 2 demonstra somente gestos e rolagens virtuais, sem aplicar dano, decidir acerto ou alternar turnos de combate. O motor independente da entrega 3 foi implementado e os cenários aplicáveis ao motor e gerador foram verificados automaticamente; dois achados de captura de entradas foram corrigidos com regressões e confirmados como resolvidos na revisão independente final, sem novos achados acionáveis. Commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Testes de partida integrada e webcam real seguem adiados conforme D15. Consulte [o contrato e as evidências](docs/ENTREGA_03.md). Entregas 4 a 7 não iniciadas.
 
 Multiplayer online, IA adversária, outras classes, mana, equipamentos e progressão permanecem fora do escopo. Celular não é alvo funcional; telas pequenas entram apenas na revisão visual. O modelo de gestos atual exige internet no carregamento, com reconhecimento executado localmente.
 
@@ -68,9 +68,9 @@ Arena 2D: dois magos, nome, vida atual/máxima, barras, CA, turno, uma prévia d
 
 Revanche preserva atributos e câmera disponível, restaura vida, limpa histórico e seleção e gera nova iniciativa. Voltar ao menu permite editar atributos. O laboratório não implementa esses fluxos de combate.
 
-## 5. Cenários de aceitação esperados — não executados nesta rodada
+## 5. Cenários de aceitação e evidências por entrega
 
-Cenários do motor futuro usam alvo com 50 de vida, CA 12 e dano padrão 10, salvo indicação contrária. Entradas controladas são uma possibilidade de verificação somente quando o usuário solicitar testes.
+Cenários do motor usam alvo com 50 de vida, CA 12 e dano padrão 10, salvo indicação contrária. Em 29/10/2026, mediante pedido explícito do usuário, os cenários aplicáveis ao motor e gerador foram executados com entradas controladas. O [relatório da entrega 3](docs/ENTREGA_03.md) separa os resultados automatizados dos casos de integração e webcam física ainda pendentes. A tabela abaixo preserva os resultados esperados do jogo.
 
 | ID | Situação | Resultado esperado |
 | --- | --- | --- |

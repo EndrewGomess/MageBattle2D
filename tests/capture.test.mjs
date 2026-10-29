@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { CaptureGate, GestureGate, activeGesture, parseD20, chooseOcrCandidate, summarize } from '../dist/core.js';
+import { CaptureGate, GestureGate, activeGesture, previewX, parseD20, chooseOcrCandidate, summarize } from '../dist/core.js';
+import { THRESHOLDS } from '../dist/config.js';
 import { segment } from '../dist/segmentation.js';
 
 const boxes = [{x:40,y:40,width:30,height:30},{x:140,y:40,width:30,height:30}];
@@ -57,13 +58,55 @@ test('OCR rejeita conflito 6/9 e escore insuficiente',()=>{
   assert.equal(chooseOcrCandidate([{value:21,confidence:99}]).best,null);
   assert.equal(chooseOcrCandidate([{value:18,confidence:95},{value:18,confidence:90}]).best.value,18);
 });
-test('gesto inativo, mão no centro e duas mãos na região não confirmam',()=>{
+test('D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores',()=>{
   const hand=x=>Array.from({length:21},()=>({x,y:.5}));
   const category={categoryName:'Victory',score:.95};
-  assert.equal(activeGesture({landmarks:[hand(.2)],gestures:[[category]]},1),null);
-  assert.equal(activeGesture({landmarks:[hand(.5)],gestures:[[category]]},1),null);
-  assert.equal(activeGesture({landmarks:[hand(.8),hand(.7)],gestures:[[category],[category]]},1),null);
-  assert.equal(activeGesture({landmarks:[hand(.8)],gestures:[[category]]},1).categoryName,'Victory');
+  assert.equal(previewX(0),1); assert.equal(previewX(1),0); assert.equal(previewX(.5),.5);
+  for(const [player,active,inactive] of [[1,.8,.2],[2,.2,.8]]) {
+    assert.equal(activeGesture({landmarks:[hand(inactive)],gestures:[[category]]},player),null);
+    assert.equal(activeGesture({landmarks:[hand(.5)],gestures:[[category]]},player),null);
+    assert.equal(activeGesture({landmarks:[hand(active)],gestures:[[category]]},player),category);
+    assert.equal(activeGesture({landmarks:[hand(active),hand(inactive)],gestures:[[category],[category]]},player),category);
+    assert.equal(activeGesture({landmarks:[hand(active),hand(active)],gestures:[[category],[category]]},player),null);
+  }
+});
+test('D14: centro, fronteiras e mão atravessando a faixa central não confirmam',()=>{
+  const category={categoryName:'Victory',score:.95};
+  const observation=xs=>({landmarks:[xs.map(x=>({x:1-x,y:.5}))],gestures:[[category]]});
+  const left=.5-THRESHOLDS.deadZone/2,right=.5+THRESHOLDS.deadZone/2;
+  for(const player of [1,2]) {
+    for(const x of [left,.5,right]) assert.equal(activeGesture(observation([x]),player),null);
+    assert.equal(activeGesture(observation([left-.01,left+.01]),player),null);
+    assert.equal(activeGesture(observation([right-.01,right+.01]),player),null);
+  }
+  assert.equal(activeGesture(observation([left-.01]),1),category);
+  assert.equal(activeGesture(observation([right+.01]),2),category);
+});
+test('D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física',()=>{
+  const hand=Array.from({length:21},()=>({x:.8,y:.5}));
+  for(const [categoryName,minimum] of Object.entries(THRESHOLDS.gestureScores)) {
+    const recognized={categoryName,score:minimum};
+    assert.equal(activeGesture({landmarks:[hand],gestures:[[recognized]]},1),recognized);
+    assert.equal(activeGesture({landmarks:[hand],gestures:[[{categoryName,score:minimum-.001}]]},1),null);
+  }
+  const valid={categoryName:'Victory',score:.95};
+  for(const invalid of [{categoryName:'Unknown',score:.99},{categoryName:'Victory',score:.1},undefined]) {
+    assert.equal(activeGesture({landmarks:[hand,hand],gestures:[[valid],[invalid]]},1),null);
+  }
+  assert.equal(activeGesture({landmarks:[],gestures:[]},1),null);
+});
+test('gesto no limite temporal confirma só depois de duração contínua completa',()=>{
+  const gate=new GestureGate(), category={categoryName:'Victory'};
+  gate.observe(category,0);gate.observe(category,499);gate.observe(category,999);
+  assert.equal(gate.observe(category,1000).fresh,true);
+  for(const now of [1250,1500,1750,2000]) assert.equal(gate.observe(category,now).fresh,false);
+});
+test('intervalo máximo excedido e classe não reconhecida reiniciam progresso',()=>{
+  const gate=new GestureGate(), category={categoryName:'Victory'};
+  gate.observe(category,0);gate.observe(category,500);
+  assert.equal(gate.observe(category,1001).progress,0);
+  assert.equal(gate.observe({categoryName:'Unknown'},1250).progress,0);
+  assert.equal(gate.observe(category,1500).progress,0);
 });
 test('gesto exige observação contínua por 1 segundo e confirma só uma vez',()=>{
   const gate=new GestureGate(), category={categoryName:'Victory'};

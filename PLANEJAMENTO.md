@@ -1,6 +1,6 @@
 # Planejamento — Duelo de Magos
 
-Data: 27/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md.
+Data: 27/10/2026. Atualização: 29/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md. Motor da entrega 3 implementado e testado: 70 testes aprovados e cobertura focada de 100% em combat.js/dice.js após correção dos dois achados de captura de entradas. Nova revisão independente confirmou as correções sem novos achados acionáveis. Commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Testes de partida integrada e webcam real adiados por decisão explícita (D15).
 
 Artefatos da entrega 1: [especificação do jogo](ESPECIFICACAO.md) e [registro de decisões](DECISOES.md). A versão 1.1 e as decisões D01 a D12 foram aprovadas pelo usuário, incluindo o arredondamento da metade do dano para baixo. Atualização vigente D13 (28/10/2026): uma webcam para gestos e d20 virtuais gerados pelo software. O ensaio de 29/10 registrou seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; veja limites em docs/ENTREGA_02.md. Dados físicos/OCR foram retirados do escopo.
 
@@ -107,7 +107,7 @@ Referências das opções: [câmeras no navegador — MDN](https://developer.moz
 
 Captura vigente: um fluxo de webcam sem áudio, com seleção de dispositivo e resolução. Liberar ao encerrar ou trocar de câmera. A falha preserva resultados e suspende novas seleções; a recuperação exige ação explícita no laboratório.
 
-Separar motor futuro, interface, reconhecimento de gestos e gerador de dados virtuais (dist/dice.js). Estados do jogo futuro: menu → preparação da webcam → iniciativa virtual → gesto → rolagem virtual única → resolução → próximo turno ou vitória. O laboratório entrega apenas gesto → rolagem e registro; nenhum motor de combate foi iniciado.
+Separar motor, interface, reconhecimento de gestos e gerador de dados virtuais (dist/dice.js). Estados do jogo futuro: menu → preparação da webcam → iniciativa virtual → gesto → rolagem virtual única → resolução → próximo turno ou vitória. O laboratório entrega apenas gesto → rolagem e registro. O motor independente está em dist/combat.js; a integração pertence à entrega 4.
 
 | Skill instalada | Aplicação |
 | --- | --- |
@@ -127,7 +127,7 @@ As entregas abaixo seguem uma ordem de dependências. Cada etapa deixa um artefa
 | --- | --- | --- | --- | --- |
 | 1 | Especificação de jogo aprovada | Fechar escopo da primeira versão, regras, valores configuráveis, fluxo de telas e decisões | [Especificação](ESPECIFICACAO.md), [registro de decisões](DECISOES.md) e este planejamento atualizado | Concluída: versão 1.1 revisada e aprovada pelo usuário |
 | 2 | Ensaio da webcam, gestos e rolagens virtuais | Enquadramento único, regiões, confirmação, gerador de 1/2d20, unicidade e recuperação | Laboratório e relatório separando observações reais e resultados do software | Ensaio físico dos gestos e comportamento do fluxo adaptado registrados, sem exigir leitura de dados físicos |
-| 3 | Motor de combate determinístico | Implementar validação da configuração, iniciativa e desempate, três tipos de ataque, cálculo de dano, turnos, histórico e vitória, recebendo resultados de dados como entradas controladas | Módulo de regras executável sem câmera e tabela de cenários de aceitação | Casos de acerto/erro na CA, vantagem/desvantagem, dano ímpar, empate de iniciativa, ataque fatal e troca de turno produzem os resultados especificados |
+| 3 | Motor de combate determinístico | Implementar validação da configuração, iniciativa e desempate, três tipos de ataque, cálculo de dano, turnos, histórico e vitória, recebendo resultados de dados como entradas controladas | [Módulo independente](dist/combat.js), testes armazenados e [contrato/evidências](docs/ENTREGA_03.md); revisão independente concluída, commit e PR autorizados pelo usuário com as pendências de D15 | Cenários aplicáveis do motor e gerador aprovados em testes automatizados; suíte completa com 70 aprovações, sem falhas |
 | 4 | Protótipo jogável integrado | Menu, webcam, iniciativa virtual, arena e resultado; integrar gestos, RNG e motor | Partida local completa com uma webcam | Uma rolagem/resolução por ação; falhas preservam estado; não repetir dano ou trocar turno por desconexão |
 | 5 | Interface visual e acessibilidade | Refinar personagens preto/branco, arena, cartões de magia, barras, feedback de gestos e rolagens, histórico, efeitos, responsividade, contraste e controles por teclado | Versão visual revisável no computador e em telas pequenas, conforme decisão D12 | Identidade dos jogadores, jogador ativo, etapa atual e resultado são legíveis; movimento pode ser reduzido; menus e controles auxiliares operam por teclado |
 | 6 | Validação de ponta a ponta | Percorrer verificações essenciais desta seção, corrigir falhas e registrar limites de hardware/reconhecimento encontrados | Registro de verificações, problemas corrigidos e limitações conhecidas | Fluxos essenciais passam, inclusive falhas de câmera, gesto incompleto, consumo único da ação, ataque fatal, revanche e retorno ao menu |
@@ -140,17 +140,31 @@ As entregas abaixo seguem uma ordem de dependências. Cada etapa deixa um artefa
 - A aparência final da entrega 5 depende do fluxo integrado da entrega 4; arte raster é opcional e pode ser substituída por SVG/CSS.
 - A publicação da entrega 7 depende de confirmação do escopo de hospedagem; a versão executável e o guia continuam sendo entregáveis mesmo sem publicação.
 
+### Lembrete obrigatório nas próximas entregas — D15
+
+Por decisão explícita do usuário em 29/10/2026, testes de partida integrada e webcam real ficam pendentes por ora. Antes de planejar **e** antes de fechar **cada** entrega abaixo, o coordenador deve relembrar as pendências ao usuário e registrar a decisão sobre retomá-las. Permanecem unicidade de seleção no aplicativo, respostas antigas, suspensão/recuperação, partida completa, revanche e retorno ao menu; na webcam real, rejeição de gestos inativos/ambíguos e métricas de precisão, rejeição e latência. Evidência sintética não substitui física.
+
+| Entrega | Retomada a lembrar ao usuário |
+| --- | --- |
+| 4 — Protótipo integrado | Definir com o usuário a execução das verificações de partida e recuperação quando o fluxo integrado existir |
+| 5 — Interface e acessibilidade | Relembrar os testes integrados e físicos ainda pendentes ao planejar e fechar o refinamento visual |
+| 6 — Validação de ponta a ponta | Revisar essas pendências antes de concluir a etapa; adiamento não equivale a fluxo integrado validado |
+| 7 — Pacote de entrega | Revisar as pendências antes de preparar e fechar o pacote, incluindo no guia os limites que continuarem sem evidência |
+
 ### Estado atual
 
 - Entrega 1: concluída e aprovada; especificação 1.1, fluxo de estados, 23 cenários de aceitação e decisões D01 a D12 aprovados; commit `c9d1d7b`.
 - Entrega 2: concluída e aceita no escopo limitado do ensaio; seis gestos positivos (três por jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; ver relatório. Commit da entrega 2 registrado em `cf988a0`; agentes, plugin e atualização documental registrados em `bcda282`. [Guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
-- Entregas 3 a 7: não iniciadas.
+- Entrega 3: motor determinístico implementado e cenários aplicáveis verificados com entradas controladas, sem integração ao laboratório. Suíte com 70 testes aprovados; [contrato e evidências](docs/ENTREGA_03.md). Dois achados da revisão sobre captura de entradas foram corrigidos, cobertos por oito regressões e confirmados como resolvidos na nova revisão independente, sem novos achados acionáveis. Commit e PR autorizados pelo usuário em 29/10/2026 para esse escopo conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Testes integrados/físicos adiados conforme D15.
+- Entregas 4 a 7: não iniciadas.
 
 ### Revisão e commit por entrega
 
 Conforme solicitado pelo usuário em 27/10/2026, cada entrega terá um commit próprio. Ao concluir o trabalho de uma entrega, mostrar os artefatos, resumir as alterações e as verificações e perguntar se o usuário autoriza criar o commit. Aguardar a autorização explícita antes de executar o commit. A aprovação de uma entrega não autoriza antecipadamente os commits das próximas.
 
 Commit autorizado para a entrega 1: `docs: definir especificacao da entrega 1`. Arquivos: `PLANEJAMENTO.md`, `ESPECIFICACAO.md` e `DECISOES.md`. Por ser o primeiro commit do repositório, também registra o planejamento já existente.
+
+Autorização da entrega 3: criar seu commit e abrir a PR, conforme pedido explícito de 29/10/2026. Registrar o motor testado com as pendências de D15; não solicitar essa autorização novamente. A execução pode ser consultada no histórico Git e na PR correspondente, quando criada. A autorização não antecipa as próximas entregas.
 
 O checklist de aceitação detalhado permanece abaixo e deve ser usado principalmente na entrega 6. A ordem prioriza reduzir o risco de visão computacional e provar uma partida funcional antes do refinamento visual.
 
@@ -187,6 +201,6 @@ Registro histórico anterior a D13 da entrega 2: laboratório de câmeras, gesto
 
 Atualização de 28/10/2026 — interface gráfica 2D: requisito explicitado e opções de execução comparadas no planejamento. Não foi disponibilizada contagem de tokens por etapa de análise, pesquisa, edição ou revisão documental; os percentuais históricos acima não medem esta rodada.
 
-Próxima ação: iniciar a entrega 3, motor determinístico de combate. Limitações da câmera e os casos sem evidência permanecem registrados para orientar a integração na entrega 4.
+Registro da entrega 3: commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Os testes foram criados, armazenados e executados mediante pedido explícito, e a revisão independente final confirmou as correções sem novos achados acionáveis; comandos e resultados estão no relatório da entrega. Manter os testes integrados e físicos adiados por ora e relembrá-los em cada entrega 4 a 7 conforme D15.
 
 Atualização D13 — 28/10/2026: laboratório adaptado a uma webcam e rolagens virtuais, com preservação de resultados, seleção única e exportação separando software e observações do operador. Tokens por etapa: análise, implementação e revisão não disponibilizados; nenhum total numérico inferido. Nesta alteração não foram adicionados/executados testes, verificação de sintaxe ou ensaio no navegador; nenhum commit criado. Entregas 3 a 7 não iniciadas.
