@@ -1,20 +1,20 @@
 # Planejamento — Duelo de Magos
 
-Data: 27/10/2026. Status: entrega 1 aprovada e concluída; commit autorizado pelo usuário; implementação ainda não iniciada.
+Data: 27/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md.
 
-Artefatos da entrega 1: [especificação do jogo](ESPECIFICACAO.md) e [registro de decisões](DECISOES.md). A versão 1.1 e as decisões D01 a D12 foram aprovadas pelo usuário, incluindo o arredondamento da metade do dano para baixo. A validação técnica das câmeras e do reconhecimento pertence à entrega 2.
+Artefatos da entrega 1: [especificação do jogo](ESPECIFICACAO.md) e [registro de decisões](DECISOES.md). A versão 1.1 e as decisões D01 a D12 foram aprovadas pelo usuário, incluindo o arredondamento da metade do dano para baixo. Atualização vigente D13 (28/10/2026): uma webcam para gestos e d20 virtuais gerados pelo software. O ensaio de 29/10 registrou seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; veja limites em docs/ENTREGA_02.md. Dados físicos/OCR foram retirados do escopo.
 
 ## 1. Objetivo e primeira versão
 
-Criar um jogo de combate 1v1 por turnos, inspirado em RPG de mesa, com dois jogadores humanos no mesmo dispositivo. A proposta inicial é um jogo 2D no navegador, em português, com menu, arena e resultado da partida.
+Criar um jogo de combate 1v1 por turnos, inspirado em RPG de mesa, com dois jogadores humanos no mesmo dispositivo. Conforme pedido do usuário em 28/10/2026, o jogo deve ter interface gráfica 2D, em português, com menu, arena com os dois magos, indicadores de vida e turno, feedback visual das magias e resultado da partida. O navegador de um computador permanece a plataforma aprovada em D12; as alternativas de execução abaixo são sugestões para avaliação.
 
 Cada jogador controla um mago. O jogador 1 usa roupas pretas e o jogador 2 usa roupas brancas. Nomes, rótulos e indicação de turno complementam as cores para facilitar a identificação.
 
-O primeiro escopo contém configuração de atributos, iniciativa, três ataques selecionados por gestos diante da câmera, leitura de dados físicos para os resultados, histórico de combate, vitória, revanche e retorno ao menu. Multiplayer pela internet, adversário automático, outras classes, mana, equipamentos e progressão ficam para possíveis versões futuras.
+O primeiro escopo contém configuração de atributos, iniciativa, três ataques selecionados por gestos diante da câmera, rolagens virtuais para os resultados, histórico de combate, vitória, revanche e retorno ao menu. Multiplayer pela internet, adversário automático, outras classes, mana, equipamentos e progressão ficam para possíveis versões futuras.
 
-A visão computacional participa de duas etapas da jogabilidade: reconhecer o gesto que seleciona a magia e reconhecer a quantidade e os valores dos dados físicos lançados. Detectar apenas a presença do dado não basta para resolver um ataque.
+A visão computacional reconhece o gesto que seleciona a magia. Confirmar a seleção gera uma única rolagem virtual aleatória; a webcam não lê números nem objetos de dados.
 
-O equipamento previsto é composto por duas webcams conectadas ao mesmo computador: uma voltada para os jogadores, destinada aos gestos, e outra dedicada à área de rolagem dos dados. Cada função recebe um fluxo de vídeo independente.
+Equipamento vigente: um computador e uma webcam voltada para os dois jogadores. Não são necessários d20 físicos ou uma segunda câmera.
 
 ## 2. Regras consolidadas
 
@@ -30,10 +30,10 @@ Vida e dano aceitam inteiros positivos. Faixa aprovada da CA: 1 a 19, para sempr
 
 ### Iniciativa e turnos
 
-1. Ao iniciar, cada jogador rola 1d20 físico de iniciativa, um jogador por vez, começando pelo jogador 1.
+1. Ao iniciar, o sistema gera 1d20 virtual de iniciativa para cada jogador, um jogador por vez, começando pelo jogador 1.
 2. O maior resultado começa. Em empate, ambos rolam novamente até desempatar.
 3. A ordem permanece fixa durante a partida.
-4. O jogador ativo faz o gesto da magia diante da câmera e, após a seleção ser confirmada, lança os dados físicos exigidos. O jogo lê e valida a rolagem antes de resolver o ataque.
+4. O jogador ativo faz o gesto da magia diante da câmera e, após a seleção ser confirmada, o sistema gera os dados virtuais exigidos uma única vez antes de resolver o ataque.
 5. Um erro também consome o turno.
 6. Após resolver a ação, o jogo verifica a vitória antes de passar o turno.
 7. Ao atingir zero de vida, o jogador é derrotado imediatamente e não realiza outra ação.
@@ -64,45 +64,23 @@ Regra de dano definida pelo usuário: a metade do dano padrão é sempre arredon
 
 Estas são as regras próprias do jogo proposto; os nomes das magias não acrescentam efeitos de outros sistemas.
 
-### Gestos e dados físicos
+### Gestos e dados virtuais — D13
 
-Requisitos definidos pelo usuário:
+- Indicador (Pointing_Up) confirma Mísseis Mágicos; V (Victory), Raio de Fogo; mão aberta (Open_Palm), Bola de Fogo. Manter o gesto por cerca de um segundo, com progresso visível.
+- Uma webcam enquadra ambos jogadores, com regiões esquerda/direita e faixa central sem confirmação. Apenas uma mão elegível na região ativa confirma a seleção; ausência, ambiguidade, mudança de gesto ou intervalo excessivo reinicia progresso pendente.
+- Cada confirmação gera uma única rolagem automática: normal usa um d20 virtual; vantagem e desvantagem usam dois resultados independentes de 1 a 20. Repetições são válidas; mostrar todos os valores e escolher maior/menor conforme a magia.
+- Manter o gesto, reconectar ou trocar o jogador não gera novas rolagens. No laboratório, Nova seleção rearma explicitamente uma tentativa; a primeira conexão pode iniciar a primeira seleção.
+- Falha, encerramento ou troca da webcam preservam magia confirmada, último resultado e registros, suspendendo novas confirmações. Após reconectar, usar Nova seleção; descartar progresso incompleto e respostas assíncronas antigas. Nenhuma falha aplica dano ou passa turno.
+- Permissão e contexto seguro (localhost ou HTTPS) continuam necessários. O modelo de gestos é carregado pela internet; não há garantia de funcionamento totalmente offline.
 
-- Primeiro o jogador seleciona a magia por gesto diante da câmera; depois lança o dado físico para determinar o resultado.
-- Ataque normal exige um d20 físico com resultado reconhecido.
-- Ataques com vantagem ou desvantagem só podem ser resolvidos depois que os dois dados físicos forem lançados e seus resultados reconhecidos. Reconhecer apenas um dado não valida o ataque.
-- Vantagem usa o maior dos dois valores; desvantagem usa o menor. O critério de acerto e os danos permanecem os definidos acima.
-- Usar duas webcams: uma para os jogadores/gestos e outra para os dados físicos.
-
-### Preparação das duas webcams
-
-- Exibir dois seletores no menu: “Câmera dos jogadores” e “Câmera dos dados”, com prévias independentes, impedindo atribuir o mesmo dispositivo às duas funções.
-- Posicionar a câmera dos jogadores de frente, com as mãos visíveis. Delimitar uma região para cada jogador e aceitar gestos apenas na região correspondente ao turno ativo; a confiabilidade dessa separação deve ser validada no ensaio.
-- Posicionar a câmera dos dados acima da área de rolagem, apontando para baixo, em suporte fixo. Ajustar distância, foco e iluminação até que os números da face superior dos d20 estejam legíveis. Essa posição facilita o enquadramento, mas não substitui a validação do reconhecimento.
-- Manter as duas prévias disponíveis e executar o reconhecimento necessário à fase: gestos na seleção da magia; dados após a confirmação. Não é necessária sincronização precisa entre os vídeos, pois essas ações acontecem em sequência.
-- Validar a abertura simultânea dos dois dispositivos no computador/navegador de destino antes de fechar a configuração. Se uma câmera falhar ou desconectar, suspender a captura da ação e solicitar reconexão, sem aplicar dano nem passar o turno automaticamente. Uma rolagem interrompida deve ser rearmada com a área vazia para evitar resultados antigos.
-
-Referência técnica: o navegador pode listar os dispositivos com [enumerateDevices](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices) e solicitar cada câmera pelo seu identificador com [getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). O acesso exige permissão do usuário e contexto seguro (HTTPS ou localhost no desenvolvimento). A disponibilidade simultânea depende também do hardware, dos drivers e dos recursos disponíveis no computador.
-
-Interações da primeira versão aprovadas pelo usuário, com viabilidade técnica a validar na entrega 2:
-
-- Mapear indicador levantado para Mísseis Mágicos, sinal de V para Raio de Fogo e mão aberta para Bola de Fogo. Confirmar a seleção após manter o gesto por cerca de um segundo, com indicação visual do progresso.
-- Travar a magia depois da confirmação, enquanto o jogador lança os dados. Gestos observados durante a leitura dos dados não selecionam outro ataque.
-- Usar uma área de rolagem delimitada e exigir que esteja vazia antes de armar cada nova captura. A captura só fica habilitada após a confirmação da magia, evitando reaproveitar dados do turno anterior.
-- Para vantagem e desvantagem, lançar os dois dados juntos e mantê-los visíveis na mesma área de captura. Rolagens sequenciais ficam fora desta versão.
-- Só aceitar a quantidade exata de dados exigida e todos os resultados legíveis e estáveis, com as mãos fora da área. Dois dados com o mesmo valor são válidos: a contagem deve distinguir os objetos físicos, sem exigir valores diferentes.
-- Com um dado ausente, em movimento, sobreposto ou com resultado ilegível, exibir o motivo e continuar aguardando a regularização da leitura. Uma leitura incompleta não aplica dano nem consome o turno; um ataque validado que erra consome o turno normalmente.
-- Consumir cada captura válida uma única vez. Exigir uma nova seleção e uma nova rolagem no próximo turno.
-
-Ponto técnico a validar antes de fechar a implementação: identificar a face superior de d20 reais, distinguindo seus números das faces laterais, em uma posição de câmera adequada. Proposta de ensaio: dois d20 com números contrastantes, superfície fosca e iluminação uniforme. O ensaio deve verificar valores de 1 a 20, dois dados de mesmo valor, movimento e oclusão. A escolha do método de leitura fica pendente desse ensaio; não há reconhecimento implementado ou desempenho medido.
-
+O ensaio real da webcam deve registrar gestos de ambos jogadores, rejeição da região inativa, ambiguidade, confirmação temporal, unicidade e recuperação. Leitura de faces, calibração de fundo e OCR não pertencem mais ao escopo vigente. Ver [D13](DECISOES.md), [guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
 ## 3. Telas e experiência
 
-Menu: título, explicação curta, campos de vida/dano/CA, prévia dos três danos e botão Iniciar combate. Incluir seleção e preparação das duas webcams e da área de rolagem, com instruções sobre os gestos e a quantidade de dados físicos necessária.
+Menu futuro: título, configuração de vida/dano/CA, prévia dos danos e início. Incluir seleção de uma webcam e instruções de gestos e dados virtuais.
 
 Iniciativa: mostrar os dois resultados, eventuais empates e quem começa. Essa apresentação pode aparecer sobre a arena.
 
-Arena: mago preto à esquerda e mago branco à direita; vida atual/máxima, barras de vida, CA e destaque do jogador ativo. Três cartões explicam gesto, magia, tipo de rolagem e dano. Duas prévias identificadas mostram os jogadores e a área dos dados, com destaque para a etapa ativa. A prévia dos jogadores indica o gesto reconhecido e a magia confirmada; a dos dados indica quantidade esperada/detectada e valores lidos. A interface distingue claramente “Faça o gesto”, “Lance 1 dado”, “Lance 2 dados” e “Aguardando leitura válida”. A resolução exibe todos os valores físicos reconhecidos, destaca o selecionado, informa acerto ou erro e atualiza a vida. O histórico registra atacante, magia, dados, resultado, CA e dano.
+Arena 2D futura: mago preto à esquerda e branco à direita, vida, CA e jogador ativo. Cartões indicam gesto, magia, quantidade virtual e dano. Uma prévia mostra regiões e progresso. A resolução exibe todos os valores gerados e o escolhido, acerto/erro e dano; histórico preserva esses dados. O laboratório atual não implementa combate.
 
 Durante a resolução, bloquear novas ações para impedir ataques duplicados. Usar efeitos curtos para cada magia e permitir reduzir movimento. Garantir contraste das roupas com o cenário e operação por teclado nos menus e controles auxiliares. O fluxo principal de combate depende da câmera; uma eventual alternativa de entrada manual precisa ser definida separadamente e identificada como tal.
 
@@ -110,11 +88,26 @@ Resultado: mostrar vencedor e oferecer Revanche, que reinicia vida e iniciativa 
 
 ## 4. Tecnologia e skills
 
-Direção técnica aprovada: HTML, CSS e JavaScript em módulos, com estado da partida no navegador. Validar a viabilidade de executar reconhecimento de gestos e leitura dos dados no navegador antes de confirmar a arquitetura sem backend. A primeira versão pode usar personagens em SVG/CSS, com efeitos visuais simples e sem imagens externas.
+Direção técnica aprovada: HTML, CSS e JavaScript em módulos, com estado da partida no navegador. Validar a viabilidade de executar reconhecimento de gestos no navegador antes de confirmar a arquitetura sem backend. A primeira versão pode usar personagens em SVG/CSS, com efeitos visuais simples e sem imagens externas.
 
-Captura: abrir dois fluxos de vídeo com identificadores de dispositivos distintos, sem solicitar áudio. Separar a configuração de resolução/frequência de cada câmera e ajustar conforme os testes de legibilidade e desempenho. Liberar os fluxos ao encerrar a sessão de câmera ou trocar de dispositivo. Incluir seleção incorreta, permissão negada, indisponibilidade de hardware e desconexão no tratamento de falhas.
+### Interface gráfica 2D e opções de execução
 
-Separar regras puras de combate da interface e dos módulos de visão computacional. Centralizar configuração, jogadores, iniciativa, jogador ativo, fase, magia confirmada, quantidade esperada de dados, captura consumida e histórico. Estados previstos: menu → preparação da câmera → iniciativa → aguardando gesto → magia confirmada → aguardando área vazia/nova rolagem → aguardando leitura válida → resolvendo ataque → próximo turno ou vitória. Nos testes do motor, fornecer resultados reconhecidos controlados, sem depender de câmera ou sorte. No jogo, os resultados dos ataques vêm dos dados físicos.
+| Opção | Onde a interface roda | Vantagem para o projeto | Impacto e situação |
+| --- | --- | --- | --- |
+| Navegador desktop — recomendação para a versão atual | Em uma aba no computador, servida localmente; hospedagem futura somente conforme escopo acordado | Reaproveita o laboratório HTML/CSS/JavaScript e permite desenhar personagens e arena em SVG/CSS | É a plataforma aprovada em D12. A compatibilidade observada no ensaio da entrega 2 limita-se aos seis gestos positivos registrados; veja os casos não medidos em docs/ENTREGA_02.md |
+| Aplicativo desktop com Electron | Em uma janela de aplicativo no computador | Permite reaproveitar a interface HTML/CSS/JavaScript em um aplicativo distribuível | Sugestão não selecionada. Acrescenta empacotamento e manutenção; câmeras e reconhecedores precisam ser validados nesse ambiente |
+| Aplicativo Python com pygame-ce | Em uma janela 2D no computador | Oferece desenho, eventos e controle do ciclo do jogo em Python; há a skill instalada `pygame-core` | Sugestão não selecionada. Exige adaptar a interface e integrar os módulos de visão computacional à aplicação Python |
+| Godot | Em um aplicativo de jogo exportado para computador | Motor dedicado a jogos 2D, com cenas, animações e efeitos | Sugestão não selecionada. Exige adaptar a interface e a lógica, além de avaliar como integrar a webcam e o reconhecimento de gestos |
+
+Recomenda-se manter o navegador desktop nesta versão para preservar D12 e o trabalho existente. Electron é uma opção futura de distribuição da interface web; pygame-ce e Godot representam mudanças de tecnologia que exigem revisão antes de qualquer migração. Esta comparação não inicia as entregas 3 a 7 nem altera as regras aprovadas.
+
+Na execução web, o acesso às câmeras exige permissão do usuário e contexto seguro, como localhost no desenvolvimento ou HTTPS na hospedagem. O laboratório atual carrega modelos pela internet, conforme o README; execução totalmente offline não está garantida. O alvo funcional continua sendo o computador com uma webcam, sem promessa de combate em celular. O ensaio físico da entrega 2 foi realizado no escopo descrito em docs/ENTREGA_02.md; os casos sem registro permanecem limitações.
+
+Referências das opções: [câmeras no navegador — MDN](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia), [Electron](https://www.electronjs.org/docs/latest/), [pygame-ce](https://pyga.me/docs/) e [recursos 2D do Godot](https://docs.godotengine.org/en/stable/tutorials/2d/introduction_to_2d.html).
+
+Captura vigente: um fluxo de webcam sem áudio, com seleção de dispositivo e resolução. Liberar ao encerrar ou trocar de câmera. A falha preserva resultados e suspende novas seleções; a recuperação exige ação explícita no laboratório.
+
+Separar motor futuro, interface, reconhecimento de gestos e gerador de dados virtuais (dist/dice.js). Estados do jogo futuro: menu → preparação da webcam → iniciativa virtual → gesto → rolagem virtual única → resolução → próximo turno ou vitória. O laboratório entrega apenas gesto → rolagem e registro; nenhum motor de combate foi iniciado.
 
 | Skill instalada | Aplicação |
 | --- | --- |
@@ -122,8 +115,9 @@ Separar regras puras de combate da interface e dos módulos de visão computacio
 | Computer Use | Verificar interações, layout e fluxo no navegador, se necessário; ler suas instruções antes de usar |
 | Imagegen | Opcional para arte raster de magos e cenário em uma etapa de refinamento; dispensável para o protótipo com SVG/CSS |
 | OpenAI Docs | Consultada nesta etapa para documentação de consumo; usar se forem necessárias orientações sobre modelos |
+| pygame-core | Aplicável somente se uma futura escolha por pygame-ce for aprovada; não utilizada nesta alteração documental |
 
-As regras de combate permanecem determinísticas depois de receber os resultados dos dados. Os módulos de visão computacional ficam responsáveis pelo reconhecimento de gestos e pela leitura dos dados físicos; ferramentas e modelos específicos serão escolhidos após validar a captura de d20. BigQuery e Databricks não têm uso previsto neste escopo.
+As regras de combate permanecem determinísticas após receber os valores virtuais; a visão computacional cuida somente dos gestos. O gerador usa uma chamada pseudoaleatória independente por dado. BigQuery e Databricks não têm uso previsto.
 
 ## 5. Plano de entregas
 
@@ -132,24 +126,25 @@ As entregas abaixo seguem uma ordem de dependências. Cada etapa deixa um artefa
 | # | Entrega | Trabalho incluído | Artefato revisável | Critério para concluir / avançar |
 | --- | --- | --- | --- | --- |
 | 1 | Especificação de jogo aprovada | Fechar escopo da primeira versão, regras, valores configuráveis, fluxo de telas e decisões | [Especificação](ESPECIFICACAO.md), [registro de decisões](DECISOES.md) e este planejamento atualizado | Concluída: versão 1.1 revisada e aprovada pelo usuário |
-| 2 | Ensaio técnico das câmeras e reconhecimento | Verificar abertura simultânea das duas webcams; testar gestos; testar leitura da face superior de 1 e 2 d20, incluindo repetição de valores, movimento, oclusão e iluminação | Protótipo de ensaio com instruções de posicionamento, resultados observados e decisão registrada sobre abordagem de reconhecimento | As duas câmeras funcionam ao mesmo tempo no dispositivo-alvo; gestos são distinguíveis; leitura de um e dois dados atende aos casos essenciais ou o bloqueio/alternativa técnica fica documentado antes da integração |
+| 2 | Ensaio da webcam, gestos e rolagens virtuais | Enquadramento único, regiões, confirmação, gerador de 1/2d20, unicidade e recuperação | Laboratório e relatório separando observações reais e resultados do software | Ensaio físico dos gestos e comportamento do fluxo adaptado registrados, sem exigir leitura de dados físicos |
 | 3 | Motor de combate determinístico | Implementar validação da configuração, iniciativa e desempate, três tipos de ataque, cálculo de dano, turnos, histórico e vitória, recebendo resultados de dados como entradas controladas | Módulo de regras executável sem câmera e tabela de cenários de aceitação | Casos de acerto/erro na CA, vantagem/desvantagem, dano ímpar, empate de iniciativa, ataque fatal e troca de turno produzem os resultados especificados |
-| 4 | Protótipo jogável integrado | Montar menu, seleção de duas câmeras, prévias, iniciativa, arena e resultado; integrar gesto e leitura dos dados ao motor; tratar permissão negada e desconexão | Partida completa local, do menu à vitória, com ambas as câmeras | Ataque normal só resolve com um dado válido; vantagem/desvantagem só resolvem com dois dados válidos; leitura incompleta ou câmera indisponível não aplica dano nem consome turno |
-| 5 | Interface visual e acessibilidade | Refinar personagens preto/branco, arena, cartões de magia, barras, feedback de leitura, histórico, efeitos, responsividade, contraste e controles por teclado | Versão visual revisável no computador e em telas pequenas, conforme decisão D12 | Identidade dos jogadores, jogador ativo, etapa atual e resultado são legíveis; movimento pode ser reduzido; menus e controles auxiliares operam por teclado |
-| 6 | Validação de ponta a ponta | Percorrer verificações essenciais desta seção, corrigir falhas e registrar limites de hardware/reconhecimento encontrados | Registro de verificações, problemas corrigidos e limitações conhecidas | Fluxos essenciais passam, inclusive falhas de câmera, leituras incompletas, consumo único da captura, ataque fatal, revanche e retorno ao menu |
+| 4 | Protótipo jogável integrado | Menu, webcam, iniciativa virtual, arena e resultado; integrar gestos, RNG e motor | Partida local completa com uma webcam | Uma rolagem/resolução por ação; falhas preservam estado; não repetir dano ou trocar turno por desconexão |
+| 5 | Interface visual e acessibilidade | Refinar personagens preto/branco, arena, cartões de magia, barras, feedback de gestos e rolagens, histórico, efeitos, responsividade, contraste e controles por teclado | Versão visual revisável no computador e em telas pequenas, conforme decisão D12 | Identidade dos jogadores, jogador ativo, etapa atual e resultado são legíveis; movimento pode ser reduzido; menus e controles auxiliares operam por teclado |
+| 6 | Validação de ponta a ponta | Percorrer verificações essenciais desta seção, corrigir falhas e registrar limites de hardware/reconhecimento encontrados | Registro de verificações, problemas corrigidos e limitações conhecidas | Fluxos essenciais passam, inclusive falhas de câmera, gesto incompleto, consumo único da ação, ataque fatal, revanche e retorno ao menu |
 | 7 | Pacote de entrega | Preparar instruções de execução e configuração das câmeras; publicar/hospedar somente se fizer parte do escopo acordado para implementação | Versão executável e guia curto de instalação, uso e limitações | Outra pessoa consegue iniciar o jogo e preparar as câmeras seguindo o guia; versão e limitações estão identificadas |
 
 ### Dependências e pontos de decisão
 
-- A entrega 2 é um portão técnico: se o reconhecimento de d20 não for confiável no hardware disponível, registrar as alternativas e seu impacto antes de começar a integração da entrega 4.
+- A entrega 2 foi concluída e aceita com escopo limitado: seis gestos positivos registrados; rejeição, unicidade e recuperação não têm evidência. A investigação de leitura física de d20 foi retirada por D13, sem ter sido validada.
 - A entrega 3 pode avançar em paralelo ao ensaio técnico depois que as regras da entrega 1 estiverem consolidadas, porque usa resultados controlados e não depende das câmeras.
 - A aparência final da entrega 5 depende do fluxo integrado da entrega 4; arte raster é opcional e pode ser substituída por SVG/CSS.
 - A publicação da entrega 7 depende de confirmação do escopo de hospedagem; a versão executável e o guia continuam sendo entregáveis mesmo sem publicação.
 
 ### Estado atual
 
-- Entrega 1: concluída e aprovada; especificação 1.1, fluxo de estados, 23 cenários de aceitação e decisões D01 a D12 aprovados; commit autorizado pelo usuário.
-- Entregas 2 a 7: não iniciadas.
+- Entrega 1: concluída e aprovada; especificação 1.1, fluxo de estados, 23 cenários de aceitação e decisões D01 a D12 aprovados; commit `03852f5`.
+- Entrega 2: concluída e aceita no escopo limitado do ensaio; seis gestos positivos (três por jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; ver relatório. Commit da entrega 2 aguarda autorização. [Guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
+- Entregas 3 a 7: não iniciadas.
 
 ### Revisão e commit por entrega
 
@@ -159,30 +154,18 @@ Commit autorizado para a entrega 1: `docs: definir especificacao da entrega 1`. 
 
 O checklist de aceitação detalhado permanece abaixo e deve ser usado principalmente na entrega 6. A ordem prioriza reduzir o risco de visão computacional e provar uma partida funcional antes do refinamento visual.
 
-Verificações essenciais:
+Verificações essenciais futuras, somente mediante pedido do usuário:
 
-- As duas webcams abrem simultaneamente e cada prévia corresponde à função escolhida.
-- A mesma webcam não pode ocupar as duas funções; ausência de dispositivo, permissão negada ou desconexão não resolve ataques automaticamente.
-- Gestos do jogador fora do turno não selecionam magias; validar a delimitação das regiões dos jogadores.
-- Iniciativa respeita maior valor e resolve empates.
-- Vantagem usa o maior dado; desvantagem usa o menor.
-- O gesto seleciona uma única magia e a seleção permanece travada durante a rolagem.
-- Ataque normal exige um dado válido; vantagem e desvantagem exigem dois dados físicos distintos com valores reconhecidos.
-- Dois dados com valores iguais são aceitos; um único dado não é contado duas vezes.
-- Leituras incompletas, dados em movimento ou números ilegíveis não resolvem o ataque nem consomem o turno.
-- Dados do turno anterior não são aceitos como uma nova rolagem.
-- Cada captura válida resolve exatamente um ataque, mesmo se os dados permanecerem diante da câmera.
-- Igualar a CA erra; ultrapassar a CA acerta.
-- Dano corresponde à metade arredondada para baixo, ao padrão e ao dobro, incluindo padrão ímpar; 9 / 2 resulta em 4 e 1 / 2 resulta em 0.
-- Acerto e erro alternam corretamente o jogador ativo.
-- Um ataque fatal encerra a partida sem permitir resposta do derrotado.
-- Cliques repetidos durante a resolução geram uma única ação.
-- Configurações inválidas não iniciam partida.
-- Revanche limpa vida/histórico e refaz iniciativa; menu permite nova configuração.
-
+- Webcam única com prévia, regiões e confirmação temporal; gesto inativo/ambíguo não confirma.
+- Cada seleção gera um ou dois inteiros de 1 a 20; dois valores iguais são permitidos; vantagem usa maior e desvantagem menor.
+- Gesto mantido não repete rolagem; Nova seleção rearma somente uma tentativa; respostas assíncronas antigas são descartadas.
+- Interrupção, vídeo congelado, troca de jogador e reconexão preservam resultado e bloqueiam novas confirmações até recuperação explícita.
+- Iniciativa futura respeita maior resultado e novo par em empate.
+- Igualdade com CA erra; metade usa piso, naturais não têm efeito extra; erro consome turno e ataque fatal encerra antes de resposta.
+- Revanche, menu e validação de atributos conforme especificação, nas entregas futuras.
 Observação de balanceamento: com CA 12, cada d20 tem 40% de chance de passar a CA. Vantagem acerta em 64% dos casos e desvantagem em 16%. Com dano padrão 10, os danos médios por ação são, respectivamente, 3,2 (vantagem), 4 (normal) e 3,2 (desvantagem). São probabilidades teóricas calculadas a partir das regras. O ataque normal tem maior média nesse valor de CA, enquanto os outros oferecem maior frequência de acerto ou maior dano por acerto. Manter as regras pedidas e avaliar o equilíbrio em partidas antes de propor ajustes.
 
-## 6. Relatório de consumo
+## 6. Relatório de consumo — registros históricos e rodada atual
 
 A ferramenta de consulta disponível retornou percentuais das janelas de uso da conta, sem contagem de tokens desta conversa ou discriminação por etapa. Portanto, não é possível declarar números reais de tokens por etapa com os dados obtidos. Indisponível não significa zero.
 
@@ -200,4 +183,10 @@ Para as próximas etapas, registrar o trabalho realizado e qualquer telemetria e
 
 A documentação oficial explica que contexto, raciocínio, ferramentas e cache influenciam o uso: [OpenAI — Pricing](https://learn.chatgpt.com/docs/pricing).
 
-Próxima entrega prevista: a entrega 2 validará a abertura simultânea das duas webcams, a captura de gestos do jogador ativo e a leitura da face superior de um e dois d20 físicos, refinando posição das câmeras e área de rolagem antes da integração ao combate.
+Registro histórico anterior a D13 da entrega 2: laboratório de câmeras, gestos, segmentação, OCR experimental, exportação de evidências e guia implementados; 18 testes automatizados e verificação de sintaxe aprovados; modelos carregados no navegador. O ensaio físico aguarda autorização das câmeras e medições. Não foi disponibilizada contagem de tokens por atividade desta execução.
+
+Atualização de 28/10/2026 — interface gráfica 2D: requisito explicitado e opções de execução comparadas no planejamento. Não foi disponibilizada contagem de tokens por etapa de análise, pesquisa, edição ou revisão documental; os percentuais históricos acima não medem esta rodada.
+
+Próxima ação: iniciar a entrega 3, motor determinístico de combate. Limitações da câmera e os casos sem evidência permanecem registrados para orientar a integração na entrega 4.
+
+Atualização D13 — 28/10/2026: laboratório adaptado a uma webcam e rolagens virtuais, com preservação de resultados, seleção única e exportação separando software e observações do operador. Tokens por etapa: análise, implementação e revisão não disponibilizados; nenhum total numérico inferido. Nesta alteração não foram adicionados/executados testes, verificação de sintaxe ou ensaio no navegador; nenhum commit criado. Entregas 3 a 7 não iniciadas.

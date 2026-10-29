@@ -1,142 +1,103 @@
-# Entrega 1 — Especificação do Duelo de Magos
+# Especificação — Duelo de Magos
 
-Versão: 1.1, aprovada pelo usuário com o arredondamento da metade do dano para baixo. Data: 27/10/2026.
+Versão vigente: 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 virtuais (D13). A versão 1.1 da entrega 1 foi aprovada e registrada no commit `03852f5`; essa aprovação e suas evidências são históricas. A entrega 2 foi concluída e aceita no escopo limitado do ensaio de 29/10/2026: seis gestos positivos, três por jogador. Rejeição, unicidade, recuperação e métricas não foram registradas; consulte docs/ENTREGA_02.md. A alteração atual não autoriza commit ou avanço de entrega.
 
-Status: entrega 1 concluída e aprovada; commit autorizado pelo usuário. Nenhum código do jogo ou ensaio com câmeras faz parte desta entrega.
+## 1. Escopo e equipamento
 
-Este documento define o comportamento aprovado para a primeira versão. O [planejamento](PLANEJAMENTO.md) organiza as entregas e o [registro de decisões](DECISOES.md) identifica as decisões D01 a D12 aprovadas pelo usuário e as validações técnicas que permanecem para a entrega 2.
+Jogo 1v1 por turnos, em português, com interface gráfica 2D no navegador de um computador. Dois jogadores humanos: mago preto à esquerda e mago branco à direita, com nomes, posição e indicação de turno além da cor. Uma única webcam observa os gestos dos dois jogadores. Os resultados dos d20 são gerados aleatoriamente pelo software; não há dados físicos, câmera de dados, OCR ou entrada manual de números no fluxo vigente.
 
-## 1. Escopo da primeira versão
+A versão futura do jogo inclui menu, preparação da webcam, iniciativa, magias, vida, histórico, vitória, revanche e retorno ao menu. O laboratório atual da entrega 2 demonstra somente gestos e rolagens virtuais, sem aplicar dano, decidir acerto ou alternar turnos de combate. Entregas 3 a 7 não iniciadas.
 
-Dois jogadores humanos disputam um combate 1v1 por turnos, em português, no mesmo computador. O jogador 1 controla o mago de roupas pretas à esquerda; o jogador 2, o mago de roupas brancas à direita. Nome, posição e indicação de turno complementam a identificação por cor.
+Multiplayer online, IA adversária, outras classes, mana, equipamentos e progressão permanecem fora do escopo. Celular não é alvo funcional; telas pequenas entram apenas na revisão visual. O modelo de gestos atual exige internet no carregamento, com reconhecimento executado localmente.
 
-O jogo inclui menu de configuração, preparação de duas webcams, iniciativa, três magias escolhidas por gestos, resolução com d20 físicos, vida, histórico, vitória, revanche e retorno ao menu.
+## 2. Regras preservadas
 
-Equipamento necessário: um computador, duas webcams distintas, dois d20 físicos e uma área de rolagem delimitada. Uma câmera observa os jogadores; a outra observa os dados. A viabilidade de reconhecer a face superior dos d20 será medida na entrega 2.
+| Item | Regra |
+| --- | --- |
+| Vida máxima | Inicial 50; inteiro positivo, igual para os dois jogadores |
+| Dano padrão | Inicial 10; inteiro positivo, igual para os dois jogadores |
+| CA | Inicial 12; inteiro de 1 a 19, igual para os dois jogadores |
+| Configuração inválida | Bloqueia início e identifica campo; vazio, zero, negativo, fração e texto são inválidos |
+| Acerto | Resultado escolhido estritamente maior que CA; igualdade erra |
+| Erro | Dano zero; consome o turno após a resolução válida |
+| Vitória | Vida limitada a zero; encerrar antes de outra ação do derrotado |
 
-Multiplayer pela internet, adversário automático, outras classes, mana, equipamentos, progressão e entrada manual de resultados ficam fora da primeira versão. Entradas controladas serão usadas apenas para verificar o motor na entrega 3.
+### Iniciativa futura — entrega 3
 
-O alvo funcional é o computador com duas webcams. A entrega 5 também revisará a legibilidade do layout em telas pequenas; executar o combate em celular não é um critério funcional desta versão. Navegador e configuração de hardware suportados serão registrados a partir do ensaio da entrega 2 (D12).
-
-## 2. Configuração e regras
-
-| Item | Regra | Situação |
-| --- | --- | --- |
-| Vida máxima | Valor inicial 50; inteiro positivo; igual para os dois jogadores | Consolidada no planejamento |
-| Dano padrão | Valor inicial 10; inteiro positivo; igual para os dois jogadores | Consolidada no planejamento |
-| CA | Valor inicial 12; inteiro de 1 a 19; igual para os dois jogadores | Decisão aprovada D01 |
-| Configuração inválida | Bloqueia o início e identifica o campo a corrigir; valores vazios, zero, negativos, fracionários ou não numéricos são inválidos | Detalhamento da validação |
-| Prévia do dano | Mostra metade arredondada para baixo, valor padrão e dobro antes do início | Consolidada no planejamento; arredondamento definido pelo usuário |
-| Acerto | O resultado escolhido deve ser estritamente maior que a CA; igualdade erra | Requisito consolidado |
-| Erro | Dano zero; consome o turno após uma rolagem válida | Requisito consolidado |
-| Vitória | Vida do alvo chega a zero após resolver o ataque; a partida termina antes de outra ação | Requisito consolidado |
-
-### Iniciativa
-
-Cada jogador obtém um resultado de 1d20; o maior começa e a ordem permanece fixa. A decisão D02 usa a câmera dos dados, com uma captura do jogador 1 e depois uma do jogador 2. Em empate, ambos repetem a rolagem até desempatar. A iniciativa usa o mesmo ciclo de área vazia e captura única dos ataques, sem seleção de magia e sem causar dano.
+O sistema gera 1d20 virtual para cada jogador, em ordem jogador 1 e jogador 2. O maior inicia; empate gera um novo par até desempatar. Não há seleção de magia ou dano na iniciativa. Exibir todos os resultados; a ordem permanece fixa no combate. Esta regra não representa uma iniciativa já implementada no laboratório.
 
 ### Magias
 
-O vínculo entre tipo de ataque, nome da magia e vantagem/desvantagem segue a decisão aprovada D03.
-
-| Tipo | Magia | Quantidade física exigida | Resultado escolhido | Dano quando acerta | Com dano padrão 10 |
+| Tipo | Gesto / classe reconhecida | Magia | Dados virtuais | Escolha | Dano no acerto |
 | --- | --- | --- | --- | --- | --- |
-| Fraco com vantagem | Mísseis Mágicos | 2d20 | Maior valor | Padrão / 2, arredondado para baixo | 5 |
-| Normal | Raio de Fogo | 1d20 | Único valor | Padrão | 10 |
-| Crítico com desvantagem | Bola de Fogo | 2d20 | Menor valor | Padrão × 2 | 20 |
+| Vantagem / fraco | Indicador / Pointing_Up | Mísseis Mágicos | 2d20 | Maior | piso(padrão / 2) |
+| Normal | V / Victory | Raio de Fogo | 1d20 | Único | Padrão |
+| Desvantagem / crítico | Mão aberta / Open_Palm | Bola de Fogo | 2d20 | Menor | Padrão × 2 |
 
-Regra de arredondamento definida pelo usuário (D05): calcular `piso(dano padrão / 2)` para Mísseis Mágicos. Dano padrão 9 resulta em 4; dano padrão 1 resulta em 0. Um ataque válido que acerta com dano derivado zero consome o turno normalmente.
+Com dano padrão 10, os danos são 5, 10 e 20. Com padrão 9, a metade é 4; com padrão 1, é 0. Acertar com dano zero ainda consome o turno. Naturais 1 e 20 seguem comparação comum, sem efeitos extras; o crítico já é o dano dobrado. Magias sem custo ou recarga; Mísseis Mágicos resolve uma única ação.
 
-Regras complementares aprovadas: 1 e 20 naturais seguem a comparação comum de acerto; o ataque chamado crítico já corresponde ao dano dobrado e não recebe multiplicador extra (D04). A vida é limitada a zero após o dano (D05). Todas as magias podem ser repetidas sem custo ou recarga, e Mísseis Mágicos resolve um único ataque por turno (D06).
+## 3. Webcam, gestos e dados virtuais
 
-## 3. Seleção de magia e leitura dos dados
+Selecionar uma webcam sem áudio e conferir a prévia espelhada: região esquerda para jogador 1 e direita para jogador 2, com faixa central sem confirmação. Apenas uma mão elegível na região ativa pode confirmar magia. Manter o gesto reconhecido por cerca de um segundo; mudança, ausência, ambiguidade ou intervalo excessivo reinicia progresso ainda não confirmado. As coordenadas da imagem de inferência são convertidas uma vez para corresponder à prévia. Limiares iniciais: Open_Palm 0,60; Pointing_Up e Victory 0,75. Escore e duração são parâmetros de ensaio, sem precisão física demonstrada.
 
-### Gestos
+Confirmar a magia gera uma única rolagem automática: um valor de 1 a 20 para normal; dois valores independentes de 1 a 20 para vantagem/desvantagem. Cada face tem probabilidade 1/20 sob a fonte pseudoaleatória utilizada. Valores iguais são permitidos. Mostrar todos os valores e destacar o escolhido; não escolher novamente em quadros seguintes, por manter o gesto, reconectar ou trocar o jogador ativo. Resultados não são informados pelo operador.
 
-Decisão D07: indicador levantado seleciona Mísseis Mágicos, sinal de V seleciona Raio de Fogo e mão aberta seleciona Bola de Fogo. O mesmo gesto deve permanecer reconhecido por cerca de um segundo, com progresso visível. Se o gesto mudar ou deixar de ser reconhecido antes da confirmação, o progresso reinicia.
+No laboratório, Nova seleção rearma explicitamente a tentativa. A primeira conexão pode iniciar a primeira seleção; trocar jogador, reconectar ou recuperar falha exige Nova seleção. O último resultado continua visível com seu jogador e identificador; registros anteriores são preservados. No jogo futuro, a mudança regular para o próximo turno deverá rearmar uma nova ação sem reutilizar a rolagem anterior.
 
-Decisão D08: cada jogador ocupa uma região indicada na prévia da câmera. Só a região do jogador ativo pode confirmar uma magia. Uma leitura ambígua não confirma seleção. A separação e o tempo de confirmação precisam ser avaliados no ensaio da entrega 2.
+### Falha e recuperação
 
-Após a confirmação, a magia fica travada até a resolução ou reinício da partida. Gestos durante a rolagem não a alteram (D09).
+Permissão negada, indisponibilidade, vídeo sem novos quadros, aba oculta e falha do reconhecedor suspendem novas confirmações. Encerrar ou trocar câmera também suspende. Preservar magia já confirmada, rolagem gerada e registros; descartar progresso não confirmado. Reconectar não sorteia novamente. Após recuperar a câmera, exigir Nova seleção no laboratório. Resultados assíncronos de uma sessão, jogador ou seleção anterior devem ser descartados.
 
-### Ciclo de captura
+No jogo futuro, preservar também configuração, vida, jogador ativo e iniciativa já resolvida, sem aplicar dano ou passar turno por falha. D13 substitui a antiga exigência de área vazia e recaptura física de D10/D11.
 
-O ciclo aprovado em D10 é aplicado a cada rolagem de iniciativa e de ataque:
+## 4. Telas e estados do jogo futuro
 
-1. Preparar a ação: definir quem rola e quantos dados são esperados. Em um ataque, a magia já deve estar confirmada.
-2. Aguardar a câmera observar a área de rolagem vazia. Dados já presentes não contam para a nova ação.
-3. Armar a captura e pedir o lançamento de um ou dois dados. Quando forem dois, ambos devem ficar visíveis juntos.
-4. Aguardar exatamente a quantidade exigida de objetos físicos distintos, todos parados, com valores inteiros de 1 a 20 legíveis na face superior e sem mãos na área.
-5. Confirmar a leitura somente quando todos os dados estiverem válidos na mesma observação estável. Dois dados com o mesmo valor são aceitos. Um único objeto não pode ser contado duas vezes.
-6. Consumir a captura uma única vez. Manter os dados na área não gera outra ação.
+| Estado | Conteúdo e avanço |
+| --- | --- |
+| Menu | Vida, dano, CA e prévia dos danos; início somente com configuração válida |
+| Preparação | Seletor de uma webcam e prévia com regiões; confirmar enquadramento |
+| Iniciativa | Gerar um d20 virtual por jogador e repetir o par em empate |
+| Aguardando gesto | Jogador ativo, cartões e progresso; confirmar gesto estável |
+| Rolagem virtual | Uma geração por ação confirmada, com todos os valores e escolhido |
+| Resolução | Comparar CA e aplicar dano uma vez; registrar histórico |
+| Próximo turno | Se alvo vivo, limpar seleção e preparar nova ação do oponente |
+| Resultado | Vencedor, Revanche e Voltar ao menu |
+| Suspenso | Preservar estado e recuperar webcam sem repetir resultado |
 
-Dados extras, ausentes, em movimento, sobrepostos ou ilegíveis mantêm a ação aguardando, com o motivo exibido. Uma leitura incompleta não aplica dano nem passa o turno. Uma rolagem válida que erra a CA consome o turno normalmente.
+Arena 2D: dois magos, nome, vida atual/máxima, barras, CA, turno, uma prévia de gestos e resultados virtuais. Histórico: turno, atacante, magia, todos os valores gerados, valor escolhido, CA, acerto/erro e dano. Bloquear ações durante resolução. Menus por teclado, contraste legível e opção de reduzir movimento.
 
-Os limiares de estabilidade, confiança e desempenho serão medidos e registrados na entrega 2. Esta especificação não declara uma precisão que ainda não foi demonstrada.
+Revanche preserva atributos e câmera disponível, restaura vida, limpa histórico e seleção e gera nova iniciativa. Voltar ao menu permite editar atributos. O laboratório não implementa esses fluxos de combate.
 
-### Falha e recuperação das câmeras
+## 5. Cenários de aceitação esperados — não executados nesta rodada
 
-A mesma webcam não pode ser usada nas duas funções. Se uma câmera estiver indisponível, a preparação não libera a partida. Se falhar durante a partida, a captura da ação é suspensa, com orientação para reconexão, sem aplicar dano nem passar o turno automaticamente.
+Cenários do motor futuro usam alvo com 50 de vida, CA 12 e dano padrão 10, salvo indicação contrária. Entradas controladas são uma possibilidade de verificação somente quando o usuário solicitar testes.
 
-Decisão D11: preservar configuração, vida, jogador ativo, magia já confirmada e resultados de iniciativa já consumidos. Após reconectar e verificar as duas prévias, descartar apenas a leitura ainda não consumida e exigir área vazia para rearmá-la. Uma resolução já consumida continua registrada e não é repetida. Se a falha acontecer antes de confirmar a magia, reiniciar o progresso do gesto.
-
-## 4. Fluxo de telas e estados
-
-| Estado | O que o jogador vê ou faz | Condição para avançar |
+| ID | Situação | Resultado esperado |
 | --- | --- | --- |
-| Menu | Configura vida, dano e CA; vê os três danos derivados | Configuração válida e solicitação de início |
-| Preparação | Seleciona duas câmeras distintas, confere prévias e enquadramento | Ambas as câmeras disponíveis e preparação confirmada |
-| Iniciativa | Rola um d20 por jogador; vê os resultados | Resultados válidos e desempate concluído |
-| Aguardando gesto | Vê jogador ativo, cartões de magia e progresso do gesto | Gesto válido confirmado |
-| Aguardando área vazia | Vê a magia travada e instrução para retirar os dados anteriores | Área observada vazia após preparar a ação |
-| Aguardando nova rolagem/leitura | Vê quantidade esperada, objetos detectados, valores e motivo de espera | Quantidade exata e todos os valores estáveis e válidos |
-| Resolvendo | Vê dados reconhecidos, valor escolhido, CA, acerto/erro e dano | Captura consumida e vida atualizada uma única vez |
-| Próximo turno | Vê destaque passar ao outro jogador | Alvo ainda tem vida; limpar seleção e iniciar novo gesto |
-| Resultado | Vê vencedor e opções Revanche e Voltar ao menu | Escolha do jogador |
-| Captura suspensa | Vê a falha da câmera e instrução de recuperação | Câmeras recuperadas; retomar conforme D11 |
+| A01 | Vida 0, dano 1,5 ou CA 20 | Bloquear início e identificar campo |
+| A02 | Iniciativa virtual 15 e 8 | Jogador 1 inicia |
+| A03 | Iniciativa virtual 11 e 11 | Gerar novo par até desempatar |
+| A04 | Raio gera 12 | Erra; vida 50; passa turno |
+| A05 | Raio gera 13 | Acerta; vida 40; passa turno |
+| A06 | Mísseis geram 7 e 18 | Usa 18; vida 45 |
+| A07 | Bola gera 7 e 18 | Usa 7; erra; vida 50 |
+| A08 | Bola gera 13 e 20 | Usa 13; vida 30 |
+| A09 | Mísseis geram 15 e 15 | Dois valores mantidos; usa 15; vida 45 |
+| A10 | Seleção normal confirmada | Gera exatamente um inteiro entre 1 e 20 |
+| A11 | Seleção vantagem/desvantagem confirmada | Duas chamadas independentes; usa maior/menor respectivamente |
+| A12 | Gesto muda, some ou intervalo excede limite antes da confirmação | Reinicia progresso; não gera dados |
+| A13 | Nova seleção explícita no laboratório | Rearma tentativa sem reutilizar a rolagem anterior |
+| A14 | Gesto confirmado permanece por vários quadros | Apenas uma rolagem para a seleção; no jogo, uma resolução/histórico |
+| A15 | Padrão 9 e Mísseis acertam | Dano 4; vida 46 |
+| A16 | Alvo com 5 e Raio acerta | Vida 0; atacante vence; derrotado não age |
+| A17 | Jogador inativo gesticula ou muda sinal após confirmar | Não altera magia nem gera outra rolagem |
+| A18 | Falha/reconexão após confirmação ou durante progresso | Preserva resultado confirmado; progresso pendente descartado; exige Nova seleção; nenhum dano/turno por falha |
+| A19 | Revanche futura | Restaura vida, limpa histórico e gera nova iniciativa |
+| A20 | Voltar ao menu futuro | Permite editar atributos |
+| A21 | Só uma webcam conectada | Preparação não exige segundo dispositivo; falha da única câmera suspende seleção |
+| A22 | Raio gera 20 | Dano 10, sem multiplicador extra |
+| A23 | Padrão 1 e Mísseis acertam | Dano 0; vida 50; passa turno |
 
-Na iniciativa, os estados de área vazia e leitura se repetem dentro da tela de iniciativa. Após confirmar os dois resultados, um empate inicia um novo par de capturas. O resultado sem empate abre o primeiro turno.
+## 6. Histórico e limite da entrega
 
-Na arena, os dois magos têm nome, vida atual/máxima, barra de vida e CA. As prévias são identificadas por função e destacam a etapa ativa. Durante a resolução, novas ações ficam bloqueadas. Cada entrada do histórico registra turno, atacante, magia, todos os dados físicos, valor escolhido, CA, acerto/erro e dano.
-
-Revanche preserva configuração e seleção de câmeras disponíveis, restaura a vida, limpa histórico, magia e capturas anteriores e refaz a iniciativa com novas rolagens. Voltar ao menu permite editar os atributos. Se houver falha de câmera, a preparação precisa ser regularizada antes de outra partida.
-
-Menus e controles auxiliares operam por teclado, resultados têm contraste legível e os efeitos permitem reduzir movimento. O fluxo de combate usa as câmeras conforme o escopo.
-
-## 5. Cenários de aceitação
-
-Estes são exemplos para orientar a implementação e a validação das próximas entregas. São resultados esperados, não testes executados. Salvo indicação contrária, o alvo começa com 50 de vida, CA 12 e dano padrão 10.
-
-| ID | Entrada ou situação | Resultado esperado |
-| --- | --- | --- |
-| A01 | Vida 0, dano 1,5 ou CA 20 | Início bloqueado; campo inválido identificado, conforme faixa aprovada em D01 |
-| A02 | Iniciativa: jogador 1 = 15; jogador 2 = 8 | Jogador 1 começa |
-| A03 | Iniciativa: 11 e 11 | Ambos rolam novamente; partida ainda não começa, conforme D02 |
-| A04 | Raio de Fogo: 12 | Erro; alvo permanece com 50; turno passa |
-| A05 | Raio de Fogo: 13 | Acerto; alvo fica com 40; turno passa |
-| A06 | Mísseis Mágicos: 7 e 18 | Usa 18; acerta; alvo fica com 45 |
-| A07 | Bola de Fogo: 7 e 18 | Usa 7; erra; alvo permanece com 50 |
-| A08 | Bola de Fogo: 13 e 20 | Usa 13; acerta por 20 de dano; alvo fica com 30 |
-| A09 | Mísseis Mágicos: dois objetos distintos com 15 e 15 | Captura aceita; usa 15; alvo fica com 45 |
-| A10 | Ataque exige dois dados; só um objeto é detectado | Aguarda; nenhum dano e nenhuma troca de turno |
-| A11 | Ataque normal; dois dados na área | Aguarda exatamente um dado, conforme D10 |
-| A12 | Dado em movimento, sobreposto ou ilegível | Aguarda leitura válida; informa o motivo |
-| A13 | Dados antigos permanecem após a troca de turno | Não arma a próxima rolagem até observar a área vazia |
-| A14 | Mesma captura válida aparece em vários quadros | Apenas uma resolução e uma entrada no histórico |
-| A15 | Dano padrão 9; Mísseis Mágicos acerta | Dano 4; alvo fica com 46, conforme arredondamento definido em D05 |
-| A16 | Alvo com 5 de vida; Raio de Fogo acerta | Vida termina em 0; atacante vence; derrotado não age |
-| A17 | Jogador inativo faz o gesto ou troca-se o gesto após confirmar | Nenhuma nova magia é selecionada, conforme D08/D09 |
-| A18 | Câmera falha durante uma leitura ainda não consumida | Sem dano e sem troca de turno; recuperação exige área vazia |
-| A19 | Revanche após vitória | Mesmos atributos; vida restaurada; histórico limpo; nova iniciativa |
-| A20 | Voltar ao menu | Campos podem ser editados; nova partida usa a nova configuração |
-| A21 | Selecionar a mesma webcam para as duas funções | Preparação bloqueada até selecionar dispositivos distintos |
-| A22 | Raio de Fogo: 20 natural | Dano 10, sem multiplicador adicional, conforme D04 |
-| A23 | Dano padrão 1; Mísseis Mágicos acerta | Dano 0; alvo permanece com 50; turno passa, conforme arredondamento definido em D05 |
-
-## 6. Limite e conclusão desta entrega
-
-Entregue e aprovado: escopo da primeira versão, regras, decisões identificadas, fluxo de telas e estados, 23 cenários de aceitação e [registro de decisões](DECISOES.md).
-
-A revisão documental conferiu a coerência entre quantidade de dados, escolha do resultado, cálculo de dano, consumo único de captura, passagem de turno e vitória. A viabilidade das câmeras, a precisão do reconhecimento e a execução do jogo permanecem sem demonstração e pertencem às entregas seguintes.
-
-A entrega 1 foi aprovada pelo usuário após a revisão do arredondamento do dano, com autorização explícita para criar seu commit. As próximas entregas continuam sujeitas à apresentação do resultado e à autorização do usuário antes de cada commit.
+A versão 1.1, aprovada em 27/10/2026, previa duas webcams e d20 físicos; D13 altera esses pontos por solicitação do usuário, sem declarar a antiga leitura física aprovada. As evidências antigas continuam identificadas em docs/ENTREGA_02.md. O ensaio de 29/10/2026 sustenta somente os seis gestos positivos registrados; rejeição, unicidade, recuperação e métricas permanecem sem evidência. A entrega 2 foi aceita com esses limites. Código do motor e integração pertencem às entregas 3 e 4.
