@@ -1,6 +1,8 @@
 # Planejamento — Duelo de Magos
 
-Data: 27/10/2026. Status: planejamento atualizado com visão computacional; implementação pendente.
+Data: 27/10/2026. Status: entrega 1 aprovada e concluída; commit autorizado pelo usuário; implementação ainda não iniciada.
+
+Artefatos da entrega 1: [especificação do jogo](ESPECIFICACAO.md) e [registro de decisões](DECISOES.md). A versão 1.1 e as decisões D01 a D12 foram aprovadas pelo usuário, incluindo o arredondamento da metade do dano para baixo. A validação técnica das câmeras e do reconhecimento pertence à entrega 2.
 
 ## 1. Objetivo e primeira versão
 
@@ -22,14 +24,14 @@ O equipamento previsto é composto por duas webcams conectadas ao mesmo computad
 | --- | --- | --- |
 | Vida máxima | 50 | Ajustável; mesmo valor para os dois jogadores |
 | Dano padrão | 10 | Ajustável; mesmo valor para os dois jogadores |
-| Classe de armadura (CA) | 12, proposta | Ajustável; mesmo valor para os dois jogadores |
+| Classe de armadura (CA) | 12 | Ajustável; mesmo valor para os dois jogadores |
 
-Vida e dano aceitam inteiros positivos. Proposta de faixa da CA: 1 a 19, para sempre existir possibilidade de acerto com a comparação estrita solicitada. O menu deve explicar essa comparação e exibir os danos derivados antes do início da partida. Configurações inválidas impedem o início e recebem uma mensagem clara.
+Vida e dano aceitam inteiros positivos. Faixa aprovada da CA: 1 a 19, para sempre existir possibilidade de acerto com a comparação estrita solicitada. O menu deve explicar essa comparação e exibir os danos derivados antes do início da partida. Configurações inválidas impedem o início e recebem uma mensagem clara.
 
 ### Iniciativa e turnos
 
-1. Ao iniciar, cada jogador rola 1d20 de iniciativa. Proposta: usar também leitura do dado físico nessa etapa, um jogador por vez.
-2. O maior resultado começa. Proposta: em empate, ambos rolam novamente até desempatar.
+1. Ao iniciar, cada jogador rola 1d20 físico de iniciativa, um jogador por vez, começando pelo jogador 1.
+2. O maior resultado começa. Em empate, ambos rolam novamente até desempatar.
 3. A ordem permanece fixa durante a partida.
 4. O jogador ativo faz o gesto da magia diante da câmera e, após a seleção ser confirmada, lança os dados físicos exigidos. O jogo lê e valida a rolagem antes de resolver o ataque.
 5. Um erro também consome o turno.
@@ -38,11 +40,11 @@ Vida e dano aceitam inteiros positivos. Proposta de faixa da CA: 1 a 19, para se
 
 ### Ataques
 
-O vínculo entre vantagem/desvantagem e as magias abaixo é uma interpretação proposta dos ataques fraco, normal e crítico descritos no pedido.
+O vínculo entre vantagem/desvantagem e as magias abaixo foi aprovado na entrega 1.
 
 | Ataque | Magia | Dados | Resultado usado | Dano se acertar | Dano padrão 10 |
 | --- | --- | --- | --- | --- | --- |
-| Fraco, com vantagem | Mísseis Mágicos | 2d20 | Maior valor | Dano padrão / 2 | 5 |
+| Fraco, com vantagem | Mísseis Mágicos | 2d20 | Maior valor | Dano padrão / 2, arredondado para baixo | 5 |
 | Normal | Raio de Fogo | 1d20 | Único valor | Dano padrão | 10 |
 | Crítico, com desvantagem | Bola de Fogo | 2d20 | Menor valor | Dano padrão × 2 | 20 |
 
@@ -50,14 +52,15 @@ Acerto: resultado escolhido > CA do alvo. Um resultado igual à CA erra. Um erro
 
 Exemplo: contra CA 12, rolar 12 erra e rolar 13 acerta. Com dados 7 e 18, Mísseis Mágicos usa 18 e Bola de Fogo usa 7.
 
-Propostas para completar as regras:
+Regras complementares aprovadas:
 
 - “Crítico” identifica a opção de dano dobrado. Tirar 20 não acrescenta outro multiplicador.
 - Valores naturais 1 e 20 seguem a mesma comparação de acerto, sem efeitos extras.
-- Quando o dano padrão for ímpar, preservar a metade exata: dano padrão 9 resulta em 4,5 para Mísseis Mágicos.
 - A vida exibida nunca fica abaixo de zero.
 - Todas as magias podem ser repetidas em qualquer turno, sem custo ou recarga.
 - Mísseis Mágicos segue uma única resolução de ataque e o dano indicado na tabela.
+
+Regra de dano definida pelo usuário: a metade do dano padrão é sempre arredondada para baixo. Dano padrão 9 resulta em 4 para Mísseis Mágicos; dano padrão 1 resulta em 0. O cálculo é `piso(dano padrão / 2)`.
 
 Estas são as regras próprias do jogo proposto; os nomes das magias não acrescentam efeitos de outros sistemas.
 
@@ -74,19 +77,19 @@ Requisitos definidos pelo usuário:
 ### Preparação das duas webcams
 
 - Exibir dois seletores no menu: “Câmera dos jogadores” e “Câmera dos dados”, com prévias independentes, impedindo atribuir o mesmo dispositivo às duas funções.
-- Posicionar a câmera dos jogadores de frente, com as mãos visíveis. Proposta: delimitar uma região para cada jogador e aceitar gestos apenas na região correspondente ao turno ativo; a confiabilidade dessa separação deve ser validada no ensaio.
+- Posicionar a câmera dos jogadores de frente, com as mãos visíveis. Delimitar uma região para cada jogador e aceitar gestos apenas na região correspondente ao turno ativo; a confiabilidade dessa separação deve ser validada no ensaio.
 - Posicionar a câmera dos dados acima da área de rolagem, apontando para baixo, em suporte fixo. Ajustar distância, foco e iluminação até que os números da face superior dos d20 estejam legíveis. Essa posição facilita o enquadramento, mas não substitui a validação do reconhecimento.
 - Manter as duas prévias disponíveis e executar o reconhecimento necessário à fase: gestos na seleção da magia; dados após a confirmação. Não é necessária sincronização precisa entre os vídeos, pois essas ações acontecem em sequência.
 - Validar a abertura simultânea dos dois dispositivos no computador/navegador de destino antes de fechar a configuração. Se uma câmera falhar ou desconectar, suspender a captura da ação e solicitar reconexão, sem aplicar dano nem passar o turno automaticamente. Uma rolagem interrompida deve ser rearmada com a área vazia para evitar resultados antigos.
 
 Referência técnica: o navegador pode listar os dispositivos com [enumerateDevices](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices) e solicitar cada câmera pelo seu identificador com [getUserMedia](https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia). O acesso exige permissão do usuário e contexto seguro (HTTPS ou localhost no desenvolvimento). A disponibilidade simultânea depende também do hardware, dos drivers e dos recursos disponíveis no computador.
 
-Propostas de interação para a primeira versão, ainda não confirmadas pelo usuário:
+Interações da primeira versão aprovadas pelo usuário, com viabilidade técnica a validar na entrega 2:
 
 - Mapear indicador levantado para Mísseis Mágicos, sinal de V para Raio de Fogo e mão aberta para Bola de Fogo. Confirmar a seleção após manter o gesto por cerca de um segundo, com indicação visual do progresso.
 - Travar a magia depois da confirmação, enquanto o jogador lança os dados. Gestos observados durante a leitura dos dados não selecionam outro ataque.
 - Usar uma área de rolagem delimitada e exigir que esteja vazia antes de armar cada nova captura. A captura só fica habilitada após a confirmação da magia, evitando reaproveitar dados do turno anterior.
-- Para vantagem e desvantagem, lançar os dois dados juntos e mantê-los visíveis na mesma área de captura. Rolagens sequenciais não fazem parte dessa proposta inicial.
+- Para vantagem e desvantagem, lançar os dois dados juntos e mantê-los visíveis na mesma área de captura. Rolagens sequenciais ficam fora desta versão.
 - Só aceitar a quantidade exata de dados exigida e todos os resultados legíveis e estáveis, com as mãos fora da área. Dois dados com o mesmo valor são válidos: a contagem deve distinguir os objetos físicos, sem exigir valores diferentes.
 - Com um dado ausente, em movimento, sobreposto ou com resultado ilegível, exibir o motivo e continuar aguardando a regularização da leitura. Uma leitura incompleta não aplica dano nem consome o turno; um ataque validado que erra consome o turno normalmente.
 - Consumir cada captura válida uma única vez. Exigir uma nova seleção e uma nova rolagem no próximo turno.
@@ -107,7 +110,7 @@ Resultado: mostrar vencedor e oferecer Revanche, que reinicia vida e iniciativa 
 
 ## 4. Tecnologia e skills
 
-Proposta técnica: HTML, CSS e JavaScript em módulos, com estado da partida no navegador. Validar a viabilidade de executar reconhecimento de gestos e leitura dos dados no navegador antes de confirmar a arquitetura sem backend. A primeira versão pode usar personagens em SVG/CSS, com efeitos visuais simples e sem imagens externas.
+Direção técnica aprovada: HTML, CSS e JavaScript em módulos, com estado da partida no navegador. Validar a viabilidade de executar reconhecimento de gestos e leitura dos dados no navegador antes de confirmar a arquitetura sem backend. A primeira versão pode usar personagens em SVG/CSS, com efeitos visuais simples e sem imagens externas.
 
 Captura: abrir dois fluxos de vídeo com identificadores de dispositivos distintos, sem solicitar áudio. Separar a configuração de resolução/frequência de cada câmera e ajustar conforme os testes de legibilidade e desempenho. Liberar os fluxos ao encerrar a sessão de câmera ou trocar de dispositivo. Incluir seleção incorreta, permissão negada, indisponibilidade de hardware e desconexão no tratamento de falhas.
 
@@ -122,17 +125,39 @@ Separar regras puras de combate da interface e dos módulos de visão computacio
 
 As regras de combate permanecem determinísticas depois de receber os resultados dos dados. Os módulos de visão computacional ficam responsáveis pelo reconhecimento de gestos e pela leitura dos dados físicos; ferramentas e modelos específicos serão escolhidos após validar a captura de d20. BigQuery e Databricks não têm uso previsto neste escopo.
 
-## 5. Etapas de execução e critérios de conclusão
+## 5. Plano de entregas
 
-| Etapa | Trabalho | Critério de conclusão |
-| --- | --- | --- |
-| 1. Especificação | Consolidar regras, propostas e escopo | Este documento, com decisões não fornecidas pelo usuário identificadas como propostas |
-| 2. Validação da visão e motor de combate | Ensaiar gestos e leitura de um/dois d20; implementar iniciativa, três ataques, dano, turnos e vitória | Viabilidade de captura demonstrada e regras funcionando com entradas determinísticas |
-| 3. Interface jogável | Integrar câmera, gestos, dados físicos, menu, iniciativa, arena, vida, histórico e resultado | Partida completa; ataques com vantagem/desvantagem bloqueados até ler dois dados válidos |
-| 4. Apresentação visual | Magos preto/branco, efeitos, responsividade e acessibilidade | Jogadores reconhecíveis e resultados legíveis em desktop e celular |
-| 5. Validação e entrega | Testes do fluxo, correções e instruções; publicação conforme o escopo da implementação | Versão executável, verificações registradas e limitações informadas |
+As entregas abaixo seguem uma ordem de dependências. Cada etapa deixa um artefato que pode ser revisado antes de investir na etapa seguinte. As entregas 1 e 2 reduzem os principais riscos de regras e hardware; a integração completa só começa depois que os critérios de visão computacional estiverem demonstrados. O motor da entrega 3 pode avançar depois da consolidação das regras, independentemente do ensaio de câmeras.
 
-As etapas 2 a 5 ainda não foram executadas. A ordem prioriza validar a leitura dos dados físicos e obter uma partida funcional antes de refinamentos artísticos.
+| # | Entrega | Trabalho incluído | Artefato revisável | Critério para concluir / avançar |
+| --- | --- | --- | --- | --- |
+| 1 | Especificação de jogo aprovada | Fechar escopo da primeira versão, regras, valores configuráveis, fluxo de telas e decisões | [Especificação](ESPECIFICACAO.md), [registro de decisões](DECISOES.md) e este planejamento atualizado | Concluída: versão 1.1 revisada e aprovada pelo usuário |
+| 2 | Ensaio técnico das câmeras e reconhecimento | Verificar abertura simultânea das duas webcams; testar gestos; testar leitura da face superior de 1 e 2 d20, incluindo repetição de valores, movimento, oclusão e iluminação | Protótipo de ensaio com instruções de posicionamento, resultados observados e decisão registrada sobre abordagem de reconhecimento | As duas câmeras funcionam ao mesmo tempo no dispositivo-alvo; gestos são distinguíveis; leitura de um e dois dados atende aos casos essenciais ou o bloqueio/alternativa técnica fica documentado antes da integração |
+| 3 | Motor de combate determinístico | Implementar validação da configuração, iniciativa e desempate, três tipos de ataque, cálculo de dano, turnos, histórico e vitória, recebendo resultados de dados como entradas controladas | Módulo de regras executável sem câmera e tabela de cenários de aceitação | Casos de acerto/erro na CA, vantagem/desvantagem, dano ímpar, empate de iniciativa, ataque fatal e troca de turno produzem os resultados especificados |
+| 4 | Protótipo jogável integrado | Montar menu, seleção de duas câmeras, prévias, iniciativa, arena e resultado; integrar gesto e leitura dos dados ao motor; tratar permissão negada e desconexão | Partida completa local, do menu à vitória, com ambas as câmeras | Ataque normal só resolve com um dado válido; vantagem/desvantagem só resolvem com dois dados válidos; leitura incompleta ou câmera indisponível não aplica dano nem consome turno |
+| 5 | Interface visual e acessibilidade | Refinar personagens preto/branco, arena, cartões de magia, barras, feedback de leitura, histórico, efeitos, responsividade, contraste e controles por teclado | Versão visual revisável no computador e em telas pequenas, conforme decisão D12 | Identidade dos jogadores, jogador ativo, etapa atual e resultado são legíveis; movimento pode ser reduzido; menus e controles auxiliares operam por teclado |
+| 6 | Validação de ponta a ponta | Percorrer verificações essenciais desta seção, corrigir falhas e registrar limites de hardware/reconhecimento encontrados | Registro de verificações, problemas corrigidos e limitações conhecidas | Fluxos essenciais passam, inclusive falhas de câmera, leituras incompletas, consumo único da captura, ataque fatal, revanche e retorno ao menu |
+| 7 | Pacote de entrega | Preparar instruções de execução e configuração das câmeras; publicar/hospedar somente se fizer parte do escopo acordado para implementação | Versão executável e guia curto de instalação, uso e limitações | Outra pessoa consegue iniciar o jogo e preparar as câmeras seguindo o guia; versão e limitações estão identificadas |
+
+### Dependências e pontos de decisão
+
+- A entrega 2 é um portão técnico: se o reconhecimento de d20 não for confiável no hardware disponível, registrar as alternativas e seu impacto antes de começar a integração da entrega 4.
+- A entrega 3 pode avançar em paralelo ao ensaio técnico depois que as regras da entrega 1 estiverem consolidadas, porque usa resultados controlados e não depende das câmeras.
+- A aparência final da entrega 5 depende do fluxo integrado da entrega 4; arte raster é opcional e pode ser substituída por SVG/CSS.
+- A publicação da entrega 7 depende de confirmação do escopo de hospedagem; a versão executável e o guia continuam sendo entregáveis mesmo sem publicação.
+
+### Estado atual
+
+- Entrega 1: concluída e aprovada; especificação 1.1, fluxo de estados, 23 cenários de aceitação e decisões D01 a D12 aprovados; commit autorizado pelo usuário.
+- Entregas 2 a 7: não iniciadas.
+
+### Revisão e commit por entrega
+
+Conforme solicitado pelo usuário em 27/10/2026, cada entrega terá um commit próprio. Ao concluir o trabalho de uma entrega, mostrar os artefatos, resumir as alterações e as verificações e perguntar se o usuário autoriza criar o commit. Aguardar a autorização explícita antes de executar o commit. A aprovação de uma entrega não autoriza antecipadamente os commits das próximas.
+
+Commit autorizado para a entrega 1: `docs: definir especificacao da entrega 1`. Arquivos: `PLANEJAMENTO.md`, `ESPECIFICACAO.md` e `DECISOES.md`. Por ser o primeiro commit do repositório, também registra o planejamento já existente.
+
+O checklist de aceitação detalhado permanece abaixo e deve ser usado principalmente na entrega 6. A ordem prioriza reduzir o risco de visão computacional e provar uma partida funcional antes do refinamento visual.
 
 Verificações essenciais:
 
@@ -148,7 +173,7 @@ Verificações essenciais:
 - Dados do turno anterior não são aceitos como uma nova rolagem.
 - Cada captura válida resolve exatamente um ataque, mesmo se os dados permanecerem diante da câmera.
 - Igualar a CA erra; ultrapassar a CA acerta.
-- Dano corresponde a metade, padrão e dobro, incluindo padrão ímpar.
+- Dano corresponde à metade arredondada para baixo, ao padrão e ao dobro, incluindo padrão ímpar; 9 / 2 resulta em 4 e 1 / 2 resulta em 0.
 - Acerto e erro alternam corretamente o jogador ativo.
 - Um ataque fatal encerra a partida sem permitir resposta do derrotado.
 - Cliques repetidos durante a resolução geram uma única ação.
@@ -175,4 +200,4 @@ Para as próximas etapas, registrar o trabalho realizado e qualquer telemetria e
 
 A documentação oficial explica que contexto, raciocínio, ferramentas e cache influenciam o uso: [OpenAI — Pricing](https://learn.chatgpt.com/docs/pricing).
 
-Próxima etapa proposta: validar a abertura simultânea das duas webcams, a captura de gestos do jogador ativo e a leitura da face superior de um e dois d20 físicos, refinando posição das câmeras e área de rolagem antes da integração ao combate.
+Próxima entrega prevista: a entrega 2 validará a abertura simultânea das duas webcams, a captura de gestos do jogador ativo e a leitura da face superior de um e dois d20 físicos, refinando posição das câmeras e área de rolagem antes da integração ao combate.
