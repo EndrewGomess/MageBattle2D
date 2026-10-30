@@ -18,7 +18,7 @@ function configChanged() {
   const config = readConfig(), validation = validateConfig(config);
   for (const key of Object.keys(DEFAULT_CONFIG)) { $(key).setAttribute('aria-invalid', String(Boolean(validation.errors[key]))); $(`${key}-error`).textContent = validation.errors[key] || ''; }
   $('start-game').disabled = !validation.valid;
-  $('damage-preview').textContent = validation.valid ? `Danos no acerto: Mísseis ${BigInt(config.baseDamage) / 2n} · Raio ${config.baseDamage} · Bola ${BigInt(config.baseDamage) * 2n}.` : 'Informe valores inteiros válidos para visualizar os danos.';
+  $('damage-preview').textContent = 'Dano normal / crítico: Mísseis 1d6 + 1 / 2d6 + 1; Raio 2d6 + 2 / 4d6 + 2; Bola 4d6 + 4 / máximo de 8d6 + 4 = 52. Crítico exige d20 escolhido igual a 20 (ambos os d20 em Bola).';
   return { config, validation };
 }
 function release(resource) {
@@ -104,6 +104,11 @@ async function tick() {
   controller.watchdog();
 }
 function text(id, content) { $(id).textContent = content; }
+function damageDetail(record) {
+  if (!record.hit) return 'Erro: nenhum d6 gerado; dano nominal 0; aplicado 0.';
+  const component = record.maximized ? `componente maximizado ${record.maximizedComponent}, sem rolagem de d6` : `d6: ${record.damageValues.join(', ')}`;
+  return `${record.critical ? 'Crítico natural' : 'Acerto normal'} · ${record.formula} · ${component} · bônus +${record.bonus} · dano nominal ${record.nominalDamage}; aplicado ${record.appliedDamage}.`;
+}
 function render(view) {
   const state = view.engine, playing = view.phase !== 'menu';
   $('menu-panel').hidden = playing; $('match-panel').hidden = !playing;
@@ -133,7 +138,9 @@ function render(view) {
     $(`region-${player.id}`).classList.toggle('active', state.activePlayer === player.id && view.phase === 'gesture');
   }
   text('turn-label', state.phase === 'finished' ? 'Partida encerrada.' : `Turno ${state.turn} · jogador ${state.activePlayer ?? '—'}`);
-  text('damage-missiles', `Dano no acerto: ${BigInt(state.config.baseDamage) / 2n}`); text('damage-ray', `Dano no acerto: ${state.config.baseDamage}`); text('damage-fireball', `Dano no acerto: ${BigInt(state.config.baseDamage) * 2n}`);
+  text('damage-missiles', 'Dano: 1d6 + 1. Crítico: 2d6 + 1, maior d20 = 20.');
+  text('damage-ray', 'Dano: 2d6 + 2. Crítico: 4d6 + 2, d20 = 20.');
+  text('damage-fireball', 'Dano: 4d6 + 4. Crítico: máximo de 8d6 + 4 = 52, ambos os d20 = 20.');
   $('game-progress').value = view.progress;
   for (const spell of Object.keys(SPELLS)) $(`spell-${spell}`).classList.toggle('selected', view.spell === spell);
   $('last-roll').hidden = !view.lastRoll;
@@ -142,11 +149,13 @@ function render(view) {
     $('roll-values').replaceChildren(); let highlighted = false;
     for (const value of roll.values) { const die = document.createElement('span'); die.className = 'die'; die.textContent = String(value); if (!highlighted && value === roll.selected) { die.classList.add('chosen'); die.setAttribute('aria-label', `${value}, escolhido`); highlighted = true; } $('roll-values').append(die); }
     const record = state.history.find(item => item.turn === roll.turn);
-    text('roll-detail', record ? `${roll.rule} · escolhido ${roll.selected} contra CA ${record.armorClass} · ${record.hit ? 'acerto' : 'erro'} · dano aplicado ${record.damage}.` : `${roll.rule} · escolhido ${roll.selected} · resolução pendente, resultado preservado.`);
+    const plan = roll.plan;
+    const pending = plan ? `Escolhido ${plan.selected} contra CA ${plan.armorClass} · ${plan.hit ? (plan.critical ? 'crítico' : 'acerto') : 'erro'} · ${plan.formula} · ${plan.maximized ? `componente maximizado ${plan.maximizedComponent}, sem sorteio de d6` : `d6 preservados: ${roll.damageValues.join(', ') || 'nenhum'} (${roll.damageValues.length}/${plan.rollsRequired})`} · bônus +${plan.bonus}.` : `d20 preservados: ${roll.values.length}/${roll.attackCount}; escolha e acerto ainda pendentes.`;
+    text('roll-detail', record ? `${roll.rule} · escolhido ${roll.selected} contra CA ${record.armorClass} · ${damageDetail(record)}` : `${roll.rule} · ${pending} Resolução pendente; resultados preservados.`);
   }
   if (historyRendered !== state.history) {
     historyRendered = state.history; $('combat-history').replaceChildren();
-    for (const record of state.history) { const row = document.createElement('tr'); for (const content of [record.turn, `Jogador ${record.attacker}`, record.spellName, record.values.join(', '), record.selected, record.armorClass, record.hit ? 'Acerto' : 'Erro', record.damage]) { const cell = document.createElement('td'); cell.textContent = String(content); row.append(cell); } $('combat-history').append(row); }
+    for (const record of state.history) { const row = document.createElement('tr'); for (const content of [record.turn, `Jogador ${record.attacker}`, record.spellName, record.attackValues.join(', '), record.selected, record.armorClass, record.hit ? 'Acerto' : 'Erro', record.critical ? 'Sim' : 'Não', record.formula, record.maximized ? `Máximo: ${record.maximizedComponent} (sem sorteio)` : record.damageValues.join(', ') || 'Nenhum', record.bonus, record.nominalDamage, record.appliedDamage]) { const cell = document.createElement('td'); cell.textContent = String(content); row.append(cell); } $('combat-history').append(row); }
     $('history-empty').hidden = state.history.length > 0;
   }
   text('winner-label', state.winner ? `Jogador ${state.winner} venceu!` : '');

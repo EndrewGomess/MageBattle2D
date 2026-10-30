@@ -1,5 +1,7 @@
 # Entrega 4 — Protótipo jogável integrado
 
+> Registro histórico anterior a D18. As regras e APIs abaixo documentam a versão então implementada; o contrato atual está em [D18.md](D18.md). Os resultados históricos não validam a adaptação D18, que não foi testada.
+
 Data da implementação: 29/10/2026. Status: implementado e revisado estaticamente, com relato exploratório posterior do usuário sobre o recorte descrito abaixo. A revisão independente confirmou a correção do P2 de restauração pelo histórico e não encontrou outros achados acionáveis. O usuário autorizou explicitamente commit e PR da Entrega 4 após a revisão final deste registro, preservando as pendências (D17); a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. O relato não equivale à validação sistemática de todos os fluxos.
 
 ## Relato exploratório do usuário

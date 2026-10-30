@@ -1,10 +1,10 @@
 // Regras puras: os resultados dos dados são fornecidos pelo chamador.
-export const DEFAULT_CONFIG = Object.freeze({ maxHealth: 50, baseDamage: 10, armorClass: 12 });
+export const DEFAULT_CONFIG = Object.freeze({ maxHealth: 50, armorClass: 12 });
 
 export const COMBAT_SPELLS = Object.freeze({
-  Pointing_Up: Object.freeze({ name: 'Mísseis Mágicos', dice: 2, selection: 'highest' }),
-  Victory: Object.freeze({ name: 'Raio de Fogo', dice: 1, selection: 'single' }),
-  Open_Palm: Object.freeze({ name: 'Bola de Fogo', dice: 2, selection: 'lowest' })
+  Pointing_Up: Object.freeze({ name: 'Mísseis Mágicos', dice: 2, selection: 'highest', damageDice: 1, bonus: 1 }),
+  Victory: Object.freeze({ name: 'Raio de Fogo', dice: 1, selection: 'single', damageDice: 2, bonus: 2 }),
+  Open_Palm: Object.freeze({ name: 'Bola de Fogo', dice: 2, selection: 'lowest', damageDice: 4, bonus: 4 })
 });
 
 export class CombatError extends Error {
@@ -35,20 +35,17 @@ function combatState(value) {
 
 function copyConfig(config) {
   if (!config || typeof config !== 'object' || Array.isArray(config)) return null;
-  const { maxHealth, baseDamage, armorClass } = config;
-  return { maxHealth, baseDamage, armorClass };
+  const { maxHealth, armorClass } = config;
+  return { maxHealth, armorClass };
 }
 
 function validateConfigCopy(config) {
   const errors = {};
   if (!config || typeof config !== 'object' || Array.isArray(config)) {
-    errors.config = 'Informe uma configuração com vida máxima, dano padrão e CA.';
+    errors.config = 'Informe uma configuração com vida máxima e CA.';
   } else {
     if (!Number.isSafeInteger(config.maxHealth) || config.maxHealth <= 0) {
       errors.maxHealth = 'A vida máxima deve ser um inteiro positivo representável com precisão.';
-    }
-    if (!Number.isSafeInteger(config.baseDamage) || config.baseDamage <= 0) {
-      errors.baseDamage = 'O dano padrão deve ser um inteiro positivo representável com precisão.';
     }
     if (!Number.isInteger(config.armorClass) || config.armorClass < 1 || config.armorClass > 19) {
       errors.armorClass = 'A CA deve ser um inteiro de 1 a 19.';
@@ -65,9 +62,9 @@ export function createCombat(config) {
   const copied = copyConfig(config);
   const validation = validateConfigCopy(copied);
   if (!validation.valid) throw new CombatError('INVALID_CONFIG', 'Configuração inválida.', validation.errors);
-  const { maxHealth, baseDamage, armorClass } = copied;
+  const { maxHealth, armorClass } = copied;
   return combatState({
-    config: { maxHealth, baseDamage, armorClass },
+    config: { maxHealth, armorClass },
     phase: 'initiative',
     players: [{ id: 1, health: maxHealth }, { id: 2, health: maxHealth }],
     initiative: { rolls: [], order: [] },
@@ -87,15 +84,15 @@ function requirePhase(state, phase) {
   }
 }
 
-function copyDice(values, count) {
+function copyDice(values, count, sides = 20) {
   if (!Array.isArray(values) || values.length !== count) {
-    throw new CombatError('INVALID_VALUES', `Informe exatamente ${count} resultado(s) de d20.`, { values: 'Quantidade incorreta de dados.' });
+    throw new CombatError('INVALID_VALUES', `Informe exatamente ${count} resultado(s) de d${sides}.`, { values: 'Quantidade incorreta de dados.' });
   }
   const copied = [];
   for (let index = 0; index < count; index++) {
     const value = values[index];
-    if (!Number.isInteger(value) || value < 1 || value > 20) {
-      throw new CombatError('INVALID_VALUES', 'Cada d20 deve ser um inteiro de 1 a 20.', { values: 'Resultado de dado inválido.' });
+    if (!Number.isInteger(value) || value < 1 || value > sides) {
+      throw new CombatError('INVALID_VALUES', `Cada d${sides} deve ser um inteiro de 1 a ${sides}.`, { values: 'Resultado de dado inválido.' });
     }
     copied[index] = value;
   }
@@ -119,11 +116,32 @@ export function applyInitiativeRoll(state, values) {
   });
 }
 
-function appliedDamage(spell, baseDamage, remainingHealth) {
-  if (spell === 'Pointing_Up') return Math.min(remainingHealth, Math.floor(baseDamage / 2));
-  if (spell === 'Victory') return Math.min(remainingHealth, baseDamage);
-  // Comparar antes de dobrar evita perder precisão para configurações grandes.
-  return baseDamage >= Math.ceil(remainingHealth / 2) ? remainingHealth : baseDamage * 2;
+function requireSpell(spellId) {
+  if (typeof spellId !== 'string' || !Object.hasOwn(COMBAT_SPELLS, spellId)) {
+    throw new CombatError('INVALID_SPELL', 'Magia desconhecida.', { spell: 'Escolha uma das três magias.' });
+  }
+  return COMBAT_SPELLS[spellId];
+}
+
+function planFromCopy(spellId, values, armorClass) {
+  const spell = COMBAT_SPELLS[spellId];
+  const selected = spell.selection === 'lowest' ? Math.min(...values) : Math.max(...values);
+  const hit = selected > armorClass, critical = hit && selected === 20;
+  const maximized = critical && spellId === 'Open_Palm';
+  const diceCount = hit ? spell.damageDice * (critical ? 2 : 1) : 0;
+  return immutable({ values, selected, armorClass, hit, critical, maximized,
+    damageDiceCount: diceCount, rollsRequired: maximized ? 0 : diceCount,
+    bonus: hit ? spell.bonus : 0, maximizedComponent: maximized ? diceCount * 6 : 0,
+    formula: hit ? `${diceCount}d6 + ${spell.bonus}` : '0 (erro)' });
+}
+
+// O controlador e o motor derivam o mesmo plano, sem aceitar flags do chamador.
+export function planAttack(spellId, attackValues, armorClass) {
+  const spell = requireSpell(spellId);
+  if (!Number.isInteger(armorClass) || armorClass < 1 || armorClass > 19) {
+    throw new CombatError('INVALID_CONFIG', 'A CA deve ser um inteiro de 1 a 19.');
+  }
+  return planFromCopy(spellId, copyDice(attackValues, spell.dice), armorClass);
 }
 
 export function resolveAction(state, action) {
@@ -131,20 +149,18 @@ export function resolveAction(state, action) {
   if (!action || typeof action !== 'object' || Array.isArray(action)) {
     throw new CombatError('INVALID_ACTION', 'Informe atacante, magia e resultados dos dados.');
   }
-  const { attacker, spell: spellId, values: receivedValues } = action;
+  const { attacker, spell: spellId, attackValues, damageValues } = action;
   if (attacker !== state.activePlayer) {
     throw new CombatError('INVALID_ATTACKER', 'Somente o jogador ativo pode agir.', { attacker: 'Jogador não está ativo.' });
   }
-  if (typeof spellId !== 'string' || !Object.hasOwn(COMBAT_SPELLS, spellId)) {
-    throw new CombatError('INVALID_SPELL', 'Magia desconhecida.', { spell: 'Escolha uma das três magias.' });
-  }
-  const spell = COMBAT_SPELLS[spellId];
-  const values = copyDice(receivedValues, spell.dice);
-  const selected = spell.selection === 'lowest' ? Math.min(...values) : Math.max(...values);
+  const spell = requireSpell(spellId);
+  const values = copyDice(attackValues, spell.dice);
+  const plan = planFromCopy(spellId, values, state.config.armorClass);
+  const damageRolls = copyDice(damageValues, plan.rollsRequired, 6);
   const target = attacker === 1 ? 2 : 1;
   const defender = state.players.find(player => player.id === target);
-  const hit = selected > state.config.armorClass;
-  const damage = hit ? appliedDamage(spellId, state.config.baseDamage, defender.health) : 0;
+  const nominalDamage = damageRolls.reduce((sum, value) => sum + value, plan.maximizedComponent) + plan.bonus;
+  const damage = Math.min(defender.health, nominalDamage);
   const remainingHealth = defender.health - damage;
   const finished = remainingHealth === 0;
   const record = {
@@ -153,10 +169,11 @@ export function resolveAction(state, action) {
     target,
     spell: spellId,
     spellName: spell.name,
-    values,
-    selected,
-    armorClass: state.config.armorClass,
-    hit,
+    ...plan,
+    attackValues: values,
+    damageValues: damageRolls,
+    nominalDamage,
+    appliedDamage: damage,
     damage
   };
   return combatState({

@@ -1,5 +1,7 @@
 # Entrega 3 — Motor de combate determinístico
 
+> Registro histórico anterior a D18. As regras e APIs abaixo documentam a versão então implementada; o contrato atual está em [D18.md](D18.md). Os resultados históricos não validam a adaptação D18, que não foi testada.
+
 Data: 29/10/2026. Estado: motor e testes implementados; suíte completa com 70 testes aprovados e cobertura focada dos dois módulos com 40 testes aprovados, após corrigir os dois achados P2 da revisão sobre captura de entradas. A revisão independente final confirmou ambos como resolvidos e não encontrou novos achados acionáveis ou divergências nas evidências. Commit e PR deste motor testado autorizados em 29/10/2026 conforme D15, mantendo testes integrados e de webcam real adiados por ora. A execução pode ser consultada no histórico Git e na PR correspondente, quando criada.
 
 ## Artefato e limites

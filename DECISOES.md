@@ -91,3 +91,32 @@ O usuário relatou reconhecimento fácil dos três gestos, ataques alternados co
 O relato não confirma unicidade ao sustentar gesto, rejeição da região inativa/central, ambiguidade/duas mãos, falha/recuperação, descarte de respostas antigas ou métricas de precisão/rejeição/latência. Exibição dos botões não comprova os cliques de revanche, encerramento ou retorno ao menu. Restam a execução controlada dos demais cenários A01–A23, BFCache e testes automatizados da integração. A correção estática do P2 de BFCache e as evidências históricas da Entrega 3 permanecem preservadas.
 
 O usuário autorizou explicitamente criar o commit e abrir a PR da Entrega 4 após a revisão final deste registro, com essas pendências. A execução pode ser consultada no histórico Git e na PR correspondente, quando criada; não é autorização para iniciar as Entregas 5–7. O coordenador deve lembrar as verificações ainda pendentes antes de planejar e fechar cada uma dessas próximas entregas, conforme a atualização de D15. As regras de combate permanecem inalteradas.
+
+## D18 — dano em d6 e crítico natural; implementada, não testada
+
+**Status: regras confirmadas e implementação funcional realizada; não testada, revisão independente concluída por leitura, sem achados funcionais acionáveis.** Após as respostas sobre crítico, o usuário confirmou manter acerto por d20 contra CA, gerar d6 somente no acerto, retirar a configuração de dano padrão e preservar vida e CA configuráveis. Os gestos continuam como no protótipo. Motor, gerador, entradas e interface funcional foram adaptados nesta etapa, antes do trabalho visual da Entrega 5.
+
+| Magia | Gesto / classe preservados | Fórmula de dano confirmada |
+| --- | --- | --- |
+| Mísseis Mágicos | Indicador / `Pointing_Up` | `1d6 + 1` |
+| Raio de Fogo | V / `Victory` | `2d6 + 2` |
+| Bola de Fogo | Mão aberta / `Open_Palm` | `4d6 + 4` |
+
+As respostas posteriores do usuário definem o crítico pelo **resultado válido/escolhido do ataque**, com dobramento da quantidade de dados de dano:
+
+| Magia | Gatilho de crítico confirmado | Dano no crítico |
+| --- | --- | --- |
+| Mísseis Mágicos | Maior dos dois d20 igual a 20; um 20 basta | `2d6 + 1` |
+| Raio de Fogo | Único d20 igual a 20 | `4d6 + 2` |
+| Bola de Fogo | Menor dos dois d20 igual a 20; ambos precisam mostrar 20 | Máximo de `8d6 + 4`: `48 + 4 = 52` |
+
+O dobramento refere-se somente aos dados; os modificadores fixos `+1`, `+2` e `+4` permanecem uma única vez. Mísseis e Raio rolam os dados do crítico; Bola aplica o máximo dos oito d6, somando 4, para dano nominal 52. Não usar um 20 descartado pela escolha do menor resultado como gatilho de crítico de Bola. Os três críticos dependem do d20 escolhido igual a 20, após confirmar o acerto.
+
+Reconciliação com as decisões históricas: D18 substitui para o contrato alvo o dano fixo/meio/padrão/dobro de D03 e a ausência de efeito extra para 20 natural de D04. Retira a derivação por dano padrão e o piso de metade de D05; preserva o limite inferior da vida e limita o dano aplicado à vida restante. Preserva a escolha de maior/único/menor d20, os gestos e a ausência de custo/recarga. A antiga denominação “crítico” da Bola de Fogo deixa de significar uma categoria de dano padrão dobrado: agora qualquer magia pode causar crítico natural, conforme a tabela. As linhas D03–D05 na seção histórica registram a versão anterior, substituída no código pela adaptação D18.
+
+Acerto e configuração confirmados:
+
+- **Acerto e dano:** manter `resultado escolhido > CA`; igualdade erra. Rolar d6 somente após acerto, conforme a fórmula normal ou crítica, com o caso maximizado da Bola descrito acima. Erro não gera dados de dano, causa dano zero e consome o turno. Com CA de 1 a 19, o 20 escolhido supera a CA e ativa o crítico; natural 1 não ganha efeito adicional.
+- **Configuração da partida:** retirar `baseDamage` e o campo de dano padrão do menu/contrato alvo. Manter vida máxima configurável, inicialmente 50, e CA configurável, inicialmente 12 e inteira de 1 a 19, iguais para ambos jogadores. Os danos passam a ser fórmulas próprias das magias, não derivados de um atributo global.
+
+As dúvidas de gatilho/efeito, acerto/dano e configurações estão respondidas. Na rodada posterior de implementação, o usuário autorizou adaptar D18 e criar seu commit após revisão. Motor, dados, controlador, histórico, menu e cartões receberam a alteração funcional; o refinamento visual da Entrega 5 não foi iniciado. Revisão independente concluída por leitura, sem achados funcionais acionáveis; a autorização não equivale à criação de commit. Nenhum teste foi adicionado, atualizado ou executado, nem sintaxe, navegador ou webcam. A suíte antiga tem contratos/expectativas incompatíveis com D18; os 70/70 e a cobertura histórica não validam estas regras. Ver [D18.md](docs/D18.md). As pendências D15/D17 permanecem.

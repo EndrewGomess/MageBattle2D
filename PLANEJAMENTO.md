@@ -1,5 +1,7 @@
 # Planejamento — Duelo de Magos
 
+**D18 implementada, ainda não testada; revisão independente concluída por leitura, sem achados funcionais acionáveis.** Motor, dados, controlador e interface funcional foram adaptados antes do refinamento visual da Entrega 5. A suíte antiga não foi atualizada nem executada; os 70/70 pertencem à versão anterior. Ver [contrato e limites D18](docs/D18.md).
+
 Data: 27/10/2026. Atualização: 29/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md. Motor da entrega 3 implementado e testado: 70 testes aprovados e cobertura focada de 100% em combat.js/dice.js após correção dos dois achados de captura de entradas. Nova revisão independente confirmou as correções sem novos achados acionáveis. A Entrega 3 foi integrada à `main` pela [PR #3](https://github.com/EndrewGomess/MageBattle2D/pull/3), no merge `0fd5b20`; a autorização está registrada em D15. Testes de partida integrada e webcam real adiados por decisão explícita (D15).
 
 Artefatos da entrega 1: [especificação do jogo](ESPECIFICACAO.md) e [registro de decisões](DECISOES.md). A versão 1.1 e as decisões D01 a D12 foram aprovadas pelo usuário, incluindo o arredondamento da metade do dano para baixo. Atualização vigente D13 (28/10/2026): uma webcam para gestos e d20 virtuais gerados pelo software. O ensaio de 29/10 registrou seis gestos positivos (três para cada jogador), uma sessão e cerca de 1.957 quadros. Rejeição, unicidade, recuperação e métricas não foram registradas; veja limites em docs/ENTREGA_02.md. Dados físicos/OCR foram retirados do escopo.
@@ -18,59 +20,70 @@ A visão computacional reconhece o gesto que seleciona a magia. Confirmar a sele
 
 Equipamento vigente: um computador e uma webcam voltada para os dois jogadores. Não são necessários d20 físicos ou uma segunda câmera.
 
-## 2. Regras consolidadas
+## 2. Regras consolidadas em D18 — implementadas, não testadas
+
+O usuário confirmou [D18](DECISOES.md): manter acerto por d20 escolhido estritamente maior que CA, gerar dano em d6 somente após acerto, retirar dano padrão e manter vida/CA configuráveis. Crítico conta o 20 escolhido, dobra somente os dados e preserva o bônus fixo; Bola exige ambos os d20 em 20 e aplica o máximo `48+4=52`. As tabelas desta seção são o contrato confirmado e implementado, ainda sem execução; substituem o dano fixo de D03 e a ausência de efeito extra de D04, retirando de D05 a metade/piso e preservando o limite da vida.
 
 ### Menu
 
 | Configuração | Valor inicial | Comportamento |
 | --- | --- | --- |
 | Vida máxima | 50 | Ajustável; mesmo valor para os dois jogadores |
-| Dano padrão | 10 | Ajustável; mesmo valor para os dois jogadores |
 | Classe de armadura (CA) | 12 | Ajustável; mesmo valor para os dois jogadores |
 
-Vida e dano aceitam inteiros positivos. Faixa aprovada da CA: 1 a 19, para sempre existir possibilidade de acerto com a comparação estrita solicitada. O menu deve explicar essa comparação e exibir os danos derivados antes do início da partida. Configurações inválidas impedem o início e recebem uma mensagem clara.
+Vida aceita inteiro positivo. CA aceita inteiros de 1 a 19. Ambos são iguais para os dois jogadores. Retirar o campo `baseDamage` do contrato alvo e do menu; os danos são fórmulas próprias das magias. O menu deve explicar a comparação e exibir fórmulas normais/críticas antes do início. Configurações inválidas impedem o início e identificam o campo. O campo de dano padrão foi retirado do código nesta etapa.
 
 ### Iniciativa e turnos
 
 1. Ao iniciar, o sistema gera 1d20 virtual de iniciativa para cada jogador, um jogador por vez, começando pelo jogador 1.
 2. O maior resultado começa. Em empate, ambos rolam novamente até desempatar.
 3. A ordem permanece fixa durante a partida.
-4. O jogador ativo faz o gesto da magia diante da câmera e, após a seleção ser confirmada, o sistema gera os dados virtuais exigidos uma única vez antes de resolver o ataque.
-5. Um erro também consome o turno.
+4. O jogador ativo confirma o gesto e o sistema gera uma única vez os d20 de ataque; compara o escolhido com a CA e identifica crítico pelo 20 escolhido.
+5. Somente no acerto gera o dano normal/crítico em d6, exceto a Bola crítica maximizada. Erro não gera d6, causa zero dano e também consome turno.
 6. Após resolver a ação, o jogo verifica a vitória antes de passar o turno.
 7. Ao atingir zero de vida, o jogador é derrotado imediatamente e não realiza outra ação.
 
 ### Ataques
 
-O vínculo entre vantagem/desvantagem e as magias abaixo foi aprovado na entrega 1.
+O vínculo de gestos e de escolha maior/único/menor é preservado. O dano e o crítico da tabela abaixo foram confirmados em D18 e foram implementados nesta etapa, sem testes.
 
-| Ataque | Magia | Dados | Resultado usado | Dano se acertar | Dano padrão 10 |
+| Ataque | Magia / gesto | d20 de ataque | Resultado usado | Dano normal no acerto | Crítico natural |
 | --- | --- | --- | --- | --- | --- |
-| Fraco, com vantagem | Mísseis Mágicos | 2d20 | Maior valor | Dano padrão / 2, arredondado para baixo | 5 |
-| Normal | Raio de Fogo | 1d20 | Único valor | Dano padrão | 10 |
-| Crítico, com desvantagem | Bola de Fogo | 2d20 | Menor valor | Dano padrão × 2 | 20 |
+| Vantagem | Mísseis Mágicos / indicador | 2d20 | Maior valor | `1d6 + 1` | Escolhido 20: `2d6 + 1` |
+| Normal | Raio de Fogo / V | 1d20 | Único valor | `2d6 + 2` | Escolhido 20: `4d6 + 2` |
+| Desvantagem | Bola de Fogo / mão aberta | 2d20 | Menor valor | `4d6 + 4` | Ambos 20: máximo de `8d6 + 4 = 52` |
 
 Acerto: resultado escolhido > CA do alvo. Um resultado igual à CA erra. Um erro causa zero dano. Não haverá modificadores adicionais de ataque na primeira versão.
 
 Exemplo: contra CA 12, rolar 12 erra e rolar 13 acerta. Com dados 7 e 18, Mísseis Mágicos usa 18 e Bola de Fogo usa 7.
 
-Regras complementares aprovadas:
+Regras alvo confirmadas:
 
-- “Crítico” identifica a opção de dano dobrado. Tirar 20 não acrescenta outro multiplicador.
-- Valores naturais 1 e 20 seguem a mesma comparação de acerto, sem efeitos extras.
-- A vida exibida nunca fica abaixo de zero.
+- Crítico natural depende do 20 escolhido, depois de acertar. Com CA máxima 19, esse resultado acerta. Um 20 descartado em Bola não ativa crítico.
+- Dobram-se apenas os dados, não `+1`, `+2` ou `+4`. Mísseis e Raio rolam seus dados críticos; Bola aplica o máximo dos oito d6 e soma 4, nominal 52.
+- Natural 1 segue a comparação comum sem efeito adicional. Igualdade com CA erra e não gera dados de dano.
+- O dano aplicado é limitado à vida restante e a vida nunca fica abaixo de zero; registrar dano nominal e aplicado separadamente.
 - Todas as magias podem ser repetidas em qualquer turno, sem custo ou recarga.
 - Mísseis Mágicos segue uma única resolução de ataque e o dano indicado na tabela.
 
-Regra de dano definida pelo usuário: a metade do dano padrão é sempre arredondada para baixo. Dano padrão 9 resulta em 4 para Mísseis Mágicos; dano padrão 1 resulta em 0. O cálculo é `piso(dano padrão / 2)`.
+Histórico: a versão das Entregas 3/4 usa metade do dano padrão com piso, dano padrão e dobro. Essa regra permanece somente nos relatórios e testes históricos; foi substituída no código por D18. Não há campo de dano padrão, metade ou piso nas novas fórmulas.
 
 Estas são as regras próprias do jogo proposto; os nomes das magias não acrescentam efeitos de outros sistemas.
+
+### Sequência de adaptação antes do visual da Entrega 5
+
+1. Adaptar o contrato do motor da Entrega 3 para configuração somente de vida/CA e entradas distintas de d20 de ataque e dano em d6/componente maximizado; derivar acerto/crítico no motor e preservar seus snapshots originais.
+2. Adaptar geração e entrada de dados para rolar dano somente no acerto, com a quantidade normal/crítica correta; crítico de Bola usa máximo 52, sem tratá-lo como rolagem aleatória comum. Erros não consomem RNG de d6.
+3. Adaptar controlador e histórico para preservar ataque e dano já gerados, sem repetição por quadros/reconexão; registrar escolhido, crítico, fórmula, dados, bônus, dano nominal e aplicado.
+4. Retirar dano padrão do menu e atualizar cartões/prévias/resultados. Alinhar os cenários alvo A01–A23 da especificação, mantendo explícito que ainda não foram executados para D18.
+5. Somente depois da adaptação funcional, trabalhar o refinamento visual da Entrega 5 usando a referência visual/mockup fornecida pelo usuário, sem inferir que ela modifica as regras. Os itens funcionais 1 a 4 foram implementados e revisados independentemente por leitura, sem achados funcionais acionáveis e sem testes; o item 5 visual permanece futuro.
 
 ### Gestos e dados virtuais — D13
 
 - Indicador (Pointing_Up) confirma Mísseis Mágicos; V (Victory), Raio de Fogo; mão aberta (Open_Palm), Bola de Fogo. Manter o gesto por cerca de um segundo, com progresso visível.
 - Uma webcam enquadra ambos jogadores, com regiões esquerda/direita e faixa central sem confirmação. Apenas uma mão elegível na região ativa confirma a seleção; ausência, ambiguidade, mudança de gesto ou intervalo excessivo reinicia progresso pendente.
 - Cada confirmação gera uma única rolagem automática: normal usa um d20 virtual; vantagem e desvantagem usam dois resultados independentes de 1 a 20. Repetições são válidas; mostrar todos os valores e escolher maior/menor conforme a magia.
+- No alvo D18, somente depois de acertar gerar os d6 de dano normal/crítico ou aplicar a Bola crítica maximizada; exibir ataque e dano separadamente e não repetir resultados já gerados.
 - Manter o gesto, reconectar ou trocar o jogador não gera novas rolagens. No laboratório, Nova seleção rearma explicitamente uma tentativa; a primeira conexão pode iniciar a primeira seleção.
 - Falha, encerramento ou troca da webcam preservam magia confirmada, último resultado e registros, suspendendo novas confirmações. Após reconectar, usar Nova seleção; descartar progresso incompleto e respostas assíncronas antigas. Nenhuma falha aplica dano ou passa turno.
 - Permissão e contexto seguro (localhost ou HTTPS) continuam necessários. O modelo de gestos é carregado pela internet; não há garantia de funcionamento totalmente offline.
@@ -78,7 +91,7 @@ Estas são as regras próprias do jogo proposto; os nomes das magias não acresc
 O ensaio real da webcam deve registrar gestos de ambos jogadores, rejeição da região inativa, ambiguidade, confirmação temporal, unicidade e recuperação. Leitura de faces, calibração de fundo e OCR não pertencem mais ao escopo vigente. Ver [D13](DECISOES.md), [guia](docs/GUIA_ENSAIO.md) e [relatório](docs/ENTREGA_02.md).
 ## 3. Telas e experiência
 
-Menu futuro: título, configuração de vida/dano/CA, prévia dos danos e início. Incluir seleção de uma webcam e instruções de gestos e dados virtuais.
+Menu alvo D18: título, configuração de vida/CA, fórmulas normais/críticas por magia e início; sem dano padrão. Incluir seleção de uma webcam e instruções de gestos e dados virtuais. A interface funcional recebeu essa adaptação; o refinamento visual continua futuro.
 
 Iniciativa: mostrar os dois resultados, eventuais empates e quem começa. Essa apresentação pode aparecer sobre a arena.
 
@@ -179,9 +192,9 @@ Verificações essenciais futuras, somente mediante pedido do usuário:
 - Gesto mantido não repete rolagem; Nova seleção rearma somente uma tentativa; respostas assíncronas antigas são descartadas.
 - Interrupção, vídeo congelado, troca de jogador e reconexão preservam resultado e bloqueiam novas confirmações até recuperação explícita.
 - Iniciativa futura respeita maior resultado e novo par em empate.
-- Igualdade com CA erra; metade usa piso, naturais não têm efeito extra; erro consome turno e ataque fatal encerra antes de resposta.
+- No alvo D18, igualdade com CA erra sem gerar d6; escolhido 20 ativa crítico com bônus fixo não dobrado e Bola maximizada; erro consome turno e ataque fatal encerra antes de resposta.
 - Revanche, menu e validação de atributos conforme especificação, nas entregas futuras.
-Observação de balanceamento: com CA 12, cada d20 tem 40% de chance de passar a CA. Vantagem acerta em 64% dos casos e desvantagem em 16%. Com dano padrão 10, os danos médios por ação são, respectivamente, 3,2 (vantagem), 4 (normal) e 3,2 (desvantagem). São probabilidades teóricas calculadas a partir das regras. O ataque normal tem maior média nesse valor de CA, enquanto os outros oferecem maior frequência de acerto ou maior dano por acerto. Manter as regras pedidas e avaliar o equilíbrio em partidas antes de propor ajustes.
+Observação histórica de balanceamento, anterior a D18: com CA 12 e dano padrão 10, foram calculadas médias por ação de 3,2 para vantagem, 4 para normal e 3,2 para desvantagem. Esses valores se referem ao dano fixo antigo; não representam o balanceamento das novas fórmulas e críticos. A avaliação do alvo D18 permanece pendente.
 
 ## 6. Relatório de consumo — registros históricos e rodada atual
 

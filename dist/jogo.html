@@ -11,12 +11,11 @@
   <form id="config-form" novalidate>
     <div class="config-grid">
       <label>Vida máxima <input id="maxHealth" name="maxHealth" value="50" inputmode="numeric" aria-describedby="maxHealth-error"><span id="maxHealth-error" class="field-error"></span></label>
-      <label>Dano padrão <input id="baseDamage" name="baseDamage" value="10" inputmode="numeric" aria-describedby="baseDamage-error"><span id="baseDamage-error" class="field-error"></span></label>
       <label>Classe de armadura (CA) <input id="armorClass" name="armorClass" value="12" inputmode="numeric" aria-describedby="armorClass-error"><span id="armorClass-error" class="field-error"></span></label>
     </div>
-    <p id="damage-preview">Danos no acerto: Mísseis 5 · Raio 10 · Bola 20.</p><button id="start-game" type="submit" class="primary">Preparar webcam</button>
+    <p id="damage-preview">Dano normal / crítico: Mísseis 1d6 + 1 / 2d6 + 1; Raio 2d6 + 2 / 4d6 + 2; Bola 4d6 + 4 / máximo de 8d6 + 4 = 52.</p><button id="start-game" type="submit" class="primary">Preparar webcam</button>
   </form>
-  <p class="hint">Os atributos são iguais para os dois jogadores. Um resultado igual à CA erra. Mísseis usam metade arredondada para baixo; Raio usa o dano padrão; Bola usa o dobro.</p>
+  <p class="hint">Vida e CA são iguais para os dois jogadores. O d20 escolhido precisa superar a CA; igualdade erra, sem gerar d6. Um 20 escolhido causa crítico: dobra os dados de dano, mantendo o bônus; em Bola, ambos os d20 precisam ser 20 e o dano é maximizado em 52.</p>
 </section>
 <section id="match-panel" hidden>
   <div class="match-heading"><h1 id="phase-title">Preparação</h1><div><label class="inline"><input type="checkbox" id="reduce-motion"> Reduzir movimento</label><button id="menu-button">Voltar ao menu</button></div></div>
@@ -58,7 +57,7 @@
     <div id="last-roll" class="last-roll" hidden><h3 id="roll-title">Última ação</h3><div id="roll-values" class="dice-values"></div><p id="roll-detail"></p></div>
   </section>
   <section id="result-panel" class="panel result" hidden><h2 id="winner-label"></h2><p>A partida terminou. Uma revanche preserva os atributos e a webcam disponível e gera nova iniciativa.</p><button id="rematch" class="primary">Revanche</button><button id="result-menu">Voltar ao menu</button></section>
-  <section id="history-panel" class="panel" hidden><h2>Histórico de combate</h2><div class="table-scroll"><table><thead><tr><th>Turno</th><th>Atacante</th><th>Magia</th><th>Todos os dados</th><th>Escolhido</th><th>CA</th><th>Resultado</th><th>Dano</th></tr></thead><tbody id="combat-history"></tbody></table></div><p id="history-empty">Nenhuma ação resolvida.</p></section>
+  <section id="history-panel" class="panel" hidden><h2>Histórico de combate</h2><div class="table-scroll"><table><thead><tr><th>Turno</th><th>Atacante</th><th>Magia</th><th>d20 de ataque</th><th>Escolhido</th><th>CA</th><th>Resultado</th><th>Crítico</th><th>Fórmula</th><th>d6 / máximo</th><th>Bônus</th><th>Dano nominal</th><th>Dano aplicado</th></tr></thead><tbody id="combat-history"></tbody></table></div><p id="history-empty">Nenhuma ação resolvida.</p></section>
 </section>
 </main><footer>Duelo de Magos · Português · Navegador desktop · Uma webcam, sem áudio</footer>
 </body></html>
