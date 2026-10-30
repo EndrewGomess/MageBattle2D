@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Duelo de Magos — Partida local</title><link rel="stylesheet" href="./game.css"><script type="module" src="./game-ui.js"></script></head>
+<body>
+<header><a class="brand" href="./jogo.html">✦ Duelo de Magos</a><span>Partida local · dois jogadores</span><a href="./index.html">Laboratório de gestos</a></header>
+<main>
+<p class="notice">Protótipo em desenvolvimento. A validação da partida integrada e os ensaios adicionais com a webcam continuam pendentes.</p>
+<p id="game-message" class="status" role="status" aria-live="polite">Configure os atributos para começar.</p>
+<section id="menu-panel" class="panel">
+  <h1>Prepare o duelo</h1><p>Dois magos, uma webcam e três magias. O sistema gera os d20 virtuais a cada ação confirmada.</p>
+  <form id="config-form" novalidate>
+    <div class="config-grid">
+      <label>Vida máxima <input id="maxHealth" name="maxHealth" value="50" inputmode="numeric" aria-describedby="maxHealth-error"><span id="maxHealth-error" class="field-error"></span></label>
+      <label>Dano padrão <input id="baseDamage" name="baseDamage" value="10" inputmode="numeric" aria-describedby="baseDamage-error"><span id="baseDamage-error" class="field-error"></span></label>
+      <label>Classe de armadura (CA) <input id="armorClass" name="armorClass" value="12" inputmode="numeric" aria-describedby="armorClass-error"><span id="armorClass-error" class="field-error"></span></label>
+    </div>
+    <p id="damage-preview">Danos no acerto: Mísseis 5 · Raio 10 · Bola 20.</p><button id="start-game" type="submit" class="primary">Preparar webcam</button>
+  </form>
+  <p class="hint">Os atributos são iguais para os dois jogadores. Um resultado igual à CA erra. Mísseis usam metade arredondada para baixo; Raio usa o dano padrão; Bola usa o dobro.</p>
+</section>
+<section id="match-panel" hidden>
+  <div class="match-heading"><h1 id="phase-title">Preparação</h1><div><label class="inline"><input type="checkbox" id="reduce-motion"> Reduzir movimento</label><button id="menu-button">Voltar ao menu</button></div></div>
+  <section class="panel" id="camera-panel" aria-labelledby="camera-title">
+    <h2 id="camera-title">Uma webcam para os dois jogadores</h2>
+    <div class="camera-layout">
+      <div>
+        <div class="camera-stage" id="camera-stage">
+          <video id="game-video" autoplay muted playsinline></video>
+          <div class="regions" aria-hidden="true"><span id="region-1">Jogador 1 · esquerda</span><span class="dead-zone"></span><span id="region-2">Jogador 2 · direita</span></div>
+          <p id="camera-placeholder">Aguardando conexão da webcam</p>
+        </div>
+        <p class="hint">Prévia espelhada. Mantenha uma mão inteira dentro da região do jogador ativo; a faixa central não confirma gestos.</p>
+      </div>
+      <div class="camera-controls">
+        <label>Webcam <select id="game-device"><option value="">Identifique os dispositivos</option></select></label>
+        <label>Resolução <select id="game-resolution"><option value="640">640 × 360</option><option value="1280">1280 × 720</option></select></label>
+        <div class="buttons"><button id="identify-camera">Permitir e identificar</button><button id="refresh-cameras">Atualizar lista</button></div>
+        <button id="connect-resources" class="primary">Conectar webcam e carregar gestos</button><button id="stop-camera">Encerrar câmera</button>
+        <p id="resource-status" class="hint">Webcam e reconhecedor desconectados.</p>
+        <button id="confirm-framing" class="primary">Confirmar enquadramento e iniciar</button>
+      </div>
+    </div>
+  </section>
+  <section id="initiative-panel" class="panel" hidden aria-labelledby="initiative-title"><h2 id="initiative-title">Iniciativa</h2><p>Um d20 para o jogador 1, depois um para o jogador 2. Empates geram outro par.</p><p id="pending-initiative"></p><ol id="initiative-history"></ol><p id="initiative-order"></p></section>
+  <section id="arena-panel" class="panel" hidden aria-labelledby="arena-title">
+    <h2 id="arena-title">Arena</h2><p id="turn-label"></p>
+    <div class="arena">
+      <article id="player-1" class="wizard-card black"><h3>Jogador 1 · Mago preto</h3><svg viewBox="0 0 160 180" aria-hidden="true"><path d="M29 170 58 72h44l29 98Z"/><circle cx="80" cy="64" r="21"/><path d="m39 48 41-45 41 45Z"/><path d="M137 170V52" class="staff"/><circle cx="137" cy="43" r="12" class="orb"/></svg><p id="health-1"></p><meter id="health-bar-1" min="0" max="50" value="50" aria-label="Vida do jogador 1"></meter><p id="armor-1"></p></article>
+      <div class="arena-center" aria-hidden="true">✦<br><small>VERSUS</small></div>
+      <article id="player-2" class="wizard-card white"><h3>Jogador 2 · Mago branco</h3><svg viewBox="0 0 160 180" aria-hidden="true"><path d="M29 170 58 72h44l29 98Z"/><circle cx="80" cy="64" r="21"/><path d="m39 48 41-45 41 45Z"/><path d="M137 170V52" class="staff"/><circle cx="137" cy="43" r="12" class="orb"/></svg><p id="health-2"></p><meter id="health-bar-2" min="0" max="50" value="50" aria-label="Vida do jogador 2"></meter><p id="armor-2"></p></article>
+    </div>
+    <div class="spells">
+      <article id="spell-Pointing_Up"><h3>☝ Mísseis Mágicos</h3><p>Indicador · 2d20, maior</p><p id="damage-missiles"></p></article>
+      <article id="spell-Victory"><h3>✌ Raio de Fogo</h3><p>V · 1d20</p><p id="damage-ray"></p></article>
+      <article id="spell-Open_Palm"><h3>✋ Bola de Fogo</h3><p>Mão aberta · 2d20, menor</p><p id="damage-fireball"></p></article>
+    </div>
+    <label id="progress-label" for="game-progress">Confirmação do gesto</label><progress id="game-progress" max="1" value="0"></progress><p class="hint">Mantenha o gesto por cerca de um segundo. A mudança regular de turno prepara uma nova seleção automaticamente.</p>
+    <div id="last-roll" class="last-roll" hidden><h3 id="roll-title">Última ação</h3><div id="roll-values" class="dice-values"></div><p id="roll-detail"></p></div>
+  </section>
+  <section id="result-panel" class="panel result" hidden><h2 id="winner-label"></h2><p>A partida terminou. Uma revanche preserva os atributos e a webcam disponível e gera nova iniciativa.</p><button id="rematch" class="primary">Revanche</button><button id="result-menu">Voltar ao menu</button></section>
+  <section id="history-panel" class="panel" hidden><h2>Histórico de combate</h2><div class="table-scroll"><table><thead><tr><th>Turno</th><th>Atacante</th><th>Magia</th><th>Todos os dados</th><th>Escolhido</th><th>CA</th><th>Resultado</th><th>Dano</th></tr></thead><tbody id="combat-history"></tbody></table></div><p id="history-empty">Nenhuma ação resolvida.</p></section>
+</section>
+</main><footer>Duelo de Magos · Português · Navegador desktop · Uma webcam, sem áudio</footer>
+</body></html>

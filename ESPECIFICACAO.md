@@ -6,9 +6,11 @@ Versão vigente: 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 v
 
 Jogo 1v1 por turnos, em português, com interface gráfica 2D no navegador de um computador. Dois jogadores humanos: mago preto à esquerda e mago branco à direita, com nomes, posição e indicação de turno além da cor. Uma única webcam observa os gestos dos dois jogadores. Os resultados dos d20 são gerados aleatoriamente pelo software; não há dados físicos, câmera de dados, OCR ou entrada manual de números no fluxo vigente.
 
-A versão futura do jogo inclui menu, preparação da webcam, iniciativa, magias, vida, histórico, vitória, revanche e retorno ao menu. O laboratório atual da entrega 2 demonstra somente gestos e rolagens virtuais, sem aplicar dano, decidir acerto ou alternar turnos de combate. O motor independente da entrega 3 foi implementado e os cenários aplicáveis ao motor e gerador foram verificados automaticamente; dois achados de captura de entradas foram corrigidos com regressões e confirmados como resolvidos na revisão independente final, sem novos achados acionáveis. Commit e PR autorizados em 29/10/2026 conforme D15; a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. Testes de partida integrada e webcam real seguem adiados conforme D15. Consulte [o contrato e as evidências](docs/ENTREGA_03.md). Entregas 4 a 7 não iniciadas.
+A versão futura do jogo inclui menu, preparação da webcam, iniciativa, magias, vida, histórico, vitória, revanche e retorno ao menu. O laboratório atual da entrega 2 demonstra somente gestos e rolagens virtuais, sem aplicar dano, decidir acerto ou alternar turnos de combate. O motor independente da entrega 3 foi implementado e os cenários aplicáveis ao motor e gerador foram verificados automaticamente; dois achados de captura de entradas foram corrigidos com regressões e confirmados como resolvidos na revisão independente final, sem novos achados acionáveis. A Entrega 3 foi integrada à `main` pela [PR #3](https://github.com/EndrewGomess/MageBattle2D/pull/3), no merge `0fd5b20`; a autorização está registrada em D15. Testes de partida integrada e webcam real seguem adiados conforme D15. Consulte [o contrato e as evidências](docs/ENTREGA_03.md). A Entrega 4 está implementada para revisão conforme D16; Entregas 5 a 7 não iniciadas.
 
 Multiplayer online, IA adversária, outras classes, mana, equipamentos e progressão permanecem fora do escopo. Celular não é alvo funcional; telas pequenas entram apenas na revisão visual. O modelo de gestos atual exige internet no carregamento, com reconhecimento executado localmente.
+
+Atualização da entrega 4 — D16/D17: `dist/jogo.html` implementa separadamente menu, preparação de webcam, iniciativa, arena, combate, resultado e revanche/menu. O usuário relatou reconhecimento fácil dos três gestos, ataques alternados passando turno, redução da vida até zero e tela de resultado com opções de encerramento/revanche. Esse recorte exploratório não comprova unicidade sustentada, rejeição/ambiguidades, falha/recuperação, métricas ou efeitos dos cliques; demais cenários controlados, BFCache e testes automatizados integrados continuam pendentes. Os agentes não executaram testes, navegador ou webcam nesta entrega. Consulte [o relato e as pendências](docs/ENTREGA_04.md). Commit e PR da Entrega 4 foram autorizados explicitamente após revisão final do registro conforme D17; execução consultável no histórico Git e na PR correspondente, quando criada. Entregas 5–7 não iniciadas.
 
 ## 2. Regras preservadas
 
@@ -22,9 +24,9 @@ Multiplayer online, IA adversária, outras classes, mana, equipamentos e progres
 | Erro | Dano zero; consome o turno após a resolução válida |
 | Vitória | Vida limitada a zero; encerrar antes de outra ação do derrotado |
 
-### Iniciativa futura — entrega 3
+### Iniciativa
 
-O sistema gera 1d20 virtual para cada jogador, em ordem jogador 1 e jogador 2. O maior inicia; empate gera um novo par até desempatar. Não há seleção de magia ou dano na iniciativa. Exibir todos os resultados; a ordem permanece fixa no combate. Esta regra não representa uma iniciativa já implementada no laboratório.
+O sistema gera 1d20 virtual para cada jogador, em ordem jogador 1 e jogador 2. O maior inicia; empate gera um novo par até desempatar. Não há seleção de magia ou dano na iniciativa. Exibir todos os resultados; a ordem permanece fixa no combate. O laboratório não possui iniciativa; o motor recebe os pares e o protótipo da entrega 4 implementa sua geração/apresentação. O relato exploratório não descreveu uma verificação específica da iniciativa e de seus empates.
 
 ### Magias
 
@@ -50,7 +52,7 @@ Permissão negada, indisponibilidade, vídeo sem novos quadros, aba oculta e fal
 
 No jogo futuro, preservar também configuração, vida, jogador ativo e iniciativa já resolvida, sem aplicar dano ou passar turno por falha. D13 substitui a antiga exigência de área vazia e recaptura física de D10/D11.
 
-## 4. Telas e estados do jogo futuro
+## 4. Telas e estados do jogo
 
 | Estado | Conteúdo e avanço |
 | --- | --- |
