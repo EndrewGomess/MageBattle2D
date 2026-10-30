@@ -43,6 +43,7 @@ A investigação de d20 físicos foi retirada do escopo por D13; isso não const
 | 27/10/2026 | Usuário solicitou como única alteração arredondar a metade do dano para baixo; documentos e cenários atualizados | Regra de arredondamento confirmada; commit ainda aguarda autorização |
 | 27/10/2026 | Usuário aprovou a versão 1.1 revisada e autorizou o commit da entrega 1 | Decisões D01 a D12 aprovadas; entrega 1 concluída; commit autorizado |
 | 29/10/2026 | Usuário autorizou criar o commit e abrir a PR da entrega 3, mantendo testes de partida integrada e webcam real pendentes por ora | Autorização para o motor testado, com limites explícitos conforme D15; execução consultável no histórico Git e na PR correspondente, quando criada |
+| Rodada do relato exploratório, sem data do ensaio informada | Usuário relatou reconhecimento dos três gestos, alternância com passagem de turno, vida até zero e tela de resultado com opções de encerramento/revanche; autorizou commit e PR da Entrega 4 após revisão final | Observações atribuídas ao usuário, sem ampliar a evidência aos casos não relatados; autorização específica e pendências em D17 |
 
 ## D13 — uma webcam e rolagens virtuais (28/10/2026)
 
@@ -72,3 +73,21 @@ As evidências da entrega 3 permanecem: 70/70 testes aprovados, cobertura focada
 Por decisão explícita do usuário, os testes de partida integrada e de webcam real ficam adiados por ora. Continuam pendentes a unicidade da seleção no aplicativo, descarte de respostas antigas, suspensão/recuperação, partida completa, revanche e retorno ao menu, além de rejeição de gestos inativos/ambíguos e métricas físicas de precisão, rejeição e latência. Evidências sintéticas não devem ser apresentadas como ensaio físico.
 
 Em cada uma das próximas entregas 4, 5, 6 e 7, o coordenador deve lembrar essas pendências ao usuário antes de planejar e antes de fechar a etapa, registrando a decisão atual sobre retomá-las. Atenção especial antes de concluir a validação de ponta a ponta ou preparar o pacote de entrega; o adiamento não equivale à execução ou aprovação desses testes.
+
+Atualização de D15 por D17: o recorte exploratório relatado pelo usuário passa a ser evidência positiva da Entrega 4 nos comportamentos descritos. As verificações integradas e físicas restantes continuam pendentes e devem ser relembradas ao planejar/fechar cada Entrega 5–7; não se considera todo o fluxo validado.
+
+## D16 — implementação do protótipo integrado com validações pendentes (29/10/2026)
+
+O usuário aprovou implementar o plano da Entrega 4, com menu, preparação de uma webcam, iniciativa virtual, arena funcional, gestos, dados, motor, resultado, revanche e retorno ao menu. A autorização permite construir o protótipo apesar das evidências físicas ainda pendentes, substituindo para esta implementação o antigo bloqueio de início da integração. O laboratório e suas evidências permanecem preservados. Não se declara a partida integrada ou o reconhecimento físico validado.
+
+Nesta rodada não adicionar nem executar testes, navegador ou webcam; realizar implementação e revisão estática. Testes da partida integrada e ensaio físico seguem adiados conforme D15, sem transformar os resultados históricos da Entrega 3 em evidência dos novos fluxos. Ao final, apresentar para revisão do usuário; a autorização de commit/PR da Entrega 3 não autoriza commit da Entrega 4. Entregas 5–7 continuam fora desta rodada.
+
+As regras de combate e D13/D14 permanecem: uma webcam, prévia espelhada, confirmação temporal por região e d20 virtuais gerados pelo software. Falhas suspendem sem reaplicar dano, repetir rolagem ou avançar turno; reconectar exige confirmação explícita de retomada. A arquitetura implementada e os critérios pendentes estão em [ENTREGA_04.md](docs/ENTREGA_04.md). O lembrete de D15 vale antes de fechar a Entrega 4 e em cada planejamento/fechamento das Entregas 5–7.
+
+## D17 — relato exploratório e autorização de registro da Entrega 4
+
+O usuário relatou reconhecimento fácil dos três gestos, ataques alternados com passagem de turno, redução da vida até zero e tela de resultado com opções de encerramento e revanche. Esses comportamentos estão observados no relato exploratório do usuário. Não foram informados data do ensaio, hardware, navegador, configurações, quantidades ou métricas; não inferir esses dados nem converter facilidade percebida em precisão medida.
+
+O relato não confirma unicidade ao sustentar gesto, rejeição da região inativa/central, ambiguidade/duas mãos, falha/recuperação, descarte de respostas antigas ou métricas de precisão/rejeição/latência. Exibição dos botões não comprova os cliques de revanche, encerramento ou retorno ao menu. Restam a execução controlada dos demais cenários A01–A23, BFCache e testes automatizados da integração. A correção estática do P2 de BFCache e as evidências históricas da Entrega 3 permanecem preservadas.
+
+O usuário autorizou explicitamente criar o commit e abrir a PR da Entrega 4 após a revisão final deste registro, com essas pendências. A execução pode ser consultada no histórico Git e na PR correspondente, quando criada; não é autorização para iniciar as Entregas 5–7. O coordenador deve lembrar as verificações ainda pendentes antes de planejar e fechar cada uma dessas próximas entregas, conforme a atualização de D15. As regras de combate permanecem inalteradas.
