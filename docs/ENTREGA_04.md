@@ -1,6 +1,6 @@
 # Entrega 4 — Protótipo jogável integrado
 
-> Registro histórico anterior a D18. As regras e APIs abaixo documentam a versão então implementada; o contrato atual está em [D18.md](D18.md). Os resultados históricos não validam a adaptação D18, que não foi testada.
+> Registro histórico anterior a D18. As regras e APIs abaixo documentam a versão então implementada; o contrato atual está em [D18.md](D18.md). Os resultados históricos não validam a adaptação D18. Os relatos manuais posteriores estão separados abaixo e em [D18.md](D18.md).
 
 Data da implementação: 29/10/2026. Status: implementado e revisado estaticamente, com relato exploratório posterior do usuário sobre o recorte descrito abaixo. A revisão independente confirmou a correção do P2 de restauração pelo histórico e não encontrou outros achados acionáveis. O usuário autorizou explicitamente commit e PR da Entrega 4 após a revisão final deste registro, preservando as pendências (D17); a execução pode ser consultada no histórico Git e na PR correspondente, quando criada. O relato não equivale à validação sistemática de todos os fluxos.
 
@@ -16,6 +16,20 @@ O usuário informou que os três gestos foram reconhecidos com facilidade, os at
 | Exibição das opções de encerramento e revanche | Observada no relato do usuário; cliques e seus efeitos não foram confirmados |
 
 Esses pontos deixam de constar como totalmente sem observação. Permanecem sem evidência específica a unicidade ao sustentar o gesto, rejeição da região inativa/central, ambiguidade/duas mãos, suspensão e recuperação, descarte de respostas antigas, precisão/rejeição/latência, cliques de revanche/encerramento/retorno ao menu e BFCache. Os testes automatizados da integração e a execução controlada dos demais cenários A01–A23 também permanecem pendentes; o relato não comprova configurações ou resultados numéricos que não foram informados.
+
+## Complemento de verificações manuais relatadas pelo usuário — 30/10/2026
+
+O usuário informou que realizou verificações adicionais e considerou resolvidos os itens abaixo. A data é a do registro deste relato; a data do ensaio, hardware, navegador, configuração e quantidade de tentativas não foram informados.
+
+| Verificação | Relato e limite |
+| --- | --- |
+| Rejeição da região inativa/central | Informada como “ok”; observação manual positiva, sem contagem ou condições detalhadas. |
+| Ambiguidade/duas mãos | Informada como “ok”; o usuário observou que o sistema não aceita quando duas mãos fazem gestos. |
+| Log ao iniciar revanche | Informado como “ok”; registros anteriores são limpos ao começar a revanche. Isso não demonstra descarte de respostas assíncronas atrasadas do reconhecedor. |
+| Revanche, encerramento e retorno ao menu | O usuário confirmou como “ok” os cliques e seus efeitos. |
+| Precisão, rejeição e latência | Avaliadas qualitativamente como “ok”; valores, método de medição e amostragem não foram informados. |
+
+Continuam pendentes evidências específicas de unicidade ao sustentar um gesto, suspensão/recuperação da câmera, descarte de respostas assíncronas antigas e retorno via BFCache. As métricas não têm valores quantitativos registrados. Os cenários controlados restantes A01–A23 e os testes automatizados da integração também não foram executados pelos agentes. Este relato não verifica os cálculos D18.
 
 ## Como acessar
 
@@ -83,3 +97,4 @@ O revisor apontou um P2 no retorno pelo histórico do navegador: `pagehide` desc
 | Total da rodada | Não disponibilizado |
 
 Indisponibilidade não significa consumo zero. Não foram inferidos valores a partir de percentuais de limites da conta, tamanho das mensagens ou soma de estimativas.
+

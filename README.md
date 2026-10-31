@@ -2,6 +2,8 @@
 
 Projeto de jogo 1v1 por turnos com interface gráfica 2D, seleção de magias por gestos em uma webcam e d20 virtuais gerados pelo software, no mesmo computador (D13).
 
+- [Contexto base do projeto](contexto_projeto.md)
+- [Pipeline Context Handoff — protocolo e template](docs/handoffs/README.md)
 - [Especificação aprovada](ESPECIFICACAO.md)
 - [Plano de entregas](PLANEJAMENTO.md)
 - [Registro de decisões](DECISOES.md)
@@ -70,3 +72,9 @@ Atualização da Entrega 4: protótipo implementado e revisado estaticamente, co
 
 Cada entrega deve ser mostrada ao usuário e ter seu commit autorizado antes de ser registrado.
 
+
+## Interface visual — Entrega 5
+
+A arena em `/jogo.html` recebeu o refinamento visual baseado na imagem fornecida, com cenário pixel art local, HUD de vida/CA/turno, cartas de magia, prévia única de webcam e histórico detalhado. Configuração, preparação, iniciativa, gestos e regras D18 permanecem no mesmo fluxo. As cartas são indicações dos gestos; não são comandos manuais de ataque. Menu superior reúne retorno ao menu, laboratório e redução de movimento.
+
+Consulte [ENTREGA_05.md](docs/ENTREGA_05.md) para escopo e limites. O [complemento manual](docs/ENTREGA_04.md#complemento-de-verificações-manuais-relatadas-pelo-usuário--30102026) atualiza os relatos históricos de câmera e cliques; o usuário também relatou funcionamento dos novos dados D18. Isso não representa execução automatizada dos cenários atuais nem métricas quantitativas.

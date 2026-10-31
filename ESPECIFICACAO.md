@@ -1,6 +1,6 @@
 # Especificação — Duelo de Magos
 
-**D18 implementada, ainda não testada.** Motor, gerador, controlador e interface funcional foram adaptados para dano em d6 e crítico natural, sem `baseDamage`. Revisão independente concluída por leitura, sem achados funcionais acionáveis. Os 70/70 históricos não validam D18; a suíte antiga não foi atualizada nem executada. Contrato e limites em [D18.md](docs/D18.md). O refinamento visual da Entrega 5 permanece separado.
+**D18 implementada, com relato manual positivo do usuário e sem execução automatizada atual.** Motor, gerador, controlador e interface funcional foram adaptados para dano em d6 e crítico natural, sem `baseDamage`. Revisão independente concluída por leitura, sem achados funcionais acionáveis. Os 70/70 históricos não validam D18; a suíte antiga não foi atualizada nem executada. Contrato e limites em [D18.md](docs/D18.md). O refinamento visual da Entrega 5 está implementado para revisão, conforme [ENTREGA_05.md](docs/ENTREGA_05.md).
 
 Base histórica anterior à adaptação D18: versão 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 virtuais (D13). A versão 1.1 da entrega 1 foi aprovada e registrada no commit `c9d1d7b`; essa aprovação e suas evidências são históricas. A entrega 2 foi concluída e aceita no escopo limitado do ensaio de 29/10/2026: seis gestos positivos, três por jogador. Rejeição, unicidade, recuperação e métricas não foram registradas; consulte docs/ENTREGA_02.md. Em 29/10/2026, o usuário autorizou commit e PR do motor testado da entrega 3, mantendo testes integrados e físicos adiados por ora (D15); isso não libera as entregas 4 a 7.
 
@@ -111,3 +111,13 @@ Cenários alvo usam vida 50 e CA 12, salvo indicação. Ataque e dano são entra
 ## 6. Histórico e limite da entrega
 
 A versão 1.1, aprovada em 27/10/2026, previa duas webcams e d20 físicos; D13 altera esses pontos por solicitação do usuário, sem declarar a antiga leitura física aprovada. As evidências antigas continuam identificadas em docs/ENTREGA_02.md. O ensaio de 29/10/2026 sustenta somente os seis gestos positivos registrados; rejeição, unicidade, recuperação e métricas permanecem sem evidência. A entrega 2 foi aceita com esses limites. Código do motor e integração pertencem às entregas 3 e 4.
+
+## Atualização da sessão manual e início da Entrega 5 — 30/10/2026
+
+O usuário relatou funcionamento dos novos dados D18 e confirmou manualmente rejeição de região inativa/central, ambiguidades de duas mãos, limpeza do log na revanche e cliques/efeitos de revanche, encerramento e menu. Precisão, rejeição e latência foram avaliadas qualitativamente como “ok”; não há medições quantitativas ou amostragem informadas. Detalhes em [ENTREGA_04.md](docs/ENTREGA_04.md#complemento-de-verificações-manuais-relatadas-pelo-usuário--30102026) e [D18.md](docs/D18.md).
+
+A sessão manual relatada foi encerrada pelo usuário. Continuam sem evidência específica o gesto sustentado, suspensão/recuperação, descarte de respostas assíncronas antigas, BFCache e cenários numéricos controlados; limpeza do log não comprova descarte de callbacks. Os testes automatizados antigos não foram migrados para D18. A escolha do MediaPipe Gesture Recognizer permanece confirmada.
+
+O usuário autorizou implementar a Entrega 5 usando a imagem fornecida. A versão visual está implementada na branch `codex/entrega-5-refinamento-visual`, sem alterar o motor ou controlador D18. Ver [relatório da Entrega 5](docs/ENTREGA_05.md). A revisão independente da nova apresentação foi concluída por leitura, sem novos achados após corrigir a visibilidade da iniciativa parcial na suspensão e a preservação de foco no log. O coordenador inspecionou menu/preparação em desktop e tela estreita, sem webcam; nenhum commit da etapa visual foi autorizado ou criado. Validação de ponta a ponta e pacote continuam etapas posteriores.
+
+

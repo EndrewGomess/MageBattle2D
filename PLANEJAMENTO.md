@@ -1,6 +1,6 @@
 # Planejamento — Duelo de Magos
 
-**D18 implementada, ainda não testada; revisão independente concluída por leitura, sem achados funcionais acionáveis.** Motor, dados, controlador e interface funcional foram adaptados antes do refinamento visual da Entrega 5. A suíte antiga não foi atualizada nem executada; os 70/70 pertencem à versão anterior. Ver [contrato e limites D18](docs/D18.md).
+**D18 implementada, com relato manual positivo do usuário e sem execução automatizada atual; revisão independente concluída por leitura, sem achados funcionais acionáveis.** Motor, dados, controlador e interface funcional foram adaptados antes do refinamento visual da Entrega 5. A suíte antiga não foi atualizada nem executada; os 70/70 pertencem à versão anterior. Ver [contrato e limites D18](docs/D18.md).
 
 Data: 27/10/2026. Atualização: 29/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md. Motor da entrega 3 implementado e testado: 70 testes aprovados e cobertura focada de 100% em combat.js/dice.js após correção dos dois achados de captura de entradas. Nova revisão independente confirmou as correções sem novos achados acionáveis. A Entrega 3 foi integrada à `main` pela [PR #3](https://github.com/EndrewGomess/MageBattle2D/pull/3), no merge `0fd5b20`; a autorização está registrada em D15. Testes de partida integrada e webcam real adiados por decisão explícita (D15).
 
@@ -221,3 +221,13 @@ Atualização de 28/10/2026 — interface gráfica 2D: requisito explicitado e o
 A Entrega 3 foi integrada à `main` pela [PR #3](https://github.com/EndrewGomess/MageBattle2D/pull/3), no merge `0fd5b20`; a autorização está registrada em D15. Os testes foram criados, armazenados e executados mediante pedido explícito, e a revisão independente final confirmou as correções sem novos achados acionáveis; comandos e resultados estão no relatório da entrega. Manter as verificações integradas e físicas restantes pendentes e relembrá-las em cada Entrega 5–7 conforme D15/D17, preservando o recorte exploratório já relatado pelo usuário.
 
 Atualização D13 — 28/10/2026: laboratório adaptado a uma webcam e rolagens virtuais, com preservação de resultados, seleção única e exportação separando software e observações do operador. Tokens por etapa: análise, implementação e revisão não disponibilizados; nenhum total numérico inferido. Nesta alteração não foram adicionados/executados testes, verificação de sintaxe ou ensaio no navegador; nenhum commit criado. Entregas 3 a 7 não iniciadas.
+
+## Atualização da sessão manual e início da Entrega 5 — 30/10/2026
+
+O usuário relatou funcionamento dos novos dados D18 e confirmou manualmente rejeição de região inativa/central, ambiguidades de duas mãos, limpeza do log na revanche e cliques/efeitos de revanche, encerramento e menu. Precisão, rejeição e latência foram avaliadas qualitativamente como “ok”; não há medições quantitativas ou amostragem informadas. Detalhes em [ENTREGA_04.md](docs/ENTREGA_04.md#complemento-de-verificações-manuais-relatadas-pelo-usuário--30102026) e [D18.md](docs/D18.md).
+
+A sessão manual relatada foi encerrada pelo usuário. Continuam sem evidência específica o gesto sustentado, suspensão/recuperação, descarte de respostas assíncronas antigas, BFCache e cenários numéricos controlados; limpeza do log não comprova descarte de callbacks. Os testes automatizados antigos não foram migrados para D18. A escolha do MediaPipe Gesture Recognizer permanece confirmada.
+
+O usuário autorizou implementar a Entrega 5 usando a imagem fornecida. A versão visual está implementada na branch `codex/entrega-5-refinamento-visual`, sem alterar o motor ou controlador D18. Ver [relatório da Entrega 5](docs/ENTREGA_05.md). A revisão independente da nova apresentação foi concluída por leitura, sem novos achados após corrigir a visibilidade da iniciativa parcial na suspensão e a preservação de foco no log. O coordenador inspecionou menu/preparação em desktop e tela estreita, sem webcam; nenhum commit da etapa visual foi autorizado ou criado. Validação de ponta a ponta e pacote continuam etapas posteriores.
+
+
