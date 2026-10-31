@@ -1,5 +1,5 @@
-import { createCombat, applyInitiativeRoll, resolveAction, validateConfig } from './combat.js';
-import { rollD20, rollForGesture } from './dice.js';
+import { createCombat, applyInitiativeRoll, resolveAction, validateConfig, COMBAT_SPELLS, planAttack } from './combat.js';
+import { rollD20, rollD6 } from './dice.js';
 import { GestureGate, activeGesture } from './core.js';
 import { THRESHOLDS } from './config.js';
 
@@ -44,7 +44,7 @@ export class GameController {
     }, delay);
   }
   start(config) {
-    const copied = { maxHealth: config?.maxHealth, baseDamage: config?.baseDamage, armorClass: config?.armorClass };
+    const copied = { maxHealth: config?.maxHealth, armorClass: config?.armorClass };
     const validation = validateConfig(copied);
     if (!validation.valid) return validation;
     const engine = createCombat(copied);
@@ -129,15 +129,30 @@ export class GameController {
     if (!selection.fresh) { this.emit(); return; }
     // Consumo antes do RNG: nenhum callback desta seleção pode executar outra ação.
     this.armed = false; this.selection++; this.phase = 'resolving';
-    try {
-      const roll = rollForGesture(selection.confirmed, this.rng);
-      this.lastRoll = Object.freeze({ match: token.match, selection: token.selection, turn: token.turn, player: token.player, spell: roll.gesture, values: Object.freeze([...roll.values]), selected: roll.selected, rule: roll.rule });
-      this.pendingAction = { attacker: token.player, spell: roll.gesture, values: [...roll.values] };
-      this.finishAction();
-    } catch (error) { this.suspend(`Ação suspensa: ${error.message}. O último resultado confirmado foi preservado.`); }
+    this.pendingAction = { attacker: token.player, spell: selection.confirmed, attackValues: [], damageValues: [],
+      match: token.match, selection: token.selection, turn: token.turn };
+    this.finishAction();
+  }
+  preserveRoll() {
+    const action = this.pendingAction;
+    if (!action) return;
+    const spell = COMBAT_SPELLS[action.spell];
+    this.lastRoll = Object.freeze({ ...action, player: action.attacker,
+      attackValues: Object.freeze([...action.attackValues]), values: Object.freeze([...action.attackValues]),
+      damageValues: Object.freeze([...action.damageValues]), plan: action.plan ?? null,
+      selected: action.plan?.selected ?? null, attackCount: spell.dice,
+      rule: spell.selection === 'highest' ? 'Vantagem: maior de 2d20' : spell.selection === 'lowest' ? 'Desvantagem: menor de 2d20' : 'Normal: 1d20' });
   }
   finishAction() {
+    if (!this.pendingAction) return;
+    this.phase = 'resolving';
     try {
+      const action = this.pendingAction, spell = COMBAT_SPELLS[action.spell];
+      // Cada resultado válido é guardado antes de solicitar o próximo dado.
+      while (action.attackValues.length < spell.dice) action.attackValues.push(rollD20(this.rng));
+      action.plan = planAttack(action.spell, action.attackValues, this.engine.config.armorClass);
+      while (action.damageValues.length < action.plan.rollsRequired) action.damageValues.push(rollD6(this.rng));
+      this.preserveRoll();
       this.engine = resolveAction(this.engine, this.pendingAction); this.pendingAction = null;
       if (this.engine.phase === 'finished') {
         this.invalidate(); this.phase = 'result'; this.message = `Jogador ${this.engine.winner} venceu!`; this.emit();
@@ -145,7 +160,10 @@ export class GameController {
         this.phase = 'nextTurn'; this.progress = 0; this.spell = null;
         this.message = 'Ação resolvida. Preparando automaticamente o próximo turno.'; this.emit(); this.later(() => this.arm());
       }
-    } catch (error) { this.suspend(`Não foi possível resolver a ação: ${error.message}. A rolagem foi preservada; retome para tentar a mesma resolução.`); }
+    } catch (error) {
+      this.preserveRoll();
+      this.suspend(`Ação suspensa: ${error.message}. Dados já gerados preservados; confirme a retomada para completar somente os dados faltantes e resolver.`);
+    }
   }
   rematch() {
     if (!this.engine || this.engine.phase !== 'finished') return;
