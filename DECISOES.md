@@ -129,3 +129,11 @@ A sessão manual relatada foi encerrada pelo usuário. Continuam sem evidência 
 
 O usuário autorizou implementar a Entrega 5 usando a imagem fornecida. A versão visual está implementada na branch `codex/entrega-5-refinamento-visual`, sem alterar o motor ou controlador D18. Ver [relatório da Entrega 5](docs/ENTREGA_05.md). A revisão independente da nova apresentação foi concluída por leitura, sem novos achados após corrigir a visibilidade da iniciativa parcial na suspensão e a preservação de foco no log. O coordenador inspecionou menu/preparação em desktop e tela estreita, sem webcam; nenhum commit da etapa visual foi autorizado ou criado. Validação de ponta a ponta e pacote continuam etapas posteriores.
 
+
+## Entrega 6 — validações autorizadas, 02/11/2026
+
+O usuário autorizou iniciar a execução das validações, incluindo testes. A suíte migrou para D18 e passou 81/81; sintaxe e HTTP local passaram. As evidências sintéticas abrangem regras, controlador, dados parciais, tokens antigos, adapter e UI em DOM mínimo; [relatório](docs/ENTREGA_06.md). O adiamento D15/D17 continua pertinente aos casos físicos e de navegador não exercitados: acesso a localhost bloqueado no navegador do ambiente, sem ensaio novo de webcam, partida integrada ou BFCache real. Métricas físicas continuam sem coleta quantitativa. Entrega 6 ainda não concluída; nenhuma regra foi alterada.
+
+Correção do registro da Entrega 5: existe o commit `e777181`, base atual da Entrega 6; as afirmações históricas de que não havia commit não descrevem o Git atual. Não se infere autorização a partir do histórico nem se retrocria handoff. O usuário considerou a Entrega 5 finalizada nesta conversa. Commit da Entrega 6 depende de autorização específica futura.
+
+Decisão posterior desta rodada (02/11/2026): o usuário pediu deixar o ensaio físico pendente por enquanto. Manter esse adiamento explícito; os bloqueios de navegador permanecem registrados separadamente no relatório da Entrega 6.

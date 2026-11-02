@@ -1,0 +1,25 @@
+PASS GET app.js type=text/javascript; charset=utf-8
+PASS GET cameras.js type=text/javascript; charset=utf-8
+PASS GET combat.js type=text/javascript; charset=utf-8
+PASS GET config.js type=text/javascript; charset=utf-8
+PASS GET core.js type=text/javascript; charset=utf-8
+PASS GET dice.js type=text/javascript; charset=utf-8
+PASS GET game-controller.js type=text/javascript; charset=utf-8
+PASS GET game-recognizer.js type=text/javascript; charset=utf-8
+PASS GET game-ui.js type=text/javascript; charset=utf-8
+PASS GET game.css type=text/css; charset=utf-8
+PASS GET gesture-worker.js type=text/javascript; charset=utf-8
+PASS GET index.html type=text/html; charset=utf-8
+PASS GET jogo.html type=text/html; charset=utf-8
+PASS GET segmentation.js type=text/javascript; charset=utf-8
+PASS GET styles.css type=text/css; charset=utf-8
+PASS GET vision.js type=text/javascript; charset=utf-8
+PASS GET assets/interface-base.png type=application/octet-stream
+PASS GET assets/fonts/OFL-VT323.txt type=application/octet-stream
+PASS GET assets/fonts/VT323-Regular.ttf type=application/octet-stream
+PASS HEAD /jogo.html 200
+PASS POST /jogo.html 405
+PASS GET /nao-existe 404
+PASS GET /%2e%2e%2fREADME.md 403
+PASS GET /.git/config 404
+HTTP assertions passed; files=19

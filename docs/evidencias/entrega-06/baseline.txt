@@ -1,0 +1,455 @@
+✔ mesmo dispositivo é rejeitado antes de qualquer abertura (7.4331ms)
+✔ falha na segunda câmera encerra o primeiro fluxo (1.0777ms)
+✔ stop durante abertura descarta fluxo que chega depois (0.179ms)
+✔ dois seletores que retornam o mesmo hardware são rejeitados (0.2592ms)
+✔ interrupção de uma câmera encerra os fluxos e notifica uma única vez (0.1984ms)
+✔ objetos antigos não armam a ação; área vazia é necessária (1.4271ms)
+✔ dois objetos distintos podem gerar uma única captura, mesmo com valores iguais (0.3972ms)
+✔ um dado não valida ação que exige dois; dado extra também bloqueia (0.242ms)
+✔ movimento, obstrução e cancelamento invalidam OCR atrasado (0.3349ms)
+✔ intervalo sem observações não conta como estabilidade (0.2075ms)
+✔ uma caixa duplicada não se passa por dois objetos físicos (0.186ms)
+✔ d20 rejeita lixo, valores fora da faixa e múltiplos números (0.3187ms)
+✔ OCR rejeita conflito 6/9 e escore insuficiente (0.2846ms)
+✔ D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores (0.6284ms)
+✔ D14: centro, fronteiras e mão atravessando a faixa central não confirmam (1.3546ms)
+✔ D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física (0.4776ms)
+✔ gesto no limite temporal confirma só depois de duração contínua completa (0.3256ms)
+✔ intervalo máximo excedido e classe não reconhecida reiniciam progresso (0.1257ms)
+✔ gesto exige observação contínua por 1 segundo e confirma só uma vez (0.1533ms)
+✔ trocar ou perder gesto reinicia progresso (0.1373ms)
+✔ métricas incluem rejeições e preservam multiplicidade dos valores (0.4035ms)
+✔ segmentação conta componentes físicos distintos, sem usar seus números (8.2298ms)
+✖ configuração padrão é explícita; estado inicial tem vida cheia e iniciativa pendente (6.4884ms)
+✖ A01: configuração inválida identifica cada campo e não aplica padrões silenciosos (1.0172ms)
+✖ configuração aceita CA 1/19 e inteiros positivos seguros; CA fora dos limites é rejeitada (0.3336ms)
+✖ criação copia campos conhecidos e não congela nem altera configuração do chamador (0.3424ms)
+✔ A02/A03: empates preservados e desempate inicia o jogador correto (0.4539ms)
+✔ iniciativa cobre todos os 400 pares possíveis de faces sem alterar vida (3.1072ms)
+✔ iniciativa copia o par sem congelá-lo e rejeita dados inválidos atomicamente (0.7936ms)
+✔ estados forjados, clones e primitivas retornam INVALID_STATE sem percorrer a entrada (0.5675ms)
+✔ operações em fases incorretas não alteram estados legítimos (0.2424ms)
+✖ A04–A09/A15/A22/A23: cenários de magias e histórico completo (0.619ms)
+✖ CA estrita e naturais: 380 combinações de uma face e CA, sem efeito especial (0.211ms)
+✖ vantagem/desvantagem: 15.200 combinações de pares e CA usam maior/menor (0.2822ms)
+✖ dano extremo e limite da vida: 105 combinações confrontadas com oráculo BigInt (0.2465ms)
+✖ A16: ataque fatal registra dano aplicado e bloqueia qualquer ação ou iniciativa posterior (0.1725ms)
+✖ erro e dano zero consomem turno, magias podem repetir e iniciativa permanece fixa (0.1804ms)
+✔ ação ausente, jogador incorreto e magia inválida são rejeitados atomicamente (0.7978ms)
+✔ quantidade, tipo e faixa de todos os dados são validados antes de consumir ação (1.9427ms)
+✖ snapshots congelados, entradas copiadas e ação duplicada não altera próximo turno (0.1949ms)
+✖ 12 partidas determinísticas limitadas mantêm invariantes, histórico e reprodução idêntica (0.3678ms)
+✖ sequência limitada de 100 erros continua válida sem forçar vitória artificial (0.1052ms)
+✔ 250 pares empatados permanecem registrados antes do desempate sem iniciar combate (3.1892ms)
+✖ 250 acertos de dano zero alternam turnos e preservam todo histórico sem falsa vitória (0.2808ms)
+✔ P2: iniciativa copia índices validados sem consumir iterador que substitui dados (0.1795ms)
+✖ P2: ação copia índices validados sem consumir iterador que substitui dados (0.15ms)
+✖ P2: iteradores que lançam não são chamados na iniciativa nem na ação (0.1473ms)
+✔ P2: iniciativa lê cada índice uma vez e compara a mesma cópia registrada (0.2694ms)
+✖ P2: ação lê cada índice uma vez antes de validar e resolver (0.1875ms)
+✖ P2: criação captura configuração uma vez antes de validar e emitir snapshot (0.4842ms)
+✖ P2: validateConfig público avalia uma leitura de cada campo externo (0.3468ms)
+✖ P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução (0.2351ms)
+✔ d20 mapeia os 20 intervalos e extremos de [0,1) para inteiros 1..20 (2.514ms)
+✔ RNG não função e amostras inválidas produzem erro claro (0.5624ms)
+✔ exceção da fonte aleatória é preservada sem nova chamada (0.1419ms)
+✔ A10: Raio gera exatamente um dado e mantém formato do laboratório (0.9052ms)
+✔ A11: vantagem/desvantagem fazem duas chamadas e usam maior/menor em 800 pares (3.4608ms)
+✔ dois valores iguais preservam duas chamadas e duas posições (0.1434ms)
+✔ gestos inválidos e chaves herdadas são rejeitados antes de chamar RNG (0.2226ms)
+✔ falha no segundo dado aborta a rolagem sem sortear novamente (1.1347ms)
+✔ rolagens independentes retornam arrays distintos sem guardar seleção anterior (0.2743ms)
+✔ fonte padrão é Math.random e mantém a quantidade de chamadas por magia (4.6854ms)
+✔ mesa vazia continua sem objetos após mudança uniforme de exposição (14.1502ms)
+✔ balanço de branco uniforme não cria objetos inexistentes (1.5453ms)
+✔ mancha de pouco contraste na mesa vazia é ignorada (0.9298ms)
+✔ ruído pequeno de alto contraste não conta como um dado (1.5976ms)
+✔ faixa fina não conta como um dado mesmo com área suficiente (1.9537ms)
+✔ dois objetos contrastantes continuam separados após variação global de luz (3.1831ms)
+✔ mudança extrema de iluminação exige calibração sem criar objetos (1.0643ms)
+✔ movimento real de um objeto continua sendo detectado (4.6345ms)
+ℹ tests 70
+ℹ suites 0
+ℹ pass 50
+ℹ fail 20
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 207.1973
+
+✖ failing tests:
+
+test at tests\combat.test.mjs:36:1
+✖ configuração padrão é explícita; estado inicial tem vida cheia e iniciativa pendente (6.4884ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      armorClass: 12,
+  -   baseDamage: 10,
+      maxHealth: 50
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:37:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { maxHealth: 50, armorClass: 12 },
+    expected: { maxHealth: 50, baseDamage: 10, armorClass: 12 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:46:1
+✖ A01: configuração inválida identifica cada campo e não aplica padrões silenciosos (1.0172ms)
+  AssertionError [ERR_ASSERTION]: baseDamage: undefined
+  
+  true !== false
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:52:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:66:1
+✖ configuração aceita CA 1/19 e inteiros positivos seguros; CA fora dos limites é rejeitada (0.3336ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      armorClass: 1,
+  -   baseDamage: 1,
+      maxHealth: 1
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:71:14)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { maxHealth: 1, armorClass: 1 },
+    expected: { maxHealth: 1, baseDamage: 1, armorClass: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:79:1
+✖ criação copia campos conhecidos e não congela nem altera configuração do chamador (0.3424ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+      'maxHealth',
+  -   'baseDamage',
+      'armorClass'
+    ]
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:86:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'maxHealth', 'armorClass' ],
+    expected: [ 'maxHealth', 'baseDamage', 'armorClass' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:159:1
+✖ A04–A09/A15/A22/A23: cenários de magias e histórico completo (0.619ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:173:20)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:183:1
+✖ CA estrita e naturais: 380 combinações de uma face e CA, sem efeito especial (0.211ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:187:21)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:197:1
+✖ vantagem/desvantagem: 15.200 combinações de pares e CA usam maior/menor (0.2822ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:202:23)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:215:1
+✖ dano extremo e limite da vida: 105 combinações confrontadas com oráculo BigInt (0.2465ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:220:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:229:1
+✖ A16: ataque fatal registra dano aplicado e bloqueia qualquer ação ou iniciativa posterior (0.1725ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:231:15)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:243:1
+✖ erro e dano zero consomem turno, magias podem repetir e iniciativa permanece fixa (0.1804ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:246:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:277:1
+✖ snapshots congelados, entradas copiadas e ação duplicada não altera próximo turno (0.1949ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:283:16)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:298:1
+✖ 12 partidas determinísticas limitadas mantêm invariantes, histórico e reprodução idêntica (0.3678ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:319:24)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:335:1
+✖ sequência limitada de 100 erros continua válida sem forçar vitória artificial (0.1052ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:337:51)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:368:1
+✖ 250 acertos de dano zero alternam turnos e preservam todo histórico sem falsa vitória (0.2808ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:371:13)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:399:1
+✖ P2: ação copia índices validados sem consumir iterador que substitui dados (0.15ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:404:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:414:1
+✖ P2: iteradores que lançam não são chamados na iniciativa nem na ação (0.1473ms)
+  Error [CombatError]: Informe exatamente 2 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:420:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:438:1
+✖ P2: ação lê cada índice uma vez antes de validar e resolver (0.1875ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:442:17)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }
+
+test at tests\combat.test.mjs:448:1
+✖ P2: criação captura configuração uma vez antes de validar e emitir snapshot (0.4842ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      armorClass: 1,
+  +   baseDamage: 0,
+  -   baseDamage: 1,
+      maxHealth: 1
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:453:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { maxHealth: 1, baseDamage: 0, armorClass: 1 },
+    expected: { maxHealth: 1, baseDamage: 1, armorClass: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:459:1
+✖ P2: validateConfig público avalia uma leitura de cada campo externo (0.3468ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    {
+      armorClass: 1,
+  +   baseDamage: 0,
+  -   baseDamage: 1,
+      maxHealth: 1
+    }
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:464:10)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { maxHealth: 1, baseDamage: 0, armorClass: 1 },
+    expected: { maxHealth: 1, baseDamage: 1, armorClass: 1 },
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\combat.test.mjs:467:1
+✖ P2: ação captura atacante magia e array uma vez sem mudar seleção durante resolução (0.2351ms)
+  Error [CombatError]: Informe exatamente 1 resultado(s) de d20.
+      at copyDice (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:89:11)
+      at resolveAction (file:///C:/Dev/projetovisao/MageBattle2D/dist/combat.js:157:18)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:475:19)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    code: 'INVALID_VALUES',
+    errors: { values: 'Quantidade incorreta de dados.' }
+  }

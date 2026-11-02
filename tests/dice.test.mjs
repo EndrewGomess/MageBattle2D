@@ -100,3 +100,11 @@ test('fonte padrão é Math.random e mantém a quantidade de chamadas por magia'
   assert.deepEqual(rollForGesture('Open_Palm').values, [13, 13]);
   assert.equal(calls, 6);
 });
+
+test('D18: d6 cobre faces, extremos, chamada única e fonte inválida', async () => {
+ const { rollD6 } = await import('../dist/dice.js');
+ for(let face=1;face<=6;face++) { let calls=0;assert.equal(rollD6(()=>{calls++;return (face-0.5)/6;}),face);assert.equal(calls,1);assert.equal(rollD6(()=>(face-1)/6),face); }
+ assert.equal(rollD6(()=>0),1);assert.equal(rollD6(()=>1-Number.EPSILON),6);
+ for(const sample of [null,'0.5',NaN,Infinity,-1,1]) assert.throws(()=>rollD6(()=>sample));
+ assert.throws(()=>rollD6(null)); const failure=new Error('RNG');assert.throws(()=>rollD6(()=>{throw failure;}),e=>e===failure);
+});

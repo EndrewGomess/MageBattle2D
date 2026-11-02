@@ -1,0 +1,89 @@
+✔ mesmo dispositivo é rejeitado antes de qualquer abertura (1.6316ms)
+✔ falha na segunda câmera encerra o primeiro fluxo (1.1288ms)
+✔ stop durante abertura descarta fluxo que chega depois (0.1716ms)
+✔ dois seletores que retornam o mesmo hardware são rejeitados (0.2651ms)
+✔ interrupção de uma câmera encerra os fluxos e notifica uma única vez (0.1947ms)
+✔ objetos antigos não armam a ação; área vazia é necessária (0.8927ms)
+✔ dois objetos distintos podem gerar uma única captura, mesmo com valores iguais (0.2545ms)
+✔ um dado não valida ação que exige dois; dado extra também bloqueia (0.148ms)
+✔ movimento, obstrução e cancelamento invalidam OCR atrasado (0.207ms)
+✔ intervalo sem observações não conta como estabilidade (0.1419ms)
+✔ uma caixa duplicada não se passa por dois objetos físicos (0.1083ms)
+✔ d20 rejeita lixo, valores fora da faixa e múltiplos números (0.2844ms)
+✔ OCR rejeita conflito 6/9 e escore insuficiente (0.2359ms)
+✔ D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores (0.5883ms)
+✔ D14: centro, fronteiras e mão atravessando a faixa central não confirmam (1.6646ms)
+✔ D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física (0.3634ms)
+✔ gesto no limite temporal confirma só depois de duração contínua completa (0.2979ms)
+✔ intervalo máximo excedido e classe não reconhecida reiniciam progresso (0.1145ms)
+✔ gesto exige observação contínua por 1 segundo e confirma só uma vez (0.1398ms)
+✔ trocar ou perder gesto reinicia progresso (0.0861ms)
+✔ métricas incluem rejeições e preservam multiplicidade dos valores (0.2924ms)
+✔ segmentação conta componentes físicos distintos, sem usar seus números (6.721ms)
+✔ A01: configuração D18, limites, campos extras e snapshots (2.2984ms)
+✔ A02/A03: todos os 400 pares de iniciativa e empates preservados (3.5654ms)
+✔ A04: dano D18, escolhido, histórico e transição (0.5093ms)
+✔ A05: dano D18, escolhido, histórico e transição (0.1528ms)
+✔ A06: dano D18, escolhido, histórico e transição (0.1314ms)
+✔ A07: dano D18, escolhido, histórico e transição (0.1017ms)
+✔ A08: dano D18, escolhido, histórico e transição (0.1047ms)
+✔ A09: dano D18, escolhido, histórico e transição (0.0901ms)
+✔ A15: dano D18, escolhido, histórico e transição (0.1021ms)
+✔ A16: dano D18, escolhido, histórico e transição (0.4661ms)
+✔ A22: dano D18, escolhido, histórico e transição (0.4801ms)
+✔ A23: dano D18, escolhido, histórico e transição (0.1499ms)
+✔ D18: enumeração de d20/CA com oráculo independente para as três magias (22.0208ms)
+✖ dados de dano: quantidade/faixa estritas; flags externas não alteram regras (1.6234ms)
+✔ estados forjados, fases incorretas, atacante/magia inválidos: rejeição atômica (0.7394ms)
+✔ P2: captura cada campo/config/índice uma vez; ignora iteradores externos (0.4404ms)
+✔ P2: iniciativa lê índices uma vez e usa a mesma cópia (0.395ms)
+✔ entradas copiadas e snapshot congelado; consumo duplicado bloqueado (0.255ms)
+✔ partidas reproduzíveis e 100 erros preservam turnos/histórico; ataque fatal encerra (1.7183ms)
+✔ d20 mapeia os 20 intervalos e extremos de [0,1) para inteiros 1..20 (2.3297ms)
+✔ RNG não função e amostras inválidas produzem erro claro (0.7798ms)
+✔ exceção da fonte aleatória é preservada sem nova chamada (0.2059ms)
+✔ A10: Raio gera exatamente um dado e mantém formato do laboratório (0.971ms)
+✔ A11: vantagem/desvantagem fazem duas chamadas e usam maior/menor em 800 pares (2.9341ms)
+✔ dois valores iguais preservam duas chamadas e duas posições (0.1412ms)
+✔ gestos inválidos e chaves herdadas são rejeitados antes de chamar RNG (0.2242ms)
+✔ falha no segundo dado aborta a rolagem sem sortear novamente (0.1597ms)
+✔ rolagens independentes retornam arrays distintos sem guardar seleção anterior (0.1825ms)
+✔ fonte padrão é Math.random e mantém a quantidade de chamadas por magia (0.5447ms)
+✔ D18: d6 cobre faces, extremos, chamada única e fonte inválida (0.3587ms)
+✔ mesa vazia continua sem objetos após mudança uniforme de exposição (9.8432ms)
+✔ balanço de branco uniforme não cria objetos inexistentes (0.9969ms)
+✔ mancha de pouco contraste na mesa vazia é ignorada (0.9363ms)
+✔ ruído pequeno de alto contraste não conta como um dado (0.9988ms)
+✔ faixa fina não conta como um dado mesmo com área suficiente (1.2156ms)
+✔ dois objetos contrastantes continuam separados após variação global de luz (2.2287ms)
+✔ mudança extrema de iluminação exige calibração sem criar objetos (1.6111ms)
+✔ movimento real de um objeto continua sendo detectado (5.0834ms)
+ℹ tests 60
+ℹ suites 0
+ℹ pass 59
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 184.0861
+
+✖ failing tests:
+
+test at tests\combat.test.mjs:47:1
+✖ dados de dano: quantidade/faixa estritas; flags externas não alteram regras (1.6234ms)
+  AssertionError [ERR_ASSERTION]: Missing expected exception.
+      at error (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:7:36)
+      at reject (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:8:73)
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/combat.test.mjs:50:96)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'throws',
+    diff: 'simple'
+  }

@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: connect ETIMEDOUT 127.0.0.1:4173
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4039,
+    code: 'ETIMEDOUT',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 4173
+  }
+}
+
+Node.js v24.22.1
