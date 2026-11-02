@@ -1,0 +1,17 @@
+{"node":"v24.22.1","os":"win32","release":"10.0.26200","arch":"x64","base":"http://127.0.0.1:4173"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+[TypeError: fetch failed] {
+  [cause]: Error: connect EACCES 127.0.0.1:4173
+      at TCPConnectWrap.afterConnect [as oncomplete] (node:net:2083:16) {
+    errno: -4092,
+    code: 'EACCES',
+    syscall: 'connect',
+    address: '127.0.0.1',
+    port: 4173
+  }
+}
+
+Node.js v24.22.1

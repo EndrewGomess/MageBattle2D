@@ -1,0 +1,101 @@
+✔ mesmo dispositivo é rejeitado antes de qualquer abertura (1.6064ms)
+✔ falha na segunda câmera encerra o primeiro fluxo (1.3195ms)
+✔ stop durante abertura descarta fluxo que chega depois (0.2577ms)
+✔ dois seletores que retornam o mesmo hardware são rejeitados (0.4003ms)
+✔ interrupção de uma câmera encerra os fluxos e notifica uma única vez (0.3328ms)
+✔ objetos antigos não armam a ação; área vazia é necessária (1.3376ms)
+✔ dois objetos distintos podem gerar uma única captura, mesmo com valores iguais (0.4546ms)
+✔ um dado não valida ação que exige dois; dado extra também bloqueia (0.2657ms)
+✔ movimento, obstrução e cancelamento invalidam OCR atrasado (0.3049ms)
+✔ intervalo sem observações não conta como estabilidade (0.1737ms)
+✔ uma caixa duplicada não se passa por dois objetos físicos (0.1321ms)
+✔ d20 rejeita lixo, valores fora da faixa e múltiplos números (0.274ms)
+✔ OCR rejeita conflito 6/9 e escore insuficiente (0.2385ms)
+✔ D14: prévia espelhada converte coordenadas uma única vez e respeita ambos jogadores (0.4467ms)
+✔ D14: centro, fronteiras e mão atravessando a faixa central não confirmam (1.139ms)
+✔ D14: limiares por classe e ambiguidades rejeitam confirmação sem evidência física (0.2982ms)
+✔ gesto no limite temporal confirma só depois de duração contínua completa (0.2046ms)
+✔ intervalo máximo excedido e classe não reconhecida reiniciam progresso (0.1143ms)
+✔ gesto exige observação contínua por 1 segundo e confirma só uma vez (0.1443ms)
+✔ trocar ou perder gesto reinicia progresso (0.1436ms)
+✔ métricas incluem rejeições e preservam multiplicidade dos valores (0.2541ms)
+✔ segmentação conta componentes físicos distintos, sem usar seus números (7.251ms)
+✔ A01: configuração D18, limites, campos extras e snapshots (3.356ms)
+✔ A02/A03: todos os 400 pares de iniciativa e empates preservados (4.5827ms)
+✔ A04: dano D18, escolhido, histórico e transição (0.6613ms)
+✔ A05: dano D18, escolhido, histórico e transição (0.2153ms)
+✔ A06: dano D18, escolhido, histórico e transição (0.1924ms)
+✔ A07: dano D18, escolhido, histórico e transição (0.1584ms)
+✔ A08: dano D18, escolhido, histórico e transição (0.1499ms)
+✔ A09: dano D18, escolhido, histórico e transição (0.1368ms)
+✔ A15: dano D18, escolhido, histórico e transição (0.1687ms)
+✔ A16: dano D18, escolhido, histórico e transição (0.3676ms)
+✔ A22: dano D18, escolhido, histórico e transição (0.4733ms)
+✔ A23: dano D18, escolhido, histórico e transição (0.1542ms)
+✔ D18: enumeração de d20/CA com oráculo independente para as três magias (23.2896ms)
+✔ dados de dano: quantidade/faixa estritas; flags externas não alteram regras (2.1807ms)
+✔ estados forjados, fases incorretas, atacante/magia inválidos: rejeição atômica (1.0401ms)
+✔ P2: captura cada campo/config/índice uma vez; ignora iteradores externos (0.562ms)
+✔ P2: iniciativa lê índices uma vez e usa a mesma cópia (0.2762ms)
+✔ entradas copiadas e snapshot congelado; consumo duplicado bloqueado (0.3837ms)
+✔ partidas reproduzíveis e 100 erros preservam turnos/histórico; ataque fatal encerra (1.9752ms)
+✔ d20 mapeia os 20 intervalos e extremos de [0,1) para inteiros 1..20 (1.7669ms)
+✔ RNG não função e amostras inválidas produzem erro claro (0.7396ms)
+✔ exceção da fonte aleatória é preservada sem nova chamada (0.1976ms)
+✔ A10: Raio gera exatamente um dado e mantém formato do laboratório (1.3513ms)
+✔ A11: vantagem/desvantagem fazem duas chamadas e usam maior/menor em 800 pares (4.8418ms)
+✔ dois valores iguais preservam duas chamadas e duas posições (0.2528ms)
+✔ gestos inválidos e chaves herdadas são rejeitados antes de chamar RNG (0.353ms)
+✔ falha no segundo dado aborta a rolagem sem sortear novamente (0.2307ms)
+✔ rolagens independentes retornam arrays distintos sem guardar seleção anterior (0.2906ms)
+✔ fonte padrão é Math.random e mantém a quantidade de chamadas por magia (0.7897ms)
+✔ D18: d6 cobre faces, extremos, chamada única e fonte inválida (0.5411ms)
+✔ A01/A21: bloqueia configuração inválida e início sem recursos; uma câmera basta (1.6785ms)
+✔ A03/A18: empate e dado parcial da iniciativa sobrevivem a reconexão explícita (1.1759ms)
+✔ A10/A14/A17: confirmação única, gesto sustentado e respostas do turno anterior (1.5745ms)
+✖ A12: mudança, ausência, lacuna e observação velha reiniciam sem RNG (9.2476ms)
+✔ região central, mão inativa e duas mãos ativas não confirmam (sintético) (0.7599ms)
+✔ A18: falha em cada posição do RNG preserva d20/d6 e retoma somente faltantes (1.2269ms)
+✔ A04/A16/A22: erro e Bola maximizada não geram d6; Raio crítico gera 4 (0.541ms)
+✔ A18: ocultar, vídeo congelado, callbacks antigos e dispose não resolvem ações (0.3208ms)
+✔ A19/A20: revanche limpa partida preservando recursos/config; menu invalida callbacks (0.5676ms)
+✔ A19: revanche sem recursos exige preparação sem RNG automático (0.3756ms)
+✔ mesa vazia continua sem objetos após mudança uniforme de exposição (10.3246ms)
+✔ balanço de branco uniforme não cria objetos inexistentes (1.6603ms)
+✔ mancha de pouco contraste na mesa vazia é ignorada (1.6144ms)
+✔ ruído pequeno de alto contraste não conta como um dado (2.0511ms)
+✔ faixa fina não conta como um dado mesmo com área suficiente (1.8584ms)
+✔ dois objetos contrastantes continuam separados após variação global de luz (2.515ms)
+✔ mudança extrema de iluminação exige calibração sem criar objetos (1.9158ms)
+✔ movimento real de um objeto continua sendo detectado (3.7784ms)
+ℹ tests 70
+ℹ suites 0
+ℹ pass 69
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 207.7505
+
+✖ failing tests:
+
+test at tests\game-controller.test.mjs:23:1
+✖ A12: mudança, ausência, lacuna e observação velha reiniciam sem RNG (9.2476ms)
+  AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+  
+    assert.ok(h.c.progress>0)
+  
+      at TestContext.<anonymous> (file:///C:/Dev/projetovisao/MageBattle2D/tests/game-controller.test.mjs:24:78)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

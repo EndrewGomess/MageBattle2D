@@ -39,3 +39,7 @@ Por determinação da equipe, o complemento foi revertido, restaurando a interfa
 3. **`dist/game-ui.js`**: revertida a rotação 3D de d20 tumbling; a função `paintDice` agora renderiza os dados d20 diretamente e com exibição numérica imediata dos valores já confirmados pela engine/controlador, preservando destaque do d20 escolhido e acessibilidade (`aria-label`), sem atrasos nem sobrecarga de nós. Removidas as complexidades de sincronização de motion pause.
 
 A interface da arena permanece totalmente alinhada à arte de referência fornecida pelo usuário, com visual estável, legível e responsivo, disponível para inspeção e revisão na branch `codex/entrega-5-refinamento-visual`.
+
+## Estado atualizado — 02/11/2026
+
+O usuário considerou a Entrega 5 finalizada e autorizou começar a Entrega 6. O histórico Git contém o commit visual `e777181`, base da branch da Entrega 6; as afirmações anteriores de ausência de commit estavam desatualizadas. Não se infere sua autorização nem se cria handoff retroativo. As validações atuais e os bloqueios do navegador/ensaio físico estão em [ENTREGA_06.md](ENTREGA_06.md).

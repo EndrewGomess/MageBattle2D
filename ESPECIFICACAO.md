@@ -1,6 +1,6 @@
 # Especificação — Duelo de Magos
 
-**D18 implementada, com relato manual positivo do usuário e sem execução automatizada atual.** Motor, gerador, controlador e interface funcional foram adaptados para dano em d6 e crítico natural, sem `baseDamage`. Revisão independente concluída por leitura, sem achados funcionais acionáveis. Os 70/70 históricos não validam D18; a suíte antiga não foi atualizada nem executada. Contrato e limites em [D18.md](docs/D18.md). O refinamento visual da Entrega 5 está implementado para revisão, conforme [ENTREGA_05.md](docs/ENTREGA_05.md).
+**Estado atual — 02/11/2026: D18 implementada e validada automaticamente no alcance da Entrega 6.** A suíte foi migrada para D18 e ampliada, com 81/81 testes aprovados na execução final do coordenador. A Entrega 5 foi considerada finalizada pelo usuário. A Entrega 6 tem validação automatizada parcial concluída; a revisão independente final da rodada foi concluída somente por leitura, sem defeitos funcionais acionáveis nos testes e documentos examinados. Navegador real/BFCache estão bloqueados pelo ambiente, e o ensaio físico foi adiado explicitamente pelo usuário; não há validação integral da partida ou métricas físicas. Ver [matriz, evidências e limites atuais](docs/ENTREGA_06.md) e [contrato D18](docs/D18.md). Os resultados históricos de 70/70 pertencem à versão anterior.
 
 Base histórica anterior à adaptação D18: versão 1.2, atualizada em 28/10/2026 pelo pedido de uma webcam e d20 virtuais (D13). A versão 1.1 da entrega 1 foi aprovada e registrada no commit `c9d1d7b`; essa aprovação e suas evidências são históricas. A entrega 2 foi concluída e aceita no escopo limitado do ensaio de 29/10/2026: seis gestos positivos, três por jogador. Rejeição, unicidade, recuperação e métricas não foram registradas; consulte docs/ENTREGA_02.md. Em 29/10/2026, o usuário autorizou commit e PR do motor testado da entrega 3, mantendo testes integrados e físicos adiados por ora (D15); isso não libera as entregas 4 a 7.
 
@@ -78,9 +78,9 @@ Arena 2D: dois magos, nome, vida atual/máxima, barras, CA, turno, uma prévia d
 
 Revanche preserva vida máxima, CA e câmera disponível, restaura vida, limpa histórico e seleção e gera nova iniciativa. Voltar ao menu permite editar vida e CA, sem dano padrão. O laboratório não implementa esses fluxos de combate. As alterações funcionais D18 desses fluxos estão implementadas, ainda sem verificação de execução.
 
-## 5. Cenários alvo A01–A23 — D18, não executados
+## 5. Cenários alvo A01–A23 — D18, evidências por camada
 
-Cenários alvo usam vida 50 e CA 12, salvo indicação. Ataque e dano são entradas controladas distintas para futura verificação autorizada. **Nenhum cenário desta revisão D18 foi executado.** Os IDs foram preservados, mas os casos de dano e crítico foram atualizados: A15 e A23 deixam de usar dano padrão/metade e A22 passa a exigir crítico. Os resultados históricos de 70/70 em [ENTREGA_03.md](docs/ENTREGA_03.md) pertencem à versão anterior e não são evidência da tabela abaixo. O relato exploratório D17 também ocorreu antes desta adaptação.
+Cenários alvo usam vida 50 e CA 12, salvo indicação. Ataque e dano são entradas controladas distintas. Em 02/11/2026, os casos aplicáveis passaram em testes automatizados; a [matriz da Entrega 6](docs/ENTREGA_06.md) identifica a camada exercitada e os casos parciais. Isso não equivale à execução real de todos os cenários no navegador ou com webcam. Os IDs foram preservados, mas os casos de dano e crítico foram atualizados: A15 e A23 deixam de usar dano padrão/metade e A22 passa a exigir crítico. Os resultados históricos de 70/70 em [ENTREGA_03.md](docs/ENTREGA_03.md) pertencem à versão anterior e não são evidência da tabela abaixo. O relato exploratório D17 também ocorreu antes desta adaptação.
 
 | ID | Situação | Resultado esperado |
 | --- | --- | --- |
@@ -121,3 +121,7 @@ A sessão manual relatada foi encerrada pelo usuário. Continuam sem evidência 
 O usuário autorizou implementar a Entrega 5 usando a imagem fornecida. A versão visual está implementada na branch `codex/entrega-5-refinamento-visual`, sem alterar o motor ou controlador D18. Ver [relatório da Entrega 5](docs/ENTREGA_05.md). A revisão independente da nova apresentação foi concluída por leitura, sem novos achados após corrigir a visibilidade da iniciativa parcial na suspensão e a preservação de foco no log. O coordenador inspecionou menu/preparação em desktop e tela estreita, sem webcam; nenhum commit da etapa visual foi autorizado ou criado. Validação de ponta a ponta e pacote continuam etapas posteriores.
 
 
+
+## Evidência atual — Entrega 6, 02/11/2026
+
+Os cenários D18 acima passaram na camada automatizada aplicável; ver [matriz A01–A23](docs/ENTREGA_06.md), que distingue camada e casos parciais. Foram aprovados 81 testes atuais após migração da suíte. As referências acima a “não executados” descrevem o estado anterior a esta rodada. Isso não comprova renderização, MediaPipe ou webcam reais. Navegador/ensaio físico e BFCache continuam pendentes; validação de ponta a ponta não concluída.

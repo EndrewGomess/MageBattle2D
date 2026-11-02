@@ -38,3 +38,14 @@ test('interrupção de uma câmera encerra os fluxos e notifica uma única vez',
   streams[0].track.listeners.mute();streams[1].track.listeners.ended();
   assert.equal(failures,1);assert.ok(streams.every(s=>s.track.stopped));
 });
+
+test('A21: uma webcam funciona sem segundo hardware e solicita somente vídeo', async () => {
+ const opened=stream('only');let options;
+ const cameras=new Cameras(()=>{},media(async input=>{options=input;return opened;}));
+ const result=await cameras.open([assignment('players','only')]);
+ assert.equal(result.size,1);assert.equal(result.get('players'),opened);assert.equal(options.audio,false);assert.equal(options.video.deviceId.exact,'only');cameras.dispose();assert.equal(opened.track.stopped,true);
+});
+test('permissão negada não mantém fluxos abertos',async()=>{
+ const denied=Object.assign(new Error('denied'),{name:'NotAllowedError'});const cameras=new Cameras(()=>{},media(async()=>{throw denied;}));
+ await assert.rejects(cameras.open([assignment('players','a')]),e=>e===denied);assert.equal(cameras.streams.size,0);assert.equal(cameras.opening,false);
+});
