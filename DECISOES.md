@@ -136,4 +136,9 @@ O usuário autorizou iniciar a execução das validações, incluindo testes. A 
 
 Correção do registro da Entrega 5: existe o commit `e777181`, base atual da Entrega 6; as afirmações históricas de que não havia commit não descrevem o Git atual. Não se infere autorização a partir do histórico nem se retrocria handoff. O usuário considerou a Entrega 5 finalizada nesta conversa. Commit da Entrega 6 depende de autorização específica futura.
 
-Decisão posterior desta rodada (02/11/2026): o usuário pediu deixar o ensaio físico pendente por enquanto. Manter esse adiamento explícito; os bloqueios de navegador permanecem registrados separadamente no relatório da Entrega 6.
+Decisão histórica desta rodada (02/11/2026): o usuário pediu deixar o ensaio físico pendente por enquanto. O relato posterior abaixo atualiza a situação; o bloqueio do navegador do agente permanece como fato da execução automatizada.
+
+
+## Relato físico posterior da Entrega 6 — registro de 02/11/2026
+
+O usuário informou que realizou o ensaio físico e que tudo funciona conforme planejado. Registra-se evidência qualitativa positiva atribuída ao usuário; não foram informados data do ensaio, hardware, navegador, configuração, método, tentativas, métricas ou resultados por cenário. Essa informação atualiza o adiamento anterior, sem substituir o resultado automatizado 81/81 nem transformar o bloqueio anterior do navegador do agente em execução. Não inferir aprovação individual de A01–A23, BFCache ou métricas quantitativas; a Entrega 6 não é declarada integralmente validada por esse relato. Ver [registro da Entrega 6](docs/ENTREGA_06.md).
