@@ -1,6 +1,6 @@
 # Entrega 6 — validação e limites
 
-Registro: 02/11/2026. Branch `codex/entrega-6-validacao-ponta-a-ponta`, base `e777181` (Entrega 5), alterações locais sem commit. O usuário autorizou explicitamente as validações nesta rodada. **Validação automatizada concluída no alcance descrito; ponta a ponta com navegador/webcam continua pendente. Entrega 6 ainda não concluída.**
+Registro: 02/11/2026. Branch `codex/entrega-6-validacao-ponta-a-ponta`, validação automatizada registrada no commit `7594bb1`, baseado em `e777181` (Entrega 5). A atualização do relato manual abaixo está local, sem novo commit. O usuário autorizou explicitamente as validações nesta rodada. **Validação automatizada concluída no alcance descrito e ensaio físico relatado positivamente pelo usuário. O relato é qualitativo e não discrimina cenários; BFCache e métricas quantitativas continuam sem evidência específica. Entrega 6 ainda não declarada integralmente validada.**
 
 ## Alterações e método
 
@@ -49,11 +49,11 @@ Comando de cobertura: `node --test --test-reporter=tap --experimental-test-cover
 
 ## Decisão sobre o ensaio físico
 
-Em 02/11/2026, o usuário instruiu: “Deixe o ensaio físico pendente por enquanto”. O ensaio físico permanece adiado por decisão explícita; não é necessário solicitar novamente nesta rodada. O bloqueio de navegador descrito abaixo é distinto desse adiamento.
+Em 02/11/2026, o usuário instruiu: “Deixe o ensaio físico pendente por enquanto”. Esse foi o estado da execução automatizada. O relato manual posterior, registrado abaixo, atualiza a situação do ensaio físico. O bloqueio anterior do navegador do agente permanece como fato daquela execução.
 
 ## Bloqueios e não verificado
 
-O coordenador tentou abrir a aplicação no navegador integrado, que retornou `net::ERR_CONNECTION_TIMED_OUT` em localhost. A alternativa via Computer Use foi interrompida por não conseguir confirmar com segurança a URL do Brave; não houve interação adicional para contornar essa restrição. Assim não há nova evidência de apresentação, cliques, BFCache real, câmera, MediaPipe ou partida integrada completa nesta rodada. Os relatos anteriores do usuário em ENTREGAS 4/D18 são preservados com os limites originais.
+O coordenador tentou abrir a aplicação no navegador integrado, que retornou `net::ERR_CONNECTION_TIMED_OUT` em localhost. A alternativa via Computer Use foi interrompida por não conseguir confirmar com segurança a URL do Brave; não houve interação adicional para contornar essa restrição. Assim não houve execução desses fluxos pelos agentes nessa rodada automatizada. O relato físico posterior do usuário está registrado separadamente abaixo; não especifica quais desses fluxos foram exercitados. Os relatos anteriores do usuário em ENTREGAS 4/D18 são preservados com os limites originais.
 
 Precisão, rejeição e latência físicas permanecem sem amostra quantitativa. Também não foram exercitados internet/modelos indisponíveis no navegador, dispositivos alternativos ou vídeo real congelado. O adiamento histórico D15/D17 não torna esses casos aprovados. Entrega 7 permanece fora desta rodada.
 
@@ -70,4 +70,11 @@ Precisão, rejeição e latência físicas permanecem sem amostra quantitativa. 
 
 A primeira revisão identificou que o DOM mínimo criava qualquer ID solicitado, mascarando a ausência de elementos no HTML. O fixture foi corrigido para carregar os IDs reais de `jogo.html`, rejeitar IDs ausentes e conferir arquivos locais referenciados. A inconsistência documental que ainda indicava a Entrega 6 como somente planejada também foi corrigida: o estado corrente agora registra validação automatizada parcial, bloqueio de navegador e adiamento físico.
 
-Após essas alterações funcionais dos testes, o coordenador executou `node --test --test-reporter=tap tests/*.test.mjs`: exit 0, 81/81 aprovados, zero falhas, cancelamentos ou ignorados. A correção posterior de estado foi exclusivamente documental e não exigiu repetição da suíte. A revisão independente final foi concluída somente por leitura, sem defeitos funcionais acionáveis nos testes e nas alterações documentais examinadas. O revisor confirmou a correção do fixture com IDs/recursos do HTML real e a distinção entre evidência sintética, bloqueios de navegador e o estado não concluído da Entrega 6. Não executou navegador ou webcam. Nenhum commit ou handoff foi criado nesta rodada.
+Após essas alterações funcionais dos testes, o coordenador executou `node --test --test-reporter=tap tests/*.test.mjs`: exit 0, 81/81 aprovados, zero falhas, cancelamentos ou ignorados. A correção posterior de estado foi exclusivamente documental e não exigiu repetição da suíte. A revisão independente final foi concluída somente por leitura, sem defeitos funcionais acionáveis nos testes e nas alterações documentais examinadas. O revisor confirmou a correção do fixture com IDs/recursos do HTML real e a distinção entre evidência sintética, bloqueios de navegador e o estado não concluído da Entrega 6. Não executou navegador ou webcam. A revisão acima antecedeu o commit `7594bb1` e o handoff local correspondente; esta atualização do relato manual não cria novo commit nem altera esse handoff histórico.
+
+
+## Relato manual posterior do usuário — registro de 02/11/2026
+
+O usuário informou: “realizei ensaio físico, tudo funciona conforme planejado”. Isso constitui relato qualitativo positivo de ensaio real realizado pelo usuário e atualiza a situação anteriormente adiada. A data acima é a do registro; não foram informados data do ensaio, hardware, navegador, configuração, quantidade de tentativas, método, métricas ou resultados por cenário.
+
+A automação 81/81 e os bloqueios do navegador do agente permanecem evidências próprias da execução anterior. O novo relato não é execução dos agentes nem discrimina A01–A23, BFCache ou valores quantitativos de precisão, rejeição e latência. A matriz acima mantém os resultados por camada efetivamente demonstrados; não se marca toda a integração como validada nem se declara a Entrega 6 integralmente concluída apenas com esse relato. O roteiro permanece disponível para obter evidências específicas dos itens ainda sem detalhamento.
