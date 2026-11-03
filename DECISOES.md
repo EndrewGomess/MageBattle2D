@@ -142,3 +142,10 @@ Decisão histórica desta rodada (02/11/2026): o usuário pediu deixar o ensaio 
 ## Relato físico posterior da Entrega 6 — registro de 02/11/2026
 
 O usuário informou que realizou o ensaio físico e que tudo funciona conforme planejado. Registra-se evidência qualitativa positiva atribuída ao usuário; não foram informados data do ensaio, hardware, navegador, configuração, método, tentativas, métricas ou resultados por cenário. Essa informação atualiza o adiamento anterior, sem substituir o resultado automatizado 81/81 nem transformar o bloqueio anterior do navegador do agente em execução. Não inferir aprovação individual de A01–A23, BFCache ou métricas quantitativas; a Entrega 6 não é declarada integralmente validada por esse relato. Ver [registro da Entrega 6](docs/ENTREGA_06.md).
+
+
+## Fechamento da Entrega 6 — 02/11/2026
+
+O usuário mandou finalizar a etapa e respondeu “realizei ensaio físico, tudo funcionando conforme planejado” à pergunta que especificava gesto mantido gerar somente um ataque, parar/reconectar a câmera preservar estado e exigir confirmação para retomar, e voltar pelo histórico retornar ao menu. O relato qualitativo positivo desses fluxos complementa o funcionamento geral informado e os 81/81 testes. A Entrega 6 fica concluída no escopo planejado e aceito; registros anteriores de validação parcial descrevem o estado anterior a este fechamento.
+
+O relato não identifica data do ensaio, equipamento, navegador, configuração, método, contagens ou resultados individuais de todos os casos. Retorno pelo histórico não comprova uso efetivo de BFCache; precisão/rejeição/latência quantitativas não foram medidas. A13 do laboratório diagnóstico permanece parcial na matriz, sem atribuir sua execução ao relato sobre a integração. Ver [fechamento e limites](docs/ENTREGA_06.md). Nenhuma regra foi alterada e a Entrega 7 não foi iniciada.
