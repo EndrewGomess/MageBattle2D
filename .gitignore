@@ -2,3 +2,9 @@ node_modules/
 ensaio-local/
 *.log
 .DS_Store
+
+# Pacotes locais gerados da Entrega 7
+artifacts/
+
+# Node portatil obtido pelo lancador; nunca distribuir o cache
+.runtime/
