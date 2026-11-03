@@ -1,6 +1,6 @@
 # Entrega 6 — validação e limites
 
-Registro: 02/11/2026. Branch `codex/entrega-6-validacao-ponta-a-ponta`, validação automatizada registrada no commit `7594bb1`, baseado em `e777181` (Entrega 5). A atualização do relato manual abaixo está local, sem novo commit. O usuário autorizou explicitamente as validações nesta rodada. **Validação automatizada concluída no alcance descrito e ensaio físico relatado positivamente pelo usuário. O relato é qualitativo e não discrimina cenários; BFCache e métricas quantitativas continuam sem evidência específica. Entrega 6 ainda não declarada integralmente validada.**
+Registro de fechamento: 02/11/2026. Branch `codex/entrega-6-fechamento`, baseada em `origin/main` após o merge `af061fa` da PR #7. A validação automatizada está registrada em `7594bb1` e o relato manual anterior em `276f0f7`. **Entrega 6 concluída no escopo planejado e aceito pelo usuário, com 81/81 testes aprovados e ensaio físico relatado positivamente.** Este fechamento preserva as limitações de método e métricas descritas abaixo; não representa medição quantitativa nem comprovação individual de todos os casos físicos.
 
 ## Alterações e método
 
@@ -26,7 +26,7 @@ Comando de cobertura: `node --test --test-reporter=tap --experimental-test-cover
 
 ## Matriz A01–A23
 
-“Passou sintético” se restringe à camada indicada. Todos os casos abaixo ainda carecem de execução real do jogo integrado no navegador quando envolverem interação, captura ou apresentação. Testes são localizáveis pelos IDs/nome nos arquivos indicados.
+“Passou sintético” se restringe à camada indicada. O ensaio físico tem relato qualitativo positivo do usuário; as linhas A14, A18 e retorno pelo histórico identificam os fluxos explicitamente incluídos na pergunta respondida. Os demais resultados não recebem detalhamento físico por inferência. Testes são localizáveis pelos IDs/nome nos arquivos indicados. O aceite de fechamento da etapa considera esse conjunto de evidências, com os limites abaixo.
 
 | ID | Status nesta rodada | Evidência e limite |
 | --- | --- | --- |
@@ -36,16 +36,16 @@ Comando de cobertura: `node --test --test-reporter=tap --experimental-test-cover
 | A04–A09 | Passou sintético | combat: valores exatos da especificação, dano/vida/histórico e maior/menor; controlador A04 comprova ausência de sorteio de d6. |
 | A10–A11 | Passou sintético | dice/controller: quantidade de RNG e ordem ataque→dano, normal/crítico/erro e Bola sem d6 no máximo. |
 | A12 | Passou sintético | controller/GestureGate: troca, ausência, intervalo e resposta velha reiniciam progresso sem RNG. |
-| A13 | Parcial | Gate/reset e rolagens independentes cobertos em testes; botão Nova seleção e fluxo do laboratório não executados nesta rodada. |
-| A14 | Passou sintético | controller: gesto sustentado, callbacks antigos e região do jogador anterior não repetem dano/dados/histórico. Ensaio físico pendente. |
+| A13 | Parcial — laboratório diagnóstico | Gate/reset e rolagens independentes cobertos em testes; não há relato específico do botão Nova seleção do laboratório nesta rodada. Limite registrado, sem atribuir execução ao ensaio do jogo integrado. |
+| A14 | Passou sintético e relato manual positivo | controller: gesto sustentado, callbacks antigos e região anterior não repetem a ação. O usuário respondeu positivamente à pergunta que incluía gesto mantido gerar apenas um ataque; sem contagem ou método informado. |
 | A15–A16 | Passou sintético | Dano mínimo 2; Bola crítica nominal 52/aplicado 50, resultado e bloqueio do derrotado. |
 | A17 | Passou sintético | Região inativa/central, duas mãos ativas e tokens anteriores rejeitados. Reconhecimento/rejeição físicos pendentes. |
-| A18 | Passou sintético | Falha injetada em cada posição de d20/d6; preservação de resultados; reconectar não rola; retomada completa faltantes; ocultação/watchdog; adapter cancela/descarta capturas/respostas antigas. Câmera/aba reais pendentes. |
+| A18 | Passou sintético | Falha injetada em cada posição de d20/d6; preservação de resultados; reconectar não rola; retomada completa faltantes; ocultação/watchdog; adapter cancela/descarta capturas/respostas antigas. O usuário respondeu positivamente à pergunta sobre parar/reconectar a câmera, preservar o estado e exigir confirmação de retomada. Não há contagens ou resultados físicos detalhados por subcaso; callbacks antigos permanecem demonstrados sinteticamente. |
 | A19 | Passou sintético | controller: limpa vida/histórico/seleção, preserva configuração/câmera disponível, nova iniciativa; preparação se recursos indisponíveis. Cliques no navegador pendentes nesta rodada. |
 | A20 | Passou sintético | controller/UI: menu limpa partida e permite editar vida/CA; sem dano padrão no contrato. Navegador pendente. |
 | A21 | Passou sintético | Cameras/UI com mediaDevices simulado: um fluxo players, áudio false, seleção de dispositivo, permissão negada e encerramento. Hardware real pendente. |
 | A22–A23 | Passou sintético | Críticos exatos da especificação e bônus somado uma vez. |
-| BFCache (adicional) | Parcial | Handler real de pagehide encerra intervalo/recursos e pageshow persistido solicita reload no DOM mínimo; navegação/cache real não executados. |
+| Retorno pelo histórico / BFCache (adicional) | Relato manual positivo do retorno; BFCache específico não confirmado | O usuário respondeu positivamente à pergunta sobre voltar pelo histórico retornar ao menu. O DOM mínimo demonstra o handler `pageshow.persisted`; não foi informado se a navegação real usou BFCache ou novo carregamento. |
 
 ## Decisão sobre o ensaio físico
 
@@ -53,7 +53,7 @@ Em 02/11/2026, o usuário instruiu: “Deixe o ensaio físico pendente por enqua
 
 ## Bloqueios e não verificado
 
-O coordenador tentou abrir a aplicação no navegador integrado, que retornou `net::ERR_CONNECTION_TIMED_OUT` em localhost. A alternativa via Computer Use foi interrompida por não conseguir confirmar com segurança a URL do Brave; não houve interação adicional para contornar essa restrição. Assim não houve execução desses fluxos pelos agentes nessa rodada automatizada. O relato físico posterior do usuário está registrado separadamente abaixo; não especifica quais desses fluxos foram exercitados. Os relatos anteriores do usuário em ENTREGAS 4/D18 são preservados com os limites originais.
+O coordenador tentou abrir a aplicação no navegador integrado, que retornou `net::ERR_CONNECTION_TIMED_OUT` em localhost. A alternativa via Computer Use foi interrompida por não conseguir confirmar com segurança a URL do Brave; não houve interação adicional para contornar essa restrição. Assim não houve execução desses fluxos pelos agentes nessa rodada automatizada. O primeiro relato físico posterior do usuário, registrado abaixo, ainda não especificava esses fluxos. A resposta contextualizada e o aceite de fechamento subsequentes identificam gesto sustentado, interrupção/reconexão da câmera com retomada explícita e retorno pelo histórico ao menu; ver a seção de fechamento. Os relatos anteriores do usuário em ENTREGAS 4/D18 são preservados com os limites originais.
 
 Precisão, rejeição e latência físicas permanecem sem amostra quantitativa. Também não foram exercitados internet/modelos indisponíveis no navegador, dispositivos alternativos ou vídeo real congelado. O adiamento histórico D15/D17 não torna esses casos aprovados. Entrega 7 permanece fora desta rodada.
 
@@ -68,7 +68,7 @@ Precisão, rejeição e latência físicas permanecem sem amostra quantitativa. 
 
 ## Revisão
 
-A primeira revisão identificou que o DOM mínimo criava qualquer ID solicitado, mascarando a ausência de elementos no HTML. O fixture foi corrigido para carregar os IDs reais de `jogo.html`, rejeitar IDs ausentes e conferir arquivos locais referenciados. A inconsistência documental que ainda indicava a Entrega 6 como somente planejada também foi corrigida: o estado corrente agora registra validação automatizada parcial, bloqueio de navegador e adiamento físico.
+A primeira revisão identificou que o DOM mínimo criava qualquer ID solicitado, mascarando a ausência de elementos no HTML. O fixture foi corrigido para carregar os IDs reais de `jogo.html`, rejeitar IDs ausentes e conferir arquivos locais referenciados. A inconsistência documental que ainda indicava a Entrega 6 como somente planejada também foi corrigida: o estado daquele momento passou a registrar validação automatizada parcial, bloqueio de navegador e adiamento físico; os relatos e o aceite posteriores estão abaixo.
 
 Após essas alterações funcionais dos testes, o coordenador executou `node --test --test-reporter=tap tests/*.test.mjs`: exit 0, 81/81 aprovados, zero falhas, cancelamentos ou ignorados. A correção posterior de estado foi exclusivamente documental e não exigiu repetição da suíte. A revisão independente final foi concluída somente por leitura, sem defeitos funcionais acionáveis nos testes e nas alterações documentais examinadas. O revisor confirmou a correção do fixture com IDs/recursos do HTML real e a distinção entre evidência sintética, bloqueios de navegador e o estado não concluído da Entrega 6. Não executou navegador ou webcam. A revisão acima antecedeu o commit `7594bb1` e o handoff local correspondente; esta atualização do relato manual não cria novo commit nem altera esse handoff histórico.
 
@@ -77,4 +77,13 @@ Após essas alterações funcionais dos testes, o coordenador executou `node --t
 
 O usuário informou: “realizei ensaio físico, tudo funciona conforme planejado”. Isso constitui relato qualitativo positivo de ensaio real realizado pelo usuário e atualiza a situação anteriormente adiada. A data acima é a do registro; não foram informados data do ensaio, hardware, navegador, configuração, quantidade de tentativas, método, métricas ou resultados por cenário.
 
-A automação 81/81 e os bloqueios do navegador do agente permanecem evidências próprias da execução anterior. O novo relato não é execução dos agentes nem discrimina A01–A23, BFCache ou valores quantitativos de precisão, rejeição e latência. A matriz acima mantém os resultados por camada efetivamente demonstrados; não se marca toda a integração como validada nem se declara a Entrega 6 integralmente concluída apenas com esse relato. O roteiro permanece disponível para obter evidências específicas dos itens ainda sem detalhamento.
+A automação 81/81 e os bloqueios do navegador do agente permanecem evidências próprias da execução anterior. O novo relato não é execução dos agentes nem discrimina A01–A23, BFCache ou valores quantitativos de precisão, rejeição e latência. Esse foi o alcance do primeiro relato, anterior à resposta contextualizada e ao aceite de fechamento registrados a seguir. A matriz mantém os resultados por camada efetivamente demonstrados. O roteiro permanece disponível para obter evidências específicas dos itens ainda sem detalhamento.
+
+
+## Fechamento aceito pelo usuário — registro de 02/11/2026
+
+O usuário mandou finalizar a Entrega 6. Em resposta à pergunta específica sobre gesto mantido produzir um ataque, parar/reconectar a câmera preservar o estado e exigir confirmação para retomar, e voltar pelo histórico retornar ao menu, informou: “realizei ensaio físico, tudo funcionando conforme planejado”. Registra-se relato manual qualitativo positivo desses fluxos e do funcionamento geral conforme o planejamento. O retorno ao menu pelo histórico foi relatado; o mecanismo BFCache não foi identificado pelo usuário.
+
+A Entrega 6 fica concluída no escopo planejado e aceito, apoiada pelos 81/81 testes automatizados, verificações de sintaxe/HTTP e ensaio físico relatado pelo usuário. Permanecem limitações do registro: não foram informados data do ensaio, equipamento, navegador, configuração, método, número de tentativas ou resultados individuais de todos os testes; precisão, rejeição e latência quantitativas não foram medidas. A13 refere-se ao laboratório diagnóstico e mantém alcance parcial, sem impedir o fechamento aceito da integração do jogo. Não inferir execução física individual de todos os cenários nem confirmação do uso efetivo de BFCache.
+
+Os bloqueios do navegador do agente pertencem à execução anterior e continuam registrados como tal. Este fechamento é documental: não houve alteração funcional ou nova execução de testes. A revisão documental do fechamento será registrada após a leitura independente; a conclusão funcional aceita pelo usuário não autoriza iniciar automaticamente a Entrega 7.
