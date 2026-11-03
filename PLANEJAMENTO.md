@@ -1,6 +1,6 @@
 # Planejamento — Duelo de Magos
 
-**Estado atual — 02/11/2026: Entrega 6 concluída no escopo planejado e aceito pelo usuário.** D18 e integração sintética têm 81/81 testes aprovados; o usuário relatou ensaio físico positivo, respondendo à pergunta sobre gesto sustentado sem repetição, câmera interrompida/reconectada com estado preservado e retomada explícita, e retorno pelo histórico ao menu. O relato é qualitativo, sem ambiente, método, contagens ou resultados individuais de todos os casos. O uso efetivo de BFCache não foi confirmado; precisão, rejeição e latência quantitativas não foram medidas. A13 do laboratório diagnóstico mantém alcance parcial. Ver [evidências e limites da Entrega 6](docs/ENTREGA_06.md). A Entrega 7 não foi iniciada.
+**Estado atual — 02/11/2026: Entrega 6 concluída no escopo planejado e aceito pelo usuário.** D18 e integração sintética têm 81/81 testes aprovados; o usuário relatou ensaio físico positivo, respondendo à pergunta sobre gesto sustentado sem repetição, câmera interrompida/reconectada com estado preservado e retomada explícita, e retorno pelo histórico ao menu. O relato é qualitativo, sem ambiente, método, contagens ou resultados individuais de todos os casos. O uso efetivo de BFCache não foi confirmado; precisão, rejeição e latência quantitativas não foram medidas. A13 do laboratório diagnóstico mantém alcance parcial. Ver [evidências e limites da Entrega 6](docs/ENTREGA_06.md). A Entrega 7 está implementada para revisão, com verificação de uso por outra pessoa pendente; ver [registro da etapa](docs/ENTREGA_07.md).
 
 Data: 27/10/2026. Atualização: 29/10/2026. Status: entregas 1 e 2 concluídas e aceitas; entrega 2 aceita com os limites do ensaio registrados em docs/ENTREGA_02.md. Motor da entrega 3 implementado e testado: 70 testes aprovados e cobertura focada de 100% em combat.js/dice.js após correção dos dois achados de captura de entradas. Nova revisão independente confirmou as correções sem novos achados acionáveis. A Entrega 3 foi integrada à `main` pela [PR #3](https://github.com/EndrewGomess/MageBattle2D/pull/3), no merge `0fd5b20`; a autorização está registrada em D15. Testes de partida integrada e webcam real adiados por decisão explícita (D15).
 
@@ -173,7 +173,7 @@ D15 adiou verificações integradas e físicas; D17 registra um recorte explorat
 - Entrega 4: protótipo integrado implementado conforme D16, com controlador independente do DOM, adapter exclusivo de worker e recursos separados do laboratório. Revisão independente concluída por leitura, com P2 de BFCache corrigido e confirmado estaticamente, sem outros achados acionáveis. Reconhecimento positivo dos três gestos, alternância/dano até vitória e exibição do resultado/opções foram observados no relato exploratório do usuário; demais verificações de D17 continuam pendentes. Os agentes não executaram testes/navegador nesta entrega. Commit e PR explicitamente autorizados pelo usuário após revisão final do registro conforme D17; execução consultável no histórico Git e na PR correspondente, quando criada. [Relatório](docs/ENTREGA_04.md).
 - Entrega 5: considerada finalizada pelo usuário em 02/11/2026 para permitir o início da Entrega 6. A branch `codex/entrega-5-refinamento-visual` contém a implementação revisada; a implementação está no commit `e777181`, conforme o histórico real. Esta transição não infere autorização anterior nem cria handoff retroativo da Entrega 5.
 - Entrega 6: concluída no escopo planejado e aceito pelo usuário, com 81/81 testes aprovados e ensaio físico manual positivo nos fluxos contextualizados. Limites de método, métricas, BFCache específico e A13 do laboratório estão no [relatório de evidências](docs/ENTREGA_06.md).
-- Entrega 7: não iniciada.
+- Entrega 7: pacote ZIP local, lançador e guia implementados para revisão na branch `codex/entrega-7-pacote-entrega`. Verificação de uso por outra pessoa pendente; etapa ainda não concluída. Limites D15/D17 mantidos por decisão explícita do usuário. Ver [registro](docs/ENTREGA_07.md).
 
 ### Revisão e commit por entrega
 
@@ -265,3 +265,16 @@ Atualização do relato manual — registro de 02/11/2026: o usuário informou q
 
 
 Fechamento da Entrega 6 — registro de 02/11/2026: concluída no escopo planejado por instrução do usuário. A resposta ao questionamento sobre gesto mantido gerar um ataque, interrupção/reconexão preservar estado e exigir confirmação de retomada, e histórico retornar ao menu foi positiva (“realizei ensaio físico, tudo funcionando conforme planejado”). É evidência qualitativa atribuída ao usuário, complementar à automação 81/81. Não foram informados ambiente, método, contagens, data do ensaio ou resultados individuais de todos os casos; BFCache efetivo e métricas quantitativas não foram confirmados. Ver [fechamento e limites](docs/ENTREGA_06.md). Registros anteriores de etapa parcial descrevem os momentos anteriores a este aceite. Entrega 7 não iniciada.
+
+
+## Planejamento da Entrega 7 — 02/11/2026
+
+Iniciado o [plano do pacote de entrega](docs/PLANO_ENTREGA_07.md), com composição local, guia curto, identificação de versão, limitações e roteiro de início por outra pessoa a executar posteriormente. Hospedagem/publicação permanece decisão explícita. Os limites herdados D15/D17 serão mantidos no pacote e relembrados no fechamento, registrando a decisão sobre eventual retomada; o aceite da Entrega 6 permanece. Nesta rodada foram produzidos somente documentos de planejamento, sem execução, testes ou commit.
+
+
+## Implementação da Entrega 7 — 03/11/2026
+
+Pacote local, lançador de duplo clique e guia implementados; ZIP gerado como artefato de trabalho rastreável por HEAD real, dirty e hashes. Ver [registro da Entrega 7](docs/ENTREGA_07.md). O usuário decidiu “Manter pendentes nesta entrega” os limites D15/D17, documentados no guia e plano. Não foram executados testes, servidor, navegador ou nova verificação física; início por outra pessoa permanece pendente. Etapa implementada para revisão, sem conclusão ou commit. Publicação/hospedagem não incluída.
+
+
+Atualização da Entrega 7 — 03/11/2026: lançador Windows x64/ARM64 prepara Node.js portátil v24.21.0 oficial com SHA-256 fixado e cache ignorado `.runtime/`, dispensando Node instalado/PATH para duplo clique. Novo pacote gerado com bootstrap e guia atualizado, ainda para revisão e sem testes de execução; ver [registro](docs/ENTREGA_07.md).
