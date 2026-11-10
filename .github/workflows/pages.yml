@@ -1,0 +1,50 @@
+name: Publicar jogo no GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Preparar arquivos do site
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Obter arquivos da revisão
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Ler configuração do GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empacotar dist para publicação
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: ./dist
+
+  deploy:
+    name: Publicar artefato
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Publicar no GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
