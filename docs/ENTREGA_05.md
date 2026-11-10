@@ -43,3 +43,13 @@ A interface da arena permanece totalmente alinhada à arte de referência fornec
 ## Estado atualizado — 02/11/2026
 
 O usuário considerou a Entrega 5 finalizada e autorizou começar a Entrega 6. O histórico Git contém o commit visual `e777181`, base da branch da Entrega 6; as afirmações anteriores de ausência de commit estavam desatualizadas. Não se infere sua autorização nem se cria handoff retroativo. As validações atuais e os bloqueios do navegador/ensaio físico estão em [ENTREGA_06.md](ENTREGA_06.md).
+
+## Ajuste de responsividade — 10/11/2026
+
+A arena e o HUD agora ocupam espaço no fluxo do documento. O menu, a iniciativa e o resultado podem crescer com regras abertas, mensagens e erros de validação. A arte panorâmica preenche a arena em desktop e ganha uma faixa própria abaixo desses painéis até `72rem`, inclusive nas larguras intermediárias, para manter os dois magos visíveis. A composição usa rolagem vertical natural quando a janela tem pouca altura ou quando o zoom reduz o espaço.
+
+O console passa de três colunas para duas até `72rem`, com histórico e última ação na linha seguinte, e para uma coluna até `51rem`. Até `40rem`, os cartões se empilham com ilustração lateral. No espaço mais estreito, os cartões passam a dispor seus elementos em uma única coluna. Valores longos de vida podem quebrar linha dentro da barra. Títulos, botões e detalhes se ajustam à largura disponível, com os controles de configuração da webcam em uma coluna até `24rem`.
+
+O ajuste está em `dist/game.css` e usa a arte e os controles existentes. O fluxo de combate segue D18. A prévia usa uma webcam espelhada, `object-fit: contain` e a divisão de regiões de 47% / 6% / 47%. Telas estreitas fazem parte do escopo visual, enquanto o alvo funcional segue sendo o navegador em computador com webcam.
+
+O implementador leu o CSS e conferiu os seletores no HTML atual. A revisão independente por leitura apontou que os painéis podiam cobrir parte dos magos em larguras intermediárias. Após reservar a faixa panorâmica até `72rem`, a nova revisão confirmou a correção por leitura e encerrou sem novos achados. A validação visual em diferentes dimensões e níveis de zoom e a execução de testes desta alteração estão pendentes. Os 81 testes aprovados da Entrega 6 são evidência histórica da versão então exercitada.
